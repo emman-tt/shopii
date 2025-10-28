@@ -36,7 +36,6 @@ export default function MoreInfo ({ buildRef }) {
         start: isMobile ? '-80%' : '80%',
         end: isMobile ?? '+=50px',
         scrub: 1,
-        markers: true
       },
       opacity: 0,
       x: 50,
