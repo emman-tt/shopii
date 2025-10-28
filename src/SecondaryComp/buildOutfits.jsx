@@ -208,7 +208,7 @@ export default function BuildOutfits ({
                 </div>
                 <div
                   onClick={scrollRight}
-                  className=' absolute right-[5%] top-[35%] z-5 text-4xl font-extrabold text-black max-[320px]:right-[1%]'
+                  className=' absolute right-[5%] top-[35%] z-5 text-4xl font-extrabold text-black max-[320px]:right-[1%] max-[400px]:right-[10%]'
                 >
                   <SlArrowRight />
                 </div>
