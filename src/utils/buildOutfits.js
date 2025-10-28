@@ -6,7 +6,6 @@ import outfit5 from '../assets/img/outfit5.webp'
 import outfit6 from '../assets/img/outfit6.webp'
 
 import outfit10 from '../assets/img/outfit10.webp'
-import outfit11 from '../assets/img/outfit11.webp'
 import outfit12 from '../assets/img/outfit12.webp'
 import outfit13 from '../assets/img/outfit13.webp'
 import outfit14 from '../assets/img/outfit14.webp'

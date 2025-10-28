@@ -4,7 +4,6 @@ import jeans from '../assets/img/jeans.jpg'
 import handBag from '../assets/img/handBag.webp'
 import specs from '../assets/img/specs.webp'
 import dress1 from '../assets/img/dress1.webp'
-import dress2 from '../assets/img/dress2.webp'
 import cap from '../assets/img/cap.webp'
 import heels from '../assets/img/heels.webp'
 
