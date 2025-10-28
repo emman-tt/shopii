@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl'
 import { outfitMiddle, outfitsLeft, outfitsRight } from '../utils/buildOutfits'
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 export default function BuildOutfits ({
   sellersRef,
   buildRef
