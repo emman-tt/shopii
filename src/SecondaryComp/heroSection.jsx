@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { gsap } from 'gsap'
-
+import ImageWithShimmer from '../reuse/shimmer'
 import { SplitText } from 'gsap/SplitText'
 gsap.registerPlugin(SplitText)
 import heroLeftimg from '../assets/img/heroLeft.png'
@@ -62,7 +62,7 @@ export default function Hero ({ heroLeft, heroRight }) {
           className='w-50/100 flex justify-center items-center  text-black bg-[#79797a1c] max-[500px]:w-full 
           max-[500px]:h-[70%]'
         >
-          <img
+          <ImageWithShimmer
             src={heroLeftimg}
             className='flex h-[89%] max-[1100px]:w-[70%] max-[500px]:h-[140%] w-[60%]  items-center'
             alt='photo'
@@ -72,7 +72,7 @@ export default function Hero ({ heroLeft, heroRight }) {
           ref={heroRight}
           className='w-50/100 flex justify-center bg-[#79797a1c]  text-black max-[500px]:w-full max-[500px]:h-70/100'
         >
-          <img src={heroRightimg} className='flex  self-center  ' alt='phot0' />
+          <ImageWithShimmer src={heroRightimg} className='flex  self-center  ' alt='phot0' />
         </div>
       </section>
 

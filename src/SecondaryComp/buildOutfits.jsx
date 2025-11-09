@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl'
+import ImageWithShimmer from '../reuse/shimmer'
 import { outfitMiddle, outfitsLeft, outfitsRight } from '../utils/buildOutfits'
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 export default function BuildOutfits ({
@@ -172,7 +173,7 @@ export default function BuildOutfits ({
               className=' flex justify-between flex-col'
             >
               <div className='w-full max-[500px]:h-110   max-[500px]:justify-center flex max-[376px]:h-100 max-[336px]:h-80'>
-                <img
+                <ImageWithShimmer
                   src={item.image}
                   className='h-full w-full max-[500px]:w-120 max-[500px]:h-auto '
                   alt='photo'
@@ -213,7 +214,7 @@ export default function BuildOutfits ({
                   <SlArrowRight />
                 </div>
                 <div className='h-[95%]   w-full '>
-                  <img
+                  <ImageWithShimmer
                     src={item.image}
                     className='h-[105%] w-full max-[1030px]:h-full max-[380px]:h-[90%] '
                     alt='photo'
@@ -236,7 +237,7 @@ export default function BuildOutfits ({
               className=' h-full flex flex-col items-center  max-[500px]:justify-center '
             >
               <div className='w-full   h-[92%] max-[500px]:h-[50%] max-[500px]:justify-center flex max-[376px]:h-80'>
-                <img
+                <ImageWithShimmer
                   src={item.image}
                   className='h-full w-full max-[500px]:w-auto max-[500px]:h-90'
                   alt='photo'

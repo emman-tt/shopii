@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl'
 import { FaRegHeart } from 'react-icons/fa6'
 import { all } from '../utils/bestSellers'
+import ImageWithShimmer from '../reuse/shimmer'
 
 export default function BestSellers ({ sellersRef }) {
   const rightArrow = useRef(null)
@@ -63,7 +64,7 @@ export default function BestSellers ({ sellersRef }) {
           >
             <FaRegHeart className='absolute right-5 z-10 top-5 text-xl ' />
             <div className='w-full h-93/100  max-[800px]:w-[95%]'>
-              <img className='h-full w-full' src={item.image} alt='' />
+              <ImageWithShimmer className='h-full w-full' src={item.image} alt='' />
             </div>
             <section className='text-sm text-black font-semibold  flex justify-around'>
               <div>{item.description}</div>

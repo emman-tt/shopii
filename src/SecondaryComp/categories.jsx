@@ -6,7 +6,7 @@ import watchimg from '../assets/img/watch.png'
 import shoesimg from '../assets/img/shoes.png'
 import categoryMiddle from '../assets/img/categoryMiddle.png'
 import { BsArrowUpRight } from 'react-icons/bs'
-
+import ImageWithShimmer from '../reuse/shimmer'
 
 
 export default function Categories ({ heroLeft, heroRight }) {
@@ -57,7 +57,7 @@ export default function Categories ({ heroLeft, heroRight }) {
           className=' w-23/100 h-[60%] max-[500px]:w-full max-[500px]:h-[25%]'
         >
           <div className='w-full flex h-73/100 max-[1100px]:h-[60%] justify-center items-center  bg-[#b1b1bb25]  max-[800px]:h-full'>
-            <img src={watchimg} className=' max-[500px]:h-full' alt='photo' />
+            <ImageWithShimmer src={watchimg} className=' max-[500px]:h-full' alt='photo' />
           </div>
           <div className='text-xl text-black font-semibold pl-10 flex gap-10 items-center pt-5 max-[800px]:text-[15px] max-[800px]:gap-5 max-[800px]:pt-1 max-[800px]:pl-2'>
             Accesories
@@ -69,7 +69,7 @@ export default function Categories ({ heroLeft, heroRight }) {
           className=' w-60/100 h-auto max-[500px]:w-full max-[500px]:h-[70%]'
         >
           <div className='w-full h-93/100 flex items-center justify-center  bg-[#b1b1bb25]'>
-            <img
+            <ImageWithShimmer
               src={categoryMiddle}
               className='w-75/100 max-[330px]:w-full'
               alt='photo'
@@ -85,7 +85,7 @@ export default function Categories ({ heroLeft, heroRight }) {
           className='w-25/100 h-50/100 flex flex-col self-end max-[500px]:w-full max-[500px]:h-[25%]'
         >
           <div className='w-full h-full p-0  flex items-center max-[800px]:h-full'>
-            <img className=' bg-[#b1b1bb25]' src={shoesimg} alt='photo' />
+            <ImageWithShimmer className=' bg-[#b1b1bb25]' src={shoesimg} alt='photo' />
           </div>
           <div className='text-xl text-black font-semibold pl-10 flex gap-10  items-center max-[800px]:text-[15px] max-[800px]:gap-5 max-[800px]:pt-1 max-[800px]:pl-2'>
             Shoes

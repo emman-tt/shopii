@@ -15,30 +15,33 @@ import gsap from 'gsap'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function Homepage() {
+export default function Homepage () {
   const heroLeft = useRef(null)
   const heroRight = useRef(null)
   const sellersRef = useRef(null)
   const buildRef = useRef(null)
   const lenisRef = useRef(null)
   const lastcard = useRef(null)
+  const isMobile = innerWidth <= 450
 
   useEffect(() => {
     lenisRef.current = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',      
+      duration:isMobile ? 2 : 1.2,
+      easing: t => (isMobile ? t : Math.min(1, 1.001 - Math.pow(2, -10 * t))),
+      orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
       smoothTouch: false,
-      wheelMultiplier: 0.8, 
-      touchMultiplier: 2,
-      infinite: false,
+      wheelMultiplier: 0.8,
+      touchMultiplier: 1,
+      touchInertiaMultiplier: 20,
+      autoResize: true,
+      infinite: false
     })
 
     lenisRef.current.on('scroll', ScrollTrigger.update)
 
-    gsap.ticker.add((time) => {
+    gsap.ticker.add(time => {
       lenisRef.current.raf(time * 1000)
     })
 
@@ -46,7 +49,7 @@ export default function Homepage() {
 
     return () => {
       lenisRef.current?.destroy()
-      gsap.ticker.remove((time) => lenisRef.current?.raf(time * 1000))
+      gsap.ticker.remove(time => lenisRef.current?.raf(time * 1000))
     }
   }, [])
 
@@ -56,7 +59,7 @@ export default function Homepage() {
       <Hero heroLeft={heroLeft} heroRight={heroRight} />
       <Categories heroLeft={heroLeft} heroRight={heroRight} />
       <Cards lastcard={lastcard} />
-      <Sneakers lastcard={lastcard}/>
+      <Sneakers lastcard={lastcard} />
       <BestSellers sellersRef={sellersRef} />
       <BuildOutfits buildRef={buildRef} sellersRef={sellersRef} />
       <MoreInfo buildRef={buildRef} />

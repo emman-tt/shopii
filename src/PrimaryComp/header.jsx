@@ -4,7 +4,7 @@ import { FaRegHeart } from 'react-icons/fa6'
 
 export default function Header () {
   return (
-    <section className='flex flex-row h-max py-2 justify-between px-10 items-center text-black max-[800px]:px-0'>
+    <section className='flex flex-row h-max py-2 justify-between px-10 items-center text-black max-[800px]:px-0 max-[500px]:px-5'>
       <section className='flex flex-row h-max font-semibold  gap-5 max-[500px]:hidden max-[800px]:text-[11px]'>
         <div>Catalog</div>
         <div>Collections</div>

@@ -5,7 +5,7 @@ import SplitText from 'gsap/SplitText'
 import { useEffect, useState, useRef } from 'react'
 import { cardsData } from '../utils/stackedCards'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
-
+import ImageWithShimmer from './shimmer'
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger, ScrollSmoother)
 
 export default function Cards ({ lastcard }) {
@@ -54,9 +54,9 @@ export default function Cards ({ lastcard }) {
             style={item.id === cardsData.length ? { zIndex: -1 } : {}}
             ref={item.id === cardsData.length ? lastcard : null}
           >
-            <div  className='absolute z-[-1] w-full h-full left-0 bottom-0 top-0 right-0 rounded-[inherit]'>
-              <img
-                className=' w-full max-[500px]:h-full  rounded-[inherit]'
+            <div className='absolute z-[-1] w-full h-full left-0 bottom-0 top-0 right-0 rounded-2xl'>
+              <ImageWithShimmer
+                className='w-full max-[500px]:h-full rounded-2xl'
                 src={item.img}
                 alt=''
               />

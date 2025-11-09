@@ -2,7 +2,7 @@ import Shoes from '../utils/shoes.js'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import { useEffect, useRef } from 'react'
-
+import ImageWithShimmer from '../reuse/shimmer.jsx'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Sneakers ({ lastcard }) {
@@ -126,7 +126,7 @@ export default function Sneakers ({ lastcard }) {
             key={item.id}
           >
             <div className='w-full h-full relative z-10'>
-              <img src={item.img} alt='photo' />
+              <ImageWithShimmer src={item.img} alt='photo' />
             </div>
           </section>
         ))}

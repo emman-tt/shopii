@@ -4,10 +4,6 @@ import Homepage from './pages/HomePage'
 
 
 function App() {
-  const [count, setCount] = useState(0)
-  
-  
-
   return (
     <div id="smooth-wrapper" className="w-full h-full overflow-hidden">
       <div id="smooth-content" className="overflow-visible w-full">
