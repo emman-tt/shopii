@@ -8,14 +8,13 @@ import { ScrollSmoother } from 'gsap/ScrollSmoother'
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger, ScrollSmoother)
 
-export default function Cards () {
+export default function Cards ({ lastcard }) {
   useEffect(() => {
     const cards = gsap.utils.toArray('#each')
-
     cards.forEach((card, i) => {
       const isLast = i === cards.length - 1
 
-    //  if (isLast) return
+      //  if (isLast) return
 
       gsap.to(card, {
         scale: 0.4 * (i / (cards.length - 1)),
@@ -23,7 +22,6 @@ export default function Cards () {
         scrollTrigger: {
           trigger: card,
           start: 'top top',
-          markers: true,
           end: 'bottom bottom',
           endTrigger: '#container',
           scrub: true,
@@ -46,26 +44,27 @@ export default function Cards () {
     >
       <section
         id='smooth-content'
-        className='w-[70%]  h-full flex flex-col gap-[70vh] items-center  overflow-x-hidden [scrollbar-width:none] '
+        className='w-[70%]  h-full flex flex-col gap-[70vh] items-center overflow-x-hidden [scrollbar-width:none] max-[500px]:gap-[30vh]  max-[500px]:w-full max-[800px]:w-full'
       >
         {cardsData.map(item => (
           <section
             id='each'
-            className='w-[90%] h-[80vh]  flex flex-col justify-end pb-20 gap-10 rounded-2xl relative'
+            className='w-[90%]  h-[80vh]  max-[450px]:h-[65vh]  flex flex-col justify-end pb-20 gap-10 rounded-2xl relative max-[500px]:gap-5 max-[450px]:w-full'
             key={item.id}
-            style={item.id === cardsData.length ? { zIndex: 4 } : {}}
+            style={item.id === cardsData.length ? { zIndex: -1 } : {}}
+            ref={item.id === cardsData.length ? lastcard : null}
           >
-            <div className='absolute z-[-1] w-full h-full left-0 bottom-0 top-0 right-0 rounded-[inherit]'>
+            <div  className='absolute z-[-1] w-full h-full left-0 bottom-0 top-0 right-0 rounded-[inherit]'>
               <img
-                className=' w-full h-auto rounded-[inherit]'
+                className=' w-full max-[500px]:h-full  rounded-[inherit]'
                 src={item.img}
                 alt=''
               />
             </div>
-            <h1 className=' backdrop-blur-[15px] flex text-5xl font-bold justify-center py-5'>
+            <h1 className=' backdrop-blur-[15px] flex text-5xl font-bold justify-center max-[780px]:py-1 max-[780px]:text-[32px] py-5 max-[500px]:text-[20px]'>
               {item.title}
             </h1>
-            <div className='px-15 text-center text-[14px]'>
+            <div className='px-15 text-center text-[14px] max-[780px]:text-[10px] max-[500px]:text-[9px] max-[500px]:px-8'>
               {item.description}
             </div>
           </section>

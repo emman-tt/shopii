@@ -8,6 +8,7 @@ const Header = lazy(() => import('../PrimaryComp/header'))
 const MoreInfo = lazy(() => import('../SecondaryComp/moreInfo'))
 const BuildOutfits = lazy(() => import('../SecondaryComp/buildOutfits'))
 const Cards = lazy(() => import('../reuse/StackedCards'))
+const Sneakers = lazy(() => import('../SecondaryComp/SneakerSection'))
 import Lenis from '@studio-freight/lenis'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import gsap from 'gsap'
@@ -20,6 +21,7 @@ export default function Homepage() {
   const sellersRef = useRef(null)
   const buildRef = useRef(null)
   const lenisRef = useRef(null)
+  const lastcard = useRef(null)
 
   useEffect(() => {
     lenisRef.current = new Lenis({
@@ -53,7 +55,8 @@ export default function Homepage() {
       <Header />
       <Hero heroLeft={heroLeft} heroRight={heroRight} />
       <Categories heroLeft={heroLeft} heroRight={heroRight} />
-      <Cards />
+      <Cards lastcard={lastcard} />
+      <Sneakers lastcard={lastcard}/>
       <BestSellers sellersRef={sellersRef} />
       <BuildOutfits buildRef={buildRef} sellersRef={sellersRef} />
       <MoreInfo buildRef={buildRef} />

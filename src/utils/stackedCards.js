@@ -8,11 +8,12 @@ import eg10 from '../assets/img/eg10.jpg'
 import eg12 from '../assets/img/eg12.jpg'
 
 import eg19 from '../assets/img/eg19.jpg'
+import eg3 from '../assets/img/eg3.jpg'
 
 export const cardsData = [
   {
     id: 1,
-    img: eg1,
+    img: eg3,
     title: 'Urban Rebellion',
     description:
       "Break the mold with pieces that scream individuality. Our urban collection isn't just clothing—it's a statement of defiance against the ordinary. Each garment is crafted for those who dare to stand out in a world of conformity. Wear your confidence like armor and let your style do the talking. This is fashion for the fearless, the bold, the unapologetically authentic."
@@ -54,7 +55,7 @@ export const cardsData = [
   },
   {
     id: 7,
-    img: '',
+    img: null,
     title: '',
     description: ''
   }
