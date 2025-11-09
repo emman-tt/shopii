@@ -154,7 +154,7 @@ export default function BuildOutfits ({
   return (
     <section
       ref={buildRef}
-      className='h-max overflow-hidden bg-white mt-50 flex flex-col text-black mb-20  '
+      className='h-max overflow-hidden bg-white mt-50 flex flex-col text-black mb-20  px-5'
     >
       <div
         ref={trigger}

@@ -52,10 +52,10 @@ export default function MoreInfo ({ buildRef }) {
   }, [])
 
   return (
-    <section className='h-230 overflow-hidden text-black mb-60'>
+    <section className='h-230 overflow-hidden text-black mb-60 px-5'>
       <h2
         ref={infoText}
-        className='text-5xl w-[80%] bg-[#b1b1bb25]  mt-40 rounded-2xl   p-10 font-medium justify-right max-[800px]:w-full max-[800px]:text-[30px] max-[500px]:text-[20px] max-[500px]:p-5 '
+        className='text-5xl w-[80%] bg-[#b1b1bb25] p  mt-40 rounded-2xl   p-10 font-medium justify-right max-[800px]:w-full max-[800px]:text-[30px] max-[500px]:text-[20px] max-[500px]:p-5 '
       >
         Shopii is an experimental Fashion Brand that sells Luxury and Confidence
         with a touch of Class

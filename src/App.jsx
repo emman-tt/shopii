@@ -1,19 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
-import Collapse from './reuse/collapseComp'
 import Homepage from './pages/HomePage'
 
-function App () {
+
+function App() {
   const [count, setCount] = useState(0)
+  
+  
 
   return (
-    <section
-      className={'flex h-screen bg-white  dark:bg-gray-900 dark:text-slate-50'}
-    >
-      <Homepage />
-    </section>
+    <div id="smooth-wrapper" className="w-full h-full overflow-hidden">
+      <div id="smooth-content" className="overflow-visible w-full">
+        <section className="flex min-h-screen bg-white dark:bg-gray-900 dark:text-slate-50">
+          <Homepage />
+        </section>
+      </div>
+    </div>
   )
 }
 

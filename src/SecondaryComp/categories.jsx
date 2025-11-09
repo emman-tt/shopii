@@ -46,7 +46,7 @@ export default function Categories ({ heroLeft, heroRight }) {
   }, [])
 
   return (
-    <section className='h-250 max-[1100px]:h-200 max-[800px]:h-140 bg-white mt-40 flex flex-col pb-10 max-[500px]:h-max'>
+    <section className='h-250 max-[1100px]:h-200 max-[800px]:h-140 bg-white mt-40 flex flex-col px-5 pb-10 max-[500px]:h-max'>
       <div className='text-3xl text-black justify-center items-center flex font-bold'>
         Categories
       </div>
