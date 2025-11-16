@@ -3,9 +3,13 @@ import { useState, useEffect } from 'react'
 import { FaSquare } from 'react-icons/fa'
 import { FaRegSquare } from 'react-icons/fa'
 import { CiFilter } from 'react-icons/ci'
-export default function Filtering ({ width = '20%', setCurrentCat , currentCat}) {
+export default function Filtering ({
+  width = '20%',
+  setCurrentCat,
+  currentCat
+}) {
   return (
-    <section className={`w-[${width}]  h-full`}>
+    <section className={`w-[${width}] fixed  h-full`}>
       <section className=' w-full px-10 justify-between flex'>
         <div className='flex gap-2 items-center'>
           Filters <CiFilter />
@@ -16,14 +20,15 @@ export default function Filtering ({ width = '20%', setCurrentCat , currentCat})
       <section className='flex flex-col pl-10 pt-9'>
         <p className='text-[16px] font-bold pb-3'>Categories</p>
 
-        <section className=' w-full  flex flex-col  align-middle gap-0.5'>
+        <section className=' w-full  flex flex-col   gap-1.5 '>
           {Categories.map(item => (
             <section
               onClick={() => setCurrentCat(item)}
-              className='flex gap-4 text-[13px]'
+              className='flex gap-4 text-[13px] align-middle items-center'
               key={item}
             >
-              <FaRegSquare /> {item}
+              <FaRegSquare />
+              <div>{item}</div>
             </section>
           ))}
         </section>
@@ -39,7 +44,7 @@ export default function Filtering ({ width = '20%', setCurrentCat , currentCat})
               <FaRegSquare />
               <div
                 style={{ backgroundColor: item }}
-                className={`w-4 h-4 rounded-4xl`}
+                className={`w-2.5 h-2.5 rounded-4xl`}
               ></div>
               {item}
             </section>

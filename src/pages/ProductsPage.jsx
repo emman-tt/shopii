@@ -26,7 +26,7 @@ export default function Products () {
   }, [gen])
   return (
     <section>
-      <Header></Header>
+      <Header fixed={true}></Header>
       <Sorting
         setGen={setGen}
         array={[
@@ -36,7 +36,7 @@ export default function Products () {
           { id: 4, value: 'Unisex' }
         ]}
       />
-      <section className='w-full  mt-10 min-h-screen flex'>
+      <section className='w-full relative  mt-10 min-h-screen flex'>
         <Filtering setCurrentCat={setCurrentCat} currentCat={currentCat} />
         <Items items={items} />
       </section>
@@ -47,11 +47,11 @@ export default function Products () {
 function Sorting ({ array = [], setGen }) {
   const [current, setCurrent] = useState(2)
   return (
-    <section className='flex  flex-row justify-around gap-40 mt-10'>
+    <section className='flex fixed left-0 right-0 top-0 z-10 bg-white  flex-row justify-around gap-40 mt-13 pt-5'>
       <div></div>
-      <section className='flex gap-14 text-[14px] border-[#96969124] border-b-2'>
+      <section  className='flex gap-14 text-[14px] border-[#96969124] border-b-2'>
         {array.map(item => (
-          <div
+          <div 
             key={item.id}
             onClick={e => {
               setCurrent(item.id), setGen(item.id)
