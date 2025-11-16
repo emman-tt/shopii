@@ -6,7 +6,6 @@ gsap.registerPlugin(SplitText)
 import heroLeftimg from '../assets/img/heroLeft.png'
 import heroRightimg from '../assets/img/heroRight.png'
 import { BsArrowUpRight } from 'react-icons/bs'
-
 import { useEffect } from 'react'
 
 export default function Hero ({ heroLeft, heroRight }) {
@@ -59,20 +58,20 @@ export default function Hero ({ heroLeft, heroRight }) {
       >
         <div
           ref={heroLeft}
-          className='w-50/100 flex justify-center items-center  text-black bg-[#79797a1c] max-[500px]:w-full 
-          max-[500px]:h-[70%]'
+          className='w-[50%] flex justify-center items-center  text-black bg-[#79797a1c] max-[500px]:w-full 
+          max-[500px]:h-[70%] '
         >
-          <ImageWithShimmer
+          <img
             src={heroLeftimg}
-            className='flex h-[89%] max-[1100px]:w-[70%] max-[500px]:h-[140%] w-[60%]  items-center'
+            className='flex h-[89%] max-[1100px]:w-[70%] max-[500px]:h-[140%] w-[60%]  items-center justify-center self-center'
             alt='photo'
           />
         </div>
         <div
           ref={heroRight}
-          className='w-50/100 flex justify-center bg-[#79797a1c]  text-black max-[500px]:w-full max-[500px]:h-70/100'
+          className='w-50/100 flex justify-center bg-[#79797a1c]  text-black max-[500px]:w-full max-[500px]:h-70/100 place-content-center'
         >
-          <ImageWithShimmer src={heroRightimg} className='flex  self-center  ' alt='phot0' />
+          <ImageWithShimmer src={heroRightimg} className='flex  self-center place-content-center w-full' alt='phot0' />
         </div>
       </section>
 

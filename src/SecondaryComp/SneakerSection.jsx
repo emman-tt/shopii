@@ -21,10 +21,10 @@ export default function Sneakers ({ lastcard }) {
         shoe1ref.current,
         {
           opacity: 0.9,
-          y: '-120vh',
-          scale: 1.2,
-          rotateZ: '-50deg',
-          x: isTablet ? 80 : -50
+          y: isMobile ? 0 : '-120vh',
+          scale: isMobile ? 1 : 1.2,
+          rotateZ: isMobile ? 0 : '-50deg',
+          x: isTablet ? 80 : isMobile ? 0 : -50
         },
         {
           rotateZ: '0deg',
@@ -39,15 +39,15 @@ export default function Sneakers ({ lastcard }) {
       trigger: lastcard.current,
       start: 'top top',
       scrub: 3,
-  
+
       animation: gsap.fromTo(
         shoe2ref.current,
         {
           opacity: 0.9,
-          y: '-120vh',
-          scale: 1.2,
-          rotateZ: '50deg',
-          x: isSmallLap ? -50 : isTablet ? -140 : 50
+          y: isMobile ? 0 : '-120vh',
+          scale: isMobile ? 1 : 1.2,
+          rotateZ:isMobile ? 0 : '50deg',
+          x: isSmallLap ? -50 : isTablet ? -140 : isMobile ? 0 : 50
         },
         {
           rotateZ: '0deg',
@@ -59,54 +59,62 @@ export default function Sneakers ({ lastcard }) {
       )
     })
 
-    if (isMobile) {
-      ScrollTrigger.create({
-        trigger: lastcard.current,
-        start: 'top top',
-        scrub: 3,
-        animation: gsap.fromTo(
-          shoe1ref.current,
-          {
-            opacity: 0.9,
-            y: '-90vh',
-            scale: 1.2,
-            rotateZ: '-50deg',
-            x:  -50
-          },
-          {
-            rotateZ: '0deg',
-            opacity: 1,
-            scale: 1,
-            x: shoe1ref.current,
-            y: shoe1ref.current
-          }
-        )
-      })
+ 
 
-      ScrollTrigger.create({
-        trigger: lastcard.current,
-        start: 'top top',
-        scrub: 3,
-    
-        animation: gsap.fromTo(
-          shoe2ref.current,
-          {
-            opacity: 0.9,
-            y: '-100vh',
-            scale: 1.2,
-            rotateZ: '50deg',
-            x:  50
-          },
-          {
-            rotateZ: '0deg',
-            opacity: 1,
-            scale: 1,
-            y: shoe2ref.current,
-            x: shoe2ref.current
-          }
-        )
-      })
-    }
+    // if (isMobile) {
+    //   ScrollTrigger.create({
+    //     trigger: shoe1ref.current,
+    //     start: 'top top',
+    //     scrub: 1,
+    //     animation: gsap.fromTo(
+    //       shoe1ref.current,
+    //       {
+    //         opacity: 0.9,
+    //         y: '-30vh',
+    //         scale: 1.2,
+    //         rotateZ: '-50deg',
+    //         x: -50
+    //       },
+    //       {
+    //         rotateZ: '0deg',
+    //         opacity: 1,
+    //         scale: 1,
+    //         x: shoe1ref.current,
+    //         y: shoe1ref.current
+    //       }
+    //     )
+    //   })
+
+    //   ScrollTrigger.create({
+    //     trigger: shoe2ref.current,
+    //     start: 'top top',
+    //     scrub: false,
+
+    //     animation: gsap.fromTo(
+    //       shoe2ref.current,
+    //       {
+    //         x: 50
+    //       },
+    //       {
+    //         x: shoe2ref.current
+    //       }
+    //       // {
+    //       //   opacity: 0.9,
+    //       //   y: '-40vh',
+    //       //   scale: 1.2,
+    //       //   rotateZ: '50deg',
+    //       //   x: 50
+    //       // },
+    //       // {
+    //       //   rotateZ: '0deg',
+    //       //   opacity: 1,
+    //       //   scale: 1,
+    //       //   y: shoe2ref.current,
+    //       //   x: shoe2ref.current
+    //       // }
+    //     )
+    //   })
+    // }
 
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill())

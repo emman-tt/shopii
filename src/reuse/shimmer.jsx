@@ -16,7 +16,7 @@ function ImageWithShimmer ({ src, alt, className }) {
         src={src}
         alt={alt}
         loading='lazy'
-        className={`${className} transition-opacity duration-500 ${
+        className={`${className} transition-opacity w-full duration-500 ${
           isLoaded ? 'opacity-100' : 'opacity-0'
         }`}
         onLoad={() => setIsLoaded(true)}
