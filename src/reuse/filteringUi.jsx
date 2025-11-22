@@ -45,9 +45,9 @@ export default function Filtering ({
 
   return (
     <section
-      className={`w-[${width}] fixed max-[500px]:mt-17  mt-10 h-full max-[1040px]:mt-20 z-10 max-[500px]:w-full bg-[#ffffff]  max-[500px]:pl-[10%] max-[500px]:fixed max-[500px]:bottom-0 max-[500px]:z-1 max-[500px]:overflow-hidden max-[500px]:h-140 max-[500px]:top-0 max-[500px]:py-10`}
+      className={`w-[${width}] fixed max-[500px]:mt-17  mt-10  max-[1040px]:mt-20 z-10 max-[500px]:w-full bg-white    max-[500px]:pl-[10%] max-[500px]:fixed max-[500px]:bottom-0 max-[500px]:z-1 max-[500px]:overflow-hidden max-[500px]:h-screen max-[500px]:top-0 max-[500px]:py-10 bottom-0 overflow-hidden min-h-150 left-0 top-[10%] `}
     >
-      <section className='max-[500px]:overflow-y-scroll[scrollbar-width:none] h-full'>
+      <section className='max-[500px]:overflow-y-scroll  overflow-y-scroll [scrollbar-width:none] h-full pb-10'>
         <section className=' w-full px-7 justify-between max-[800px]:text-[12px] flex max-[1040px]:px-2 max-[800px]:px-1 max-[500px]:h-max '>
           <div className='flex gap-2 items-center max-[500px]:text-[17px] '>
             Filters <CiFilter />
@@ -86,7 +86,7 @@ export default function Filtering ({
         <section className='flex flex-col pl-10 pt-9 max-[1040px]:pl-5 max-[800px]:pt-1 max-[500px]:pt-10'>
           <p className='text-[16px] font-bold pb-3 max-[800px]:pb-1'>Colours</p>
           <section className=' w-full  flex flex-col  align-middle gap-0.5 max-[500px]:gap-2 '>
-            
+
             {Colours.map(item => (
               <section
                 onClick={() => {
