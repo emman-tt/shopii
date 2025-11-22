@@ -49,14 +49,14 @@ export default function Homepage () {
 
       gsap.ticker.lagSmoothing(0)
 
-      // Allow time for layout (especially stacked cards) to settle
+
       setTimeout(() => {
         ScrollTrigger.refresh()
         setReady(true)
       }, 10000)
     }
 
-    // Ensure this runs only after images and lazy components are loaded
+    
     if (document.readyState === 'complete') {
       initializeLenis()
     } else {
@@ -70,13 +70,7 @@ export default function Homepage () {
     }
   }, [])
 
-  // if (!ready) {
-  //   return (
-  //     <div className='flex justify-center items-center h-screen text-lg font-semibold'>
-  //       Preparing experience...
-  //     </div>
-  //   )
-  // }
+
 
   return (
     <section className='flex flex-col h-max bg-white overflow-x-hidden w-screen'>
