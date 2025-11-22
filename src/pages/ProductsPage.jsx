@@ -6,7 +6,8 @@ import { LuArrowUpDown } from 'react-icons/lu'
 import Loader from '../reuse/loadingAnime'
 import { CiFilter } from 'react-icons/ci'
 import { Categories } from '../utils/filtering'
-
+import Sorting from '../SecondaryComp/Sorting'
+import { Colours } from '../utils/filtering'
 export default function Products () {
   const [items, setItems] = useState([])
   const [page, setPage] = useState(2)
@@ -17,10 +18,13 @@ export default function Products () {
   const isMobiles = innerWidth <= 500
   const [isActive, setIsActive] = useState(false)
   const [categories, setCategories] = useState(Categories)
+  const [currentColor, setCurrentColor] = useState('all')
+  const [colours, setColours] = useState(Colours)
+
   useEffect(() => {
     ;(async function GetProducts () {
       const res = await fetch(
-        `http://localhost:3000/api/AllProducts?page=${page}&gender=${gen}&category=${currentCat}`,
+        `http://localhost:3000/api/AllProducts?page=${page}&gender=${gen}&category=${currentCat}&color=${currentColor}`,
         { method: 'GET' }
       )
       const products = await res.json()
@@ -41,7 +45,7 @@ export default function Products () {
       setIsLoaded(false)
       setIsNotFound(false)
     }
-  }, [gen, currentCat])
+  }, [gen, currentCat,currentColor])
 
   return (
     <section>
@@ -74,6 +78,10 @@ export default function Products () {
             setCategories={setCategories}
             setCurrentCat={setCurrentCat}
             currentCat={currentCat}
+            currentColor={currentColor}
+            setCurrentColor={setCurrentColor}
+            Colours={colours}
+            setColours={setColours}
           />
         )}
 
@@ -85,6 +93,10 @@ export default function Products () {
             setIsActive={setIsActive}
             setCurrentCat={setCurrentCat}
             currentCat={currentCat}
+            currentColor={currentColor}
+            setCurrentColor={setCurrentColor}
+            Colours={colours}
+            setColours={setColours}
           />
         )}
 
@@ -95,33 +107,6 @@ export default function Products () {
             <Loader />
           </section>
         )}
-      </section>
-    </section>
-  )
-}
-
-function Sorting ({ array = [], setGen }) {
-  const [current, setCurrent] = useState(2)
-  return (
-    <section className='flex fixed left-0 right-0 top-0 z-11   flex-row justify-around gap-40 mt-13 pt-5 max-[1000px]:gap-0 max-[1000px]:mt-13 max-[1000px]:pt-7 max-[1000px]:w-[90%]  max-[1000px]:left-[12%] bg-white max-[500px]:w-full max-[800px]:left-[5%] max-[800px]:mt-8 max-[500px]:left-0 max-[500px]:mt-10 max-[500px]:overflow-x-scroll [scrollbar-width:none] '>
-      {/* <div></div> */}
-      <section className='flex gap-14 max-[500px]:gap-0 text-[14px] border-[#96969124] border-b-2 max-[1040px]:pl-[10%] max-[800px]:text-[12px] max-[500px]:pl-[5%]'>
-        {array.map(item => (
-          <div
-            key={item.id}
-            onClick={e => {
-              setCurrent(item.id), setGen(item.id)
-            }}
-            style={
-              current === item.id
-                ? { borderBottom: '3px solid black', borderColor: 'black' }
-                : {}
-            }
-            className='pb-3 max-[500px]:w-max cursor-pointer px-5 max-[800px]:pb-1'
-          >
-            {item.value}
-          </div>
-        ))}
       </section>
     </section>
   )

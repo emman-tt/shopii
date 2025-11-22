@@ -11,6 +11,16 @@ export const Categories = [
   { id: 10, cat: 'Swimwear & Beachwear', selected: false }
 ]
 
-export const Colours = ['Red', 'Blue', 'Green', 'Black', 'Yellow', 'Brown']
+export const Colours = [
+  { col: 'All', selected: true },
+  { col: 'Red', selected: false },
+  { col: 'Blue', selected: false },
+  { col: 'Green', selected: false },
+  { col: 'Black', selected: false },
+  { col: 'Yellow', selected: false },
+  { col: 'Brown', selected: false },
+  { col: 'Purple', selected: false },
+  { col: 'Grey', selected: false }
+]
 
 export const Pricing = []
