@@ -20,11 +20,11 @@ export default function Products () {
   const [categories, setCategories] = useState(Categories)
   const [currentColor, setCurrentColor] = useState('all')
   const [colours, setColours] = useState(Colours)
-
+const PORT = 'https://shopii-backend.onrender.com/'
   useEffect(() => {
     ;(async function GetProducts () {
       const res = await fetch(
-        `http://localhost:3000/api/AllProducts?page=${page}&gender=${gen}&category=${currentCat}&color=${currentColor}`,
+        `${PORT}api/AllProducts?page=${page}&gender=${gen}&category=${currentCat}&color=${currentColor}`,
         { method: 'GET' }
       )
       const products = await res.json()
@@ -103,7 +103,7 @@ export default function Products () {
         {isLoaded ? (
           <Items items={items} />
         ) : (
-          <section className='w-screen flex justify-center items-center align-middle h-screen   max-[800px]:pl-20 max-[500px]:pl-0 max-[500px]:w-full z-10 overflow-hidden '>
+          <section className='w-screen flex justify-center items-center align-middle h-screen   max-[800px]:pl-20 max-[500px]:pl-0 max-[500px]:w-full z-0 overflow-hidden '>
             <Loader />
           </section>
         )}

@@ -47,7 +47,7 @@ export default function Filtering ({
     <section
       className={`w-[${width}] fixed max-[500px]:mt-17  mt-10  max-[1040px]:mt-20 z-10 max-[500px]:w-full bg-white    max-[500px]:pl-[10%] max-[500px]:fixed max-[500px]:bottom-0 max-[500px]:z-1 max-[500px]:overflow-hidden max-[500px]:h-screen max-[500px]:top-0 max-[500px]:py-10 bottom-0 overflow-hidden min-h-150 left-0 top-[10%] `}
     >
-      <section className='max-[500px]:overflow-y-scroll  overflow-y-scroll [scrollbar-width:none] h-full pb-10'>
+      <section className='max-[500px]:overflow-y-scroll  overflow-y-scroll  [scrollbar-width:none] h-full pb-10'>
         <section className=' w-full px-7 justify-between max-[800px]:text-[12px] flex max-[1040px]:px-2 max-[800px]:px-1 max-[500px]:h-max '>
           <div className='flex gap-2 items-center max-[500px]:text-[17px] '>
             Filters <CiFilter />
@@ -57,7 +57,7 @@ export default function Filtering ({
           </div>
         </section>
 
-        <section className='flex flex-col pl-10 pt-9 max-[800px]:pt-1 max-[1040px]:pl-3 '>
+        <section className='flex flex-col pl-10 pt-9 max-[800px]:pt-1 max-[1040px]:pl-3 max-[500px]:pt-10'>
           <p className='text-[16px] font-bold pb-3 max-[800px]: max-[800px]:text-[14px]'>
             Categories
           </p>
@@ -116,7 +116,7 @@ export default function Filtering ({
           onClick={() => {
             setIsActive(false)
           }}
-          className='w-[90%] mt-3 py-2 flex justify-center items-center align-bottom ml-6 max-[800px]:mt-1 max-[800px]:py-1 bg-black text-white max-[1040px]:ml-2 max-[500px]:mt-6'
+          className='w-[90%] mt-3 py-2 flex justify-center items-center align-bottom ml-6 max-[800px]:mt-1 max-[800px]:py-1 bg-black text-white max-[1040px]:ml-2 max-[500px]:mt-6 max-[500px]:mb-20 max-[500px]:py-5'
         >
           Save
         </button>

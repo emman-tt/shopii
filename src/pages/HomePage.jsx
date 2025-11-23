@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect } from 'react'
 import { lazy } from 'react'
-import Lenis from '@studio-freight/lenis'
+import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Cards from '../reuse/StackedCards'
+
 
 const Categories = lazy(() => import('../SecondaryComp/categories'))
 const Hero = lazy(() => import('../SecondaryComp/heroSection'))
@@ -25,6 +26,7 @@ export default function Homepage () {
   const lastcard = useRef(null)
   const isMobile = window.innerWidth <= 450
   const [ready, setReady] = useState(false)
+ 
 
   useEffect(() => {
     const initializeLenis = () => {
