@@ -82,7 +82,7 @@ export default function Hero ({ heroLeft, heroRight }) {
 
           <BsArrowUpRight className='font-extrabold text-3xl max-[800px]:text-sm' />
         </div>
-        <div onClick={() => navigate('/shopii/products')} className='w-50/100 pl-0 justify-center flex flex-row gap-6 items-center hover:opacity-[0.4] cursor-pointer'>
+        <div onClick={() => navigate('/products')} className='w-50/100 pl-0 justify-center flex flex-row gap-6 items-center hover:opacity-[0.4] cursor-pointer'>
           <div ref={heroRightText}>New Arrivals</div>
           <BsArrowUpRight className='font-extrabold text-3xl max-[800px]:text-sm' />
         </div>

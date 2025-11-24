@@ -1,4 +1,3 @@
-import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import Homepage from './pages/HomePage'
 import Products from './pages/ProductsPage'
@@ -8,8 +7,8 @@ function App() {
   return (
     <BrowserRouter>
     <Routes>
-      <Route path='/shopii/' element={<Homepage/>}/>
-      <Route path='/shopii/products' element={<Products/>}/>
+      <Route path='/' element={<Homepage/>}/>
+      <Route path='/products' element={<Products/>}/>
     </Routes>
     </BrowserRouter>
   )

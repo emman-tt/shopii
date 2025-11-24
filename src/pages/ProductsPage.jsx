@@ -20,7 +20,8 @@ export default function Products () {
   const [categories, setCategories] = useState(Categories)
   const [currentColor, setCurrentColor] = useState('all')
   const [colours, setColours] = useState(Colours)
-const PORT = 'https://shopii-backend.onrender.com/'
+ const PORT = 'https://shopii-backend.onrender.com/'
+// const PORT = 'http://localhost:3000/'
   useEffect(() => {
     ;(async function GetProducts () {
       const res = await fetch(

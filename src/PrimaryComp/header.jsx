@@ -8,7 +8,7 @@ export default function Header ({ fixed = false }) {
   const navigate = useNavigate()
   const isMobile = innerWidth < 500
   function openLink () {
-    navigate('/shopii/products')
+    navigate('/products')
   }
 
   return (
@@ -39,7 +39,7 @@ export default function Header ({ fixed = false }) {
         </section>
       )}
       <h1
-        onClick={() => navigate('/shopii/')}
+        onClick={() => navigate('/')}
         className='text-3xl font-extrabold pr-20 max-[800px]:text-[15px] max-[800px]:font-bold max-[500px]:text-[32px] max-[500px]:pl-0 cursor-pointer  max-[500px]:pr-0 max-[500px]:hidden'
       >
         SHOPII
