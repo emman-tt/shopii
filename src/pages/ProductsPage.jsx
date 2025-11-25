@@ -8,45 +8,19 @@ import { CiFilter } from 'react-icons/ci'
 import { Categories } from '../utils/filtering'
 import Sorting from '../SecondaryComp/Sorting'
 import { Colours } from '../utils/filtering'
+import { useFetching } from '../hooks/useFetching'
 export default function Products () {
-  const [items, setItems] = useState([])
   const [page, setPage] = useState(2)
   const [gen, setGen] = useState(2)
   const [currentCat, setCurrentCat] = useState(1)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [isNotFound, setIsNotFound] = useState(false)
   const isMobiles = innerWidth <= 500
   const [isActive, setIsActive] = useState(false)
   const [categories, setCategories] = useState(Categories)
   const [currentColor, setCurrentColor] = useState('all')
   const [colours, setColours] = useState(Colours)
- const PORT = 'https://shopii-backend.onrender.com/'
-// const PORT = 'http://localhost:3000/'
-  useEffect(() => {
-    ;(async function GetProducts () {
-      const res = await fetch(
-        `${PORT}api/AllProducts?page=${page}&gender=${gen}&category=${currentCat}&color=${currentColor}`,
-        { method: 'GET' }
-      )
-      const products = await res.json()
 
-      const use = products.products
-      if (!use || use.length < 1) {
-        setIsNotFound(true)
-        setIsLoaded(true)
-        setItems(use)
-        return
-      }
 
-      setIsLoaded(true)
-      setItems(use)
-    })()
-
-    return () => {
-      setIsLoaded(false)
-      setIsNotFound(false)
-    }
-  }, [gen, currentCat,currentColor])
+  const { isLoaded, items } = useFetching(page, gen, currentCat, currentColor)
 
   return (
     <section>
