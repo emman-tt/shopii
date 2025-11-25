@@ -6,6 +6,7 @@ import { FaHeart } from 'react-icons/fa'
 import ImageWithShimmer from '../reuse/shimmer'
 import { useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
+import { useEffect } from 'react'
 
 export default function SPP () {
   const [qty, setQty] = useState(1)
@@ -13,13 +14,19 @@ export default function SPP () {
   const [data, setData] = useState([])
   const [size, selectSize] = useState(null)
   const [color, setColor] = useState(null)
-
   const { state } = useLocation()
+  const PORT = 'http://localhost:3000'
   useEffect(() => {
     const details = state.details
     console.log(details)
     setData([details])
   }, [])
+
+  async function saveToCart () {
+    const res = await fetch(`${PORT}/api/cart`, {
+      method: 'POST'
+    })
+  }
 
   return (
     <section className='w-screen h-screen  overflow-hidden'>
@@ -66,7 +73,9 @@ export default function SPP () {
                 { name: 'red', selected: false },
                 { name: 'green', selected: false },
                 { name: 'yellow', selected: false },
-                { name: 'blue', selected: false }
+                { name: 'blue', selected: false },
+                { name: 'black', selected: true },
+                { name: 'white', selected: false }
               ]}
             />
 

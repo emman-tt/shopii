@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { FaCheck } from 'react-icons/fa6'
 export default function FeaturesComp ({
   feature = 'Number',
   icon,
@@ -13,15 +14,9 @@ export default function FeaturesComp ({
 }) {
   const [Children, setChildren] = useState(chlidren)
   function selector (item) {
-    console.log(item)
-const use = chlidren.find(i => i.name === item)
-console.log(use)
-
     setChildren(prev =>
       prev.map(i =>
-        i.name === item.name
-          ? {...i,selected:true}
-          : { ...i, selected: false }
+        i.name === item ? { ...i, selected: true } : { ...i, selected: false }
       )
     )
   }
@@ -37,16 +32,25 @@ console.log(use)
           <>
             {Children.map(item => (
               <div
-                onClick={() => selector(item)}
+                onClick={() => selector(item.name)}
                 key={item.name}
-                className='hover:border'
+                className=' flex place-content-center relative justify-center align-middle border'
                 style={{
                   backgroundColor: item.name,
                   width: w,
                   height: h,
                   cursor: 'pointer'
                 }}
-              ></div>
+              >
+    
+                {item.selected ? (
+                  <FaCheck
+                    className='absolute text-black'
+                    color='white'
+                    size={10}
+                  />
+                ) : null}
+              </div>
             ))}
           </>
         ) : (
