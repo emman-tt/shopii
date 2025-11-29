@@ -4,7 +4,7 @@ import { FaRegHeart } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
 import { GiHamburgerMenu } from 'react-icons/gi'
 
-export default function Header ({ fixed = false }) {
+export default function Header ({ fixed = false, cartRef }) {
   const navigate = useNavigate()
   const isMobile = innerWidth < 500
   function openLink () {
@@ -52,7 +52,7 @@ export default function Header ({ fixed = false }) {
         <div>
           <FaRegHeart />
         </div>
-        <div>
+        <div ref={cartRef}>
           <BsCart4 />
         </div>
       </section>

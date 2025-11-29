@@ -5,36 +5,79 @@ import { FaRegHeart } from 'react-icons/fa6'
 import { FaHeart } from 'react-icons/fa'
 import ImageWithShimmer from '../reuse/shimmer'
 import { useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
 
 export default function SPP () {
   const [qty, setQty] = useState(1)
   const [clicked, setClicked] = useState(false)
   const [data, setData] = useState([])
-  const [size, selectSize] = useState(null)
+  const [size, selectSize] = useState('m')
   const [color, setColor] = useState(null)
   const { state } = useLocation()
+  const itemRef = useRef(null)
+  const cartRef = useRef(null)
+
   const PORT = 'http://localhost:3000'
   useEffect(() => {
     const details = state.details
     console.log(details)
+    setColor(details.colours[0])
     setData([details])
   }, [])
 
-  async function saveToCart () {
-    const res = await fetch(`${PORT}/api/cart`, {
-      method: 'POST'
+  function Anime () {
+    const clone = itemRef.current.cloneNode(true)
+    Object.assign(clone.style, {
+      position: 'absolute',
+      zIndex: -1,
+      pointerEvents: 'none'
     })
+    document.body.appendChild(clone)
+
+    const itemPos = itemRef.current.getBoundingClientRect()
+    const cartPos = cartRef.current.getBoundingClientRect()
+
+    gsap.set(clone, {
+      // x: 260,
+      // y: -600,
+      left: itemPos.left,
+      right: itemPos.top,
+      width: itemPos.width,
+      scale: 0.7,
+      height: itemPos.height
+    })
+
+    gsap.to(clone, {
+      x: cartPos.left,
+      y: -700,
+      width: cartPos.width,
+      height: cartPos.height,
+      duration: 1.9,
+      ease: 'power2.inOut',
+      onComplete: () => clone.remove()
+    })
+  }
+  async function saveToCart (id) {
+    try {
+      const res = await fetch(
+        `${PORT}/api/cart?itemID=${id}&size=${size}&color=${color}&quantity=${qty}`,
+        {
+          method: 'POST'
+        }
+      )
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 
   return (
     <section className='w-screen h-screen  overflow-hidden'>
-      <Header />
+      <Header cartRef={cartRef} />
       {data.map(item => (
         <section key={item.id} className='flex w-screen px-[12%] mt-5'>
           <section className=' h-[full]  flex place-content-center w-[60%]'>
-            <img className={'h-[60%] w-auto'} src={item.image} />
+            <img ref={itemRef} className={'h-[60%] w-auto'} src={item.image} />
           </section>
           <section className=' grow px-5 gap-7 flex flex-col'>
             <section className='flex justify-between border-b pb-2 pt-5 '>
@@ -64,6 +107,7 @@ export default function SPP () {
             <FeaturesComp
               setColor={setColor}
               setSize={selectSize}
+              size={size}
               w={15}
               h={15}
               className={'flex justify-between border-b pb-3'}
@@ -99,11 +143,18 @@ export default function SPP () {
             </section>
 
             <section className='flex justify-between gap-4'>
-              <button className='bg-black rounded-[10px] w-[65%] text-white py-2.5'>
+              <button
+                onClick={() => {
+                  Anime(), saveToCart(item.id)
+                }}
+                className='bg-black rounded-[10px] w-[65%] text-white py-2.5'
+              >
                 Add To Cart
               </button>
               <button
-                onClick={() => setClicked(!clicked)}
+                onClick={() => {
+                  setClicked(!clicked)
+                }}
                 className='grow border rounded-[10px] hover:bg-[#3d3c3c37] flex h-inherit justify-center gap-3'
               >
                 <div className='flex self-center'>wishlist</div>

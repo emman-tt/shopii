@@ -10,7 +10,8 @@ export default function FeaturesComp ({
   gap = 4,
   className,
   setSize,
-  setColor
+  setColor,
+  size
 }) {
   const [Children, setChildren] = useState(chlidren)
   function selector (item) {
@@ -32,7 +33,9 @@ export default function FeaturesComp ({
           <>
             {Children.map(item => (
               <div
-                onClick={() => selector(item.name)}
+                onClick={() => {
+                  setColor(item.name), selector(item.name)
+                }}
                 key={item.name}
                 className=' flex place-content-center relative justify-center align-middle border'
                 style={{
@@ -42,7 +45,6 @@ export default function FeaturesComp ({
                   cursor: 'pointer'
                 }}
               >
-    
                 {item.selected ? (
                   <FaCheck
                     className='absolute text-black'
@@ -57,7 +59,9 @@ export default function FeaturesComp ({
           <>
             {Children.map(item => (
               <div
+                // size={item.selected ? item.name : 'l'}
                 onClick={() => {
+                  setSize(item.name)
                   selector(item.name)
                 }}
                 key={item.name}
