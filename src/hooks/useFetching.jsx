@@ -5,11 +5,11 @@ export function useFetching ( page, gen, currentCat, currentColor ) {
   const [items, setItems] = useState([])
   //  const PORT = 'https://shopii-backend.onrender.com/'
  
-  const PORT = 'http://localhost:3000/'
+  const PORT = 'http://localhost:3000'
   useEffect(() => {
     ;(async function GetProducts () {
       const res = await fetch(
-        `${PORT}api/AllProducts?page=${page}&gender=${gen}&category=${currentCat}&color=${currentColor}`,
+        `${PORT}/api/AllProducts?page=${page}&gender=${gen}&category=${currentCat}&color=${currentColor}`,
         { method: 'GET' }
       )
       const products = await res.json()

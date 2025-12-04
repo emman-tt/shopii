@@ -33,7 +33,7 @@ export default function BestSellers ({ sellersRef }) {
   return (
     <section
       ref={sellersRef}
-      className=' mt-40 flex flex-col h-120 mb-10 relative  w-screen  overflow-hidden max-[800px]:h-110'
+      className=' mt-40 flex flex-col h-120 mb-10 relative    overflow-hidden  max-[800px]:h-110'
     >
       <div
         ref={leftArrow}

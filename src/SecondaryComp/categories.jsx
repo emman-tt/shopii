@@ -46,7 +46,7 @@ export default function Categories ({ heroLeft, heroRight }) {
   }, [])
 
   return (
-    <section className='h-250 max-[1100px]:h-200 max-[800px]:h-140 bg-white mt-40 flex flex-col px-5 pb-10 max-[500px]:h-max'>
+    <section className='h-250 max-[1100px]:h-200 max-[800px]:h-140 bg-white mt-40 flex  flex-col px-5 pb-10 max-[500px]:h-max'>
       <div className='text-3xl text-black justify-center items-center flex font-bold'>
         Categories
       </div>
@@ -57,7 +57,7 @@ export default function Categories ({ heroLeft, heroRight }) {
           className=' w-23/100 h-[60%] max-[500px]:w-full max-[500px]:h-[25%]'
         >
           <div className='w-full flex h-73/100 max-[1100px]:h-[60%] justify-center items-center  bg-[#b1b1bb25]  max-[800px]:h-full'>
-            <ImageWithShimmer src={watchimg} className=' max-[500px]:h-full' alt='photo' />
+            <img src={watchimg} className=' max-[500px]:h-full' alt='photo' />
           </div>
           <div className='text-xl text-black font-semibold pl-10 flex gap-10 items-center pt-5 max-[800px]:text-[15px] max-[800px]:gap-5 max-[800px]:pt-1 max-[800px]:pl-2'>
             Accesories
@@ -69,7 +69,7 @@ export default function Categories ({ heroLeft, heroRight }) {
           className=' w-60/100 h-auto max-[500px]:w-full max-[500px]:h-[70%]'
         >
           <div className='w-full h-93/100 flex items-center justify-center  bg-[#b1b1bb25]'>
-            <ImageWithShimmer
+            <img
               src={categoryMiddle}
               className='w-75/100 max-[330px]:w-full'
               alt='photo'
@@ -85,7 +85,7 @@ export default function Categories ({ heroLeft, heroRight }) {
           className='w-25/100 h-50/100 flex flex-col self-end max-[500px]:w-full max-[500px]:h-[25%]'
         >
           <div className='w-full h-full p-0  flex items-center max-[800px]:h-full'>
-            <ImageWithShimmer className=' bg-[#b1b1bb25]' src={shoesimg} alt='photo' />
+            <img className=' bg-[#b1b1bb25]' src={shoesimg} alt='photo' />
           </div>
           <div className='text-xl text-black font-semibold pl-10 flex gap-10  items-center max-[800px]:text-[15px] max-[800px]:gap-5 max-[800px]:pt-1 max-[800px]:pl-2'>
             Shoes

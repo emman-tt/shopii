@@ -7,23 +7,40 @@ import ImageWithShimmer from '../reuse/shimmer'
 import { useLocation } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
-
+import { useParams } from 'react-router-dom'
+import Notification from '../reuse/Notification'
 export default function SPP () {
   const [qty, setQty] = useState(1)
   const [clicked, setClicked] = useState(false)
   const [data, setData] = useState([])
   const [size, selectSize] = useState('m')
   const [color, setColor] = useState(null)
-  const { state } = useLocation()
+  const [message, showMessage] = useState(false)
+  const [recur, setRecur] = useState(0)
+
+  const { id } = useParams()
   const itemRef = useRef(null)
   const cartRef = useRef(null)
+  function forceRecur () {
+    setRecur(prev => prev + 1)
+  }
 
   const PORT = 'http://localhost:3000'
   useEffect(() => {
-    const details = state.details
-    console.log(details)
-    setColor(details.colours[0])
-    setData([details])
+    const split = id.split(':')[1]
+    ;(async function FetchSPP () {
+      const res = await fetch(`${PORT}/api/getSPP?ID=${split}`, {
+        method: 'GET'
+      })
+
+      const items = await res.json()
+      if (items) {
+        const details = items.product
+        setColor('black')
+        // setColor(details.colours[0] === null ? 'black'   : details.colours[0])
+        setData([details])
+      }
+    })()
   }, [])
 
   function Anime () {
@@ -39,54 +56,67 @@ export default function SPP () {
     const cartPos = cartRef.current.getBoundingClientRect()
 
     gsap.set(clone, {
-      // x: 260,
-      // y: -600,
       left: itemPos.left,
-      right: itemPos.top,
+      top: itemPos.top,
       width: itemPos.width,
       scale: 0.7,
       height: itemPos.height
     })
 
     gsap.to(clone, {
-      x: cartPos.left,
-      y: -700,
+      left: cartPos.left,
+      top: cartPos.top,
       width: cartPos.width,
       height: cartPos.height,
-      duration: 1.9,
+      duration: 1,
       ease: 'power2.inOut',
       onComplete: () => clone.remove()
     })
   }
   async function saveToCart (id) {
+    showMessage(true)
     try {
+      setTimeout(() => {
+        showMessage(false)
+      }, 2000)
       const res = await fetch(
         `${PORT}/api/cart?itemID=${id}&size=${size}&color=${color}&quantity=${qty}`,
         {
           method: 'POST'
         }
       )
+      forceRecur()
     } catch (error) {
       console.log(error.message)
     }
   }
 
   return (
-    <section className='w-screen h-screen  overflow-hidden'>
-      <Header cartRef={cartRef} />
+    <section className='w-screen h-screen lg:overflow-hidden overflow-x-hidden relative[scrollbar-width:none]'>
+      {message && <Notification />}
+      <Header setRecur={setRecur} recur={recur} cartRef={cartRef} />
       {data.map(item => (
-        <section key={item.id} className='flex w-screen px-[12%] mt-5'>
-          <section className=' h-[full]  flex place-content-center w-[60%]'>
-            <img ref={itemRef} className={'h-[60%] w-auto'} src={item.image} />
+        <section
+          key={item.id}
+          className='flex md:px-[4%] lg:px-[12%] mt-5 pb-20  max-[900px]:flex-col '
+        >
+          <section className=' h-130   flex place-content-center w-[60%] max-sm:w-full max-sm:h-100  '>
+            <img
+              ref={itemRef}
+              className={'h-full w-auto  max-sm:h-full'}
+              src={item.image}
+            />
           </section>
-          <section className=' grow px-5 gap-7 flex flex-col'>
+          <section className=' grow px-5 gap-7 flex flex-col '>
             <section className='flex justify-between border-b pb-2 pt-5 '>
               <section className='flex flex-col'>
                 <div className=' text-[13px]'>{item.name}</div>
-                <div className='font-bold text-[20px]'>{item.description}</div>
+                <div className='text-[20px] font-bold max-[430px]:text-[15px]'>
+                  {item.description}
+                </div>
               </section>
 
-              <div className='font-bold text-[20px] place-content-center pr-7'>
+              <div className='font-bold text-[20px] max-[430px]:text-[17px] place-content-center pr-7 max-md:pr-0'>
                 ${item.price}
               </div>
             </section>
@@ -145,7 +175,7 @@ export default function SPP () {
             <section className='flex justify-between gap-4'>
               <button
                 onClick={() => {
-                  Anime(), saveToCart(item.id)
+                  Anime(), saveToCart(item.id), setRecur(prev=> prev + 1)
                 }}
                 className='bg-black rounded-[10px] w-[65%] text-white py-2.5'
               >

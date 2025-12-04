@@ -61,7 +61,7 @@ export default function Cards ({ lastcard }) {
   return (
     <section
       id='container'
-      className='w-full h-max bg-[#ffffff] mt-100 flex items-center justify-center pt-10 '
+      className='w-full h-max bg-[#ffffff] mt-100 flex items-center justify-center pt-10 overflow-hidden '
     >
       <section
         id='smooth-content'

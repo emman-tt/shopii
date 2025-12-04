@@ -123,7 +123,7 @@ export default function Sneakers ({ lastcard }) {
 
   return (
     <>
-      <h1 className='text-black mt-50 font-extrabold text-3xl flex justify-center mb-15'>
+      <h1 className='text-black mt-50 font-extrabold text-3xl flex justify-center mb-15 overflow-hidden'>
         TRENDY SNEAKERS
       </h1>
       <section className='flex  h-80 mb-10 relative  w-full justify-center align-middle  max-[800px]:h-110  gap-10 px-10 max-[500px]:wrap-normal max-[500px]:gap-0 max-[500px]:px-1 max-[500px]:flex-wrap'>
