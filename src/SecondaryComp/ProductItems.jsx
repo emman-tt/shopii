@@ -5,17 +5,12 @@ import { IoHeart } from 'react-icons/io5'
 import NoItem from '../reuse/NoItem'
 import { useNavigate } from 'react-router-dom'
 const PORT = 'http://localhost:3000'
+// const PORT = 'https://shopii-backend.onrender.com'
 
 export default function Items ({ items }) {
   const navigate = useNavigate()
 
   function openSPP (id) {
-     console.log(id)
-    // ;(async function FetchSPP () {
-    //   const res = await fetch(`${PORT}/api/getSPP?ID=${id}`, {
-    //     method: 'GET'
-    //   })
-    // })()
     navigate(`/products/:${id}`)
   }
   return (

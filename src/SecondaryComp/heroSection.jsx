@@ -55,7 +55,7 @@ export default function Hero ({ heroLeft, heroRight }) {
     <>
       <section
         id='hero'
-        className='h-150 px-5 flex gap-5 mt-5 max-[800px]:h-100 max-[500px]:flex-col max-[500px]:h-max overflow-hidden'
+        className='h-150 px-5 flex gap-5 mt-15 max-[800px]:h-100 max-[500px]:flex-col max-[500px]:h-max overflow-hidden'
       >
         <div
           ref={heroLeft}

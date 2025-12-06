@@ -5,6 +5,7 @@
   aspect-ratio: 1;
   border-radius: 50%;
   background: #25b09b;
+  overflow: hidden;
 
   --_m: 
     conic-gradient(#0000 10%,#000),

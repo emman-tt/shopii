@@ -9,7 +9,11 @@ import { Categories } from '../utils/filtering'
 import Sorting from '../SecondaryComp/Sorting'
 import { Colours } from '../utils/filtering'
 import { useFetching } from '../hooks/useFetching'
-export default function Products () {
+import { lazy } from 'react'
+import Overlay from '../reuse/overlay'
+const CartUi = lazy(() => import('../SecondaryComp/Cart'))
+const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
+export default function Products ({ menu, showMenu, cart, showCart }) {
   const [page, setPage] = useState(2)
   const [gen, setGen] = useState(2)
   const [currentCat, setCurrentCat] = useState(1)
@@ -19,12 +23,17 @@ export default function Products () {
   const [currentColor, setCurrentColor] = useState('all')
   const [colours, setColours] = useState(Colours)
 
-
   const { isLoaded, items } = useFetching(page, gen, currentCat, currentColor)
 
   return (
     <section>
-      <Header fixed={true}></Header>
+      <Header
+        showCart={showCart}
+        showMenu={showMenu}
+        menu={menu}
+        fixed={true}
+      ></Header>
+
       <Sorting
         setGen={setGen}
         array={[
@@ -34,7 +43,9 @@ export default function Products () {
           { id: 4, value: 'Unisex' }
         ]}
       />
-
+      {menu && <MobileMenu showMenu={showMenu} />}
+      {cart && <Overlay showCart={showCart} />}
+      {cart && <CartUi showCart={showCart} />}
       <section className='w-full relative  mt-10 min-h-screen flex flex-col'>
         {isMobiles ? (
           <section
@@ -78,7 +89,7 @@ export default function Products () {
         {isLoaded ? (
           <Items items={items} />
         ) : (
-          <section className='w-screen flex justify-center items-center align-middle h-screen   max-[800px]:pl-20 max-[500px]:pl-0 max-[500px]:w-full z-0 overflow-hidden '>
+          <section className='w-full flex justify-center items-center align-middle h-screen   max-[800px]:pl-20 max-[500px]:pl-0 max-[500px]:w-full z-0 overflow-x-hidden '>
             <Loader />
           </section>
         )}

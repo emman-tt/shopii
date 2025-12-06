@@ -4,44 +4,33 @@ import { useState } from 'react'
 import { FaRegHeart } from 'react-icons/fa6'
 import { FaHeart } from 'react-icons/fa'
 import ImageWithShimmer from '../reuse/shimmer'
-import { useLocation } from 'react-router-dom'
+
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
-import { useParams } from 'react-router-dom'
 import Notification from '../reuse/Notification'
-export default function SPP () {
+import useFecthingSPP from '../hooks/useFetchingSPP'
+import Loader from '../reuse/loadingAnime'
+import { lazy } from 'react'
+const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
+import Overlay from '../reuse/overlay'
+const CartUi = lazy(() => import('../SecondaryComp/Cart'))
+export default function SPP ({ menu, showMenu, showCart, cart }) {
   const [qty, setQty] = useState(1)
   const [clicked, setClicked] = useState(false)
-  const [data, setData] = useState([])
   const [size, selectSize] = useState('m')
   const [color, setColor] = useState(null)
   const [message, showMessage] = useState(false)
   const [recur, setRecur] = useState(0)
+  const PORT = 'http://localhost:3000'
 
-  const { id } = useParams()
+  // const { id } = useParams()
   const itemRef = useRef(null)
   const cartRef = useRef(null)
   function forceRecur () {
     setRecur(prev => prev + 1)
   }
 
-  const PORT = 'http://localhost:3000'
-  useEffect(() => {
-    const split = id.split(':')[1]
-    ;(async function FetchSPP () {
-      const res = await fetch(`${PORT}/api/getSPP?ID=${split}`, {
-        method: 'GET'
-      })
-
-      const items = await res.json()
-      if (items) {
-        const details = items.product
-        setColor('black')
-        // setColor(details.colours[0] === null ? 'black'   : details.colours[0])
-        setData([details])
-      }
-    })()
-  }, [])
+  const { isLoaded, data } = useFecthingSPP(setColor, recur)
 
   function Anime () {
     const clone = itemRef.current.cloneNode(true)
@@ -92,125 +81,143 @@ export default function SPP () {
   }
 
   return (
-    <section className='w-screen h-screen lg:overflow-hidden overflow-x-hidden relative[scrollbar-width:none]'>
+    <section className='w-full h-full lg:overflow-hidden overflow-x-hidden relative[scrollbar-width:none] pt-15'>
       {message && <Notification />}
-      <Header setRecur={setRecur} recur={recur} cartRef={cartRef} />
-      {data.map(item => (
-        <section
-          key={item.id}
-          className='flex md:px-[4%] lg:px-[12%] mt-5 pb-20  max-[900px]:flex-col '
-        >
-          <section className=' h-130   flex place-content-center w-[60%] max-sm:w-full max-sm:h-100  '>
-            <img
-              ref={itemRef}
-              className={'h-full w-auto  max-sm:h-full'}
-              src={item.image}
-            />
-          </section>
-          <section className=' grow px-5 gap-7 flex flex-col '>
-            <section className='flex justify-between border-b pb-2 pt-5 '>
-              <section className='flex flex-col'>
-                <div className=' text-[13px]'>{item.name}</div>
-                <div className='text-[20px] font-bold max-[430px]:text-[15px]'>
-                  {item.description}
+      <Header
+        showCart={showCart}
+        menu={menu}
+        showMenu={showMenu}
+        setRecur={setRecur}
+        recur={recur}
+        cartRef={cartRef}
+        fixed={true}
+      />
+      {menu && <MobileMenu showMenu={showMenu} />}
+      {cart && <Overlay showCart={showCart} />}
+      {cart && <CartUi showCart={showCart} />}
+
+      {!isLoaded ? (
+        <section className='w-full flex justify-center items-center align-middle h-screen   max-[800px]:pl-20 max-[500px]:pl-0 max-[500px]:w-full z-0 overflow-x-hidden '>
+          <Loader />
+        </section>
+      ) : (
+        data.map(item => (
+          <section
+            key={item.id}
+            className='flex md:px-[4%] lg:px-[12%] mt-5 pb-20  max-[900px]:flex-col '
+          >
+            <section className=' h-130   flex place-content-center w-[60%] max-sm:w-full max-sm:h-100  '>
+              <img
+                ref={itemRef}
+                className={'h-full w-auto  max-sm:h-full'}
+                src={item.image}
+              />
+            </section>
+            <section className=' grow px-5 gap-7 flex flex-col '>
+              <section className='flex justify-between border-b pb-2 pt-5 '>
+                <section className='flex flex-col'>
+                  <div className=' text-[13px]'>{item.name}</div>
+                  <div className='text-[20px] font-bold max-[430px]:text-[15px]'>
+                    {item.description}
+                  </div>
+                </section>
+
+                <div className='font-bold text-[20px] max-[430px]:text-[17px] place-content-center pr-7 max-md:pr-0'>
+                  ${item.price}
                 </div>
               </section>
+              <FeaturesComp
+                setColor={setColor}
+                setSize={selectSize}
+                feature='Size'
+                chlidren={[
+                  { name: 'xs', selected: false },
+                  { name: 's', selected: false },
+                  { name: 'm', selected: true },
+                  { name: 'l', selected: false },
+                  { name: 'xl', selected: false },
+                  { name: 'xxl', selected: false }
+                ]}
+                className={'flex justify-between border-b pb-3'}
+              />
+              <FeaturesComp
+                setColor={setColor}
+                setSize={selectSize}
+                size={size}
+                w={15}
+                h={15}
+                className={'flex justify-between border-b pb-3'}
+                feature='Colours'
+                colour={true}
+                chlidren={[
+                  { name: 'red', selected: false },
+                  { name: 'green', selected: false },
+                  { name: 'yellow', selected: false },
+                  { name: 'blue', selected: false },
+                  { name: 'black', selected: true },
+                  { name: 'white', selected: false }
+                ]}
+              />
 
-              <div className='font-bold text-[20px] max-[430px]:text-[17px] place-content-center pr-7 max-md:pr-0'>
-                ${item.price}
-              </div>
-            </section>
-            <FeaturesComp
-              setColor={setColor}
-              setSize={selectSize}
-              feature='Size'
-              chlidren={[
-                { name: 'xs', selected: false },
-                { name: 's', selected: false },
-                { name: 'm', selected: true },
-                { name: 'l', selected: false },
-                { name: 'xl', selected: false },
-                { name: 'xxl', selected: false }
-              ]}
-              className={'flex justify-between border-b pb-3'}
-            />
-            <FeaturesComp
-              setColor={setColor}
-              setSize={selectSize}
-              size={size}
-              w={15}
-              h={15}
-              className={'flex justify-between border-b pb-3'}
-              feature='Colours'
-              colour={true}
-              chlidren={[
-                { name: 'red', selected: false },
-                { name: 'green', selected: false },
-                { name: 'yellow', selected: false },
-                { name: 'blue', selected: false },
-                { name: 'black', selected: true },
-                { name: 'white', selected: false }
-              ]}
-            />
+              <section className='flex justify-between pb-2 border-b'>
+                <div>Quantity</div>
+                <section className='flex gap-5 text-[20px]'>
+                  <button
+                    onClick={() => (qty > 1 ? setQty(qty - 1) : null)}
+                    className=' bg-[#8d8a8a2a] rounded-[10px] px-4 font-bold'
+                  >
+                    -
+                  </button>
+                  <div>{qty}</div>
+                  <button
+                    onClick={() => setQty(qty + 1)}
+                    className='flex place-content-center bg-[#8d8a8a2a] rounded-[10px] px-4 font-bold'
+                  >
+                    +
+                  </button>
+                </section>
+              </section>
 
-            <section className='flex justify-between pb-2 border-b'>
-              <div>Quantity</div>
-              <section className='flex gap-5 text-[20px]'>
+              <section className='flex justify-between gap-4'>
                 <button
-                  onClick={() => (qty > 1 ? setQty(qty - 1) : null)}
-                  className=' bg-[#8d8a8a2a] rounded-[10px] px-4 font-bold'
+                  onClick={() => {
+                    Anime(), saveToCart(item.id), setRecur(prev => prev + 1)
+                  }}
+                  className='bg-black rounded-[10px] w-[65%] text-white py-2.5'
                 >
-                  -
+                  Add To Cart
                 </button>
-                <div>{qty}</div>
                 <button
-                  onClick={() => setQty(qty + 1)}
-                  className='flex place-content-center bg-[#8d8a8a2a] rounded-[10px] px-4 font-bold'
+                  onClick={() => {
+                    setClicked(!clicked)
+                  }}
+                  className='grow border rounded-[10px] hover:bg-[#3d3c3c37] flex h-inherit justify-center gap-3'
                 >
-                  +
+                  <div className='flex self-center'>wishlist</div>
+                  {clicked ? (
+                    <FaHeart className='align-middle self-center flex' />
+                  ) : (
+                    <FaRegHeart className='align-middle self-center flex' />
+                  )}
                 </button>
               </section>
-            </section>
+              <section>
+                <div className='font-bold text-[13px]'>Estimated Delivery</div>
+                <div className='text-[14px]'>Dec 1 - Dec 9</div>
+              </section>
 
-            <section className='flex justify-between gap-4'>
-              <button
-                onClick={() => {
-                  Anime(), saveToCart(item.id), setRecur(prev=> prev + 1)
-                }}
-                className='bg-black rounded-[10px] w-[65%] text-white py-2.5'
-              >
-                Add To Cart
-              </button>
-              <button
-                onClick={() => {
-                  setClicked(!clicked)
-                }}
-                className='grow border rounded-[10px] hover:bg-[#3d3c3c37] flex h-inherit justify-center gap-3'
-              >
-                <div className='flex self-center'>wishlist</div>
-                {clicked ? (
-                  <FaHeart className='align-middle self-center flex' />
-                ) : (
-                  <FaRegHeart className='align-middle self-center flex' />
-                )}
-              </button>
-            </section>
-            <section>
-              <div className='font-bold text-[13px]'>Estimated Delivery</div>
-              <div className='text-[14px]'>Dec 1 - Dec 9</div>
-            </section>
-
-            <section>
-              <p className='font-bold text-[20px]'>Highlights</p>
-              <ul className='list-disc pl-7'>
-                {Array.from({ length: item.highlights.length }, (_, i) => (
-                  <li key={i}>{item.highlights[i]}</li>
-                ))}
-              </ul>
+              <section>
+                <p className='font-bold text-[20px]'>Highlights</p>
+                <ul className='list-disc pl-7'>
+                  {Array.from({ length: item.highlights.length }, (_, i) => (
+                    <li key={i}>{item.highlights[i]}</li>
+                  ))}
+                </ul>
+              </section>
             </section>
           </section>
-        </section>
-      ))}
+        ))
+      )}
     </section>
   )
 }

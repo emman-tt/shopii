@@ -4,8 +4,7 @@ import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Cards from '../reuse/StackedCards'
-
-
+import Overlay from '../reuse/overlay'
 const Categories = lazy(() => import('../SecondaryComp/categories'))
 const Hero = lazy(() => import('../SecondaryComp/heroSection'))
 const Footer = lazy(() => import('../PrimaryComp/footer'))
@@ -14,10 +13,12 @@ const Header = lazy(() => import('../PrimaryComp/header'))
 const MoreInfo = lazy(() => import('../SecondaryComp/moreInfo'))
 const BuildOutfits = lazy(() => import('../SecondaryComp/buildOutfits'))
 const Sneakers = lazy(() => import('../SecondaryComp/SneakerSection'))
+const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
+const CartUi = lazy(() => import('../SecondaryComp/Cart'))
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function Homepage () {
+export default function Homepage ({ menu, showMenu, cart, showCart }) {
   const heroLeft = useRef(null)
   const heroRight = useRef(null)
   const sellersRef = useRef(null)
@@ -26,7 +27,6 @@ export default function Homepage () {
   const lastcard = useRef(null)
   const isMobile = window.innerWidth <= 450
   const [ready, setReady] = useState(false)
- 
 
   useEffect(() => {
     const initializeLenis = () => {
@@ -51,14 +51,12 @@ export default function Homepage () {
 
       gsap.ticker.lagSmoothing(0)
 
-
       setTimeout(() => {
         ScrollTrigger.refresh()
         setReady(true)
       }, 10000)
     }
 
-    
     if (document.readyState === 'complete') {
       initializeLenis()
     } else {
@@ -72,15 +70,20 @@ export default function Homepage () {
     }
   }, [])
 
-
-
   return (
-    <section className='flex flex-col h-max bg-white overflow-x-hidden w-screen'>
-      <Header />
+    <section className='flex flex-col h-max bg-white overflow-x-hidden w-full'>
+      <Header
+        showCart={showCart}
+        showMenu={showMenu}
+        menu={menu}
+        fixed={true}
+      />
+      {menu && <MobileMenu showMenu={showMenu} />}
+      {cart && <CartUi showCart={showCart} />}
+      {cart && <Overlay  showCart={showCart} />}
       <Hero heroLeft={heroLeft} heroRight={heroRight} />
       <Categories heroLeft={heroLeft} heroRight={heroRight} />
-
-      {!isMobile ? <Cards lastcard={lastcard}/> : null}
+      {!isMobile ? <Cards lastcard={lastcard} /> : null}
       <Sneakers lastcard={lastcard} />
       <BestSellers sellersRef={sellersRef} />
       <BuildOutfits buildRef={buildRef} sellersRef={sellersRef} />
