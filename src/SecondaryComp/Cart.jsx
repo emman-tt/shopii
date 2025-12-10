@@ -7,14 +7,48 @@ export default function Cart ({ showCart }) {
   const box = useRef(null)
   const [products, setProducts] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
+  
+
+  async function updateQuantity (id, qty) {
+    try {
+      const res = await fetch(
+        `${API_URL}/UpdateCart?qty=${qty}&productID=${id}`,
+        {
+          method: 'PUT'
+        }
+      )
+      const result = await res.json()
+      if (result) {
+        setProducts(prev =>
+          prev.map(item =>
+            item.id === id
+              ? {
+                  ...item,
+                  cartProduct: {
+                    ...item.cartProduct,
+                    quantity: Number(item.cartProduct.quantity) + Number(qty)
+                  }
+                }
+              : item
+          )
+        )
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   function removeFromCart (id) {
+    console.log(id)
+
     setProducts(prev => prev.filter(item => item.id != id))
   }
 
   useEffect(() => {
     const sum = products.reduce((acc, item) => {
-      return acc + item.price
+      const qty = Number(item.cartProduct?.quantity ?? 1)
+      const price = Number(item.price ?? 0)
+      return acc + price * qty
     }, 0)
 
     setTotalPrice(sum.toFixed(2))
@@ -28,12 +62,6 @@ export default function Cart ({ showCart }) {
       if (res) {
         const items = await res.json()
         const data = items.products
-
-        // const sum = data.reduce((acc, item) => {
-        //   return acc + item.price
-        // }, 0)
-
-        // setTotalPrice(sum.toFixed(2))
         setProducts(data.reverse())
       }
     })()
@@ -64,14 +92,12 @@ export default function Cart ({ showCart }) {
     })
   }
 
-  useEffect(() => {}, [])
+
 
   return (
     <section className='w-full h-full flex bg-amber-300'>
-    
-        
-        <InformationBox/>
-  
+      <InformationBox />
+
       <section
         ref={box}
         className='fixed right-0 top-10 bottom-0 w-[45%] bg-white z-50 flex flex-col h-full pb-15 gap-0 justify-between pt-5 px-15'
@@ -123,7 +149,9 @@ export default function Cart ({ showCart }) {
                         </div>
                       </div>
                       <div
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => {
+                          removeFromCart(item.id)
+                        }}
                         className='font-bold text-[13px] cursor-pointer'
                       >
                         X
@@ -138,9 +166,23 @@ export default function Cart ({ showCart }) {
 
                       <div className='flex gap-10 font-semibold items-center'>
                         <section className='flex   gap-5'>
-                          <button className='cursor-pointer'>-</button>
+                          <button
+                            onClick={() => {
+                              updateQuantity(item.id, -1)
+                            }}
+                            className='cursor-pointer'
+                          >
+                            -
+                          </button>
                           {item.cartProduct.quantity}
-                          <button className='cursor-pointer'>+</button>
+                          <button
+                            onClick={() => {
+                              updateQuantity(item.id, 1)
+                            }}
+                            className='cursor-pointer'
+                          >
+                            +
+                          </button>
                         </section>
 
                         <p>{item.price}$</p>
