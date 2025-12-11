@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react'
-export function useFetching ( page, gen, currentCat, currentColor ) {
+  const API_URL = import.meta.env.VITE_PORT_URL
+
+export function useFetching (page, gen, currentCat, currentColor) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isNotFound, setIsNotFound] = useState(false)
   const [items, setItems] = useState([])
-  //  const PORT = 'https://shopii-backend.onrender.com/'
- 
-  const PORT = 'http://localhost:3000'
+
   useEffect(() => {
     ;(async function GetProducts () {
       const res = await fetch(
-        `${PORT}/api/AllProducts?page=${page}&gender=${gen}&category=${currentCat}&color=${currentColor}`,
+        `${API_URL}/AllProducts?page=${page}&gender=${gen}&category=${currentCat}&color=${currentColor}`,
         { method: 'GET' }
       )
       const products = await res.json()
@@ -32,5 +32,5 @@ export function useFetching ( page, gen, currentCat, currentColor ) {
     }
   }, [gen, currentCat, currentColor])
 
-  return {isLoaded,items}
+  return { isLoaded, items }
 }

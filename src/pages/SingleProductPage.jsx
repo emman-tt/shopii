@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { FaRegHeart } from 'react-icons/fa6'
 import { FaHeart } from 'react-icons/fa'
 import ImageWithShimmer from '../reuse/shimmer'
-
+const API_URL = import.meta.env.VITE_PORT_URL
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import Notification from '../reuse/Notification'
@@ -30,7 +30,7 @@ export default function SPP ({
   const [color, setColor] = useState(null)
   const [message, showMessage] = useState(false)
 
-  const PORT = 'http://localhost:3000'
+  // const PORT = API_URL
 
   // const { id } = useParams()
   const itemRef = useRef(null)
@@ -78,7 +78,7 @@ export default function SPP ({
         showMessage(false)
       }, 2000)
       const res = await fetch(
-        `${PORT}/api/cart?itemID=${id}&size=${size}&color=${color}&quantity=${qty}`,
+        `${API_URL}/cart?itemID=${id}&size=${size}&color=${color}&quantity=${qty}`,
         {
           method: 'POST'
         }

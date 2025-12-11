@@ -3,8 +3,8 @@ import { FaHeart } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 import { IoHeart } from 'react-icons/io5'
 import NoItem from '../reuse/NoItem'
+const API_URL = import.meta.env.VITE_PORT_URL
 import { useNavigate } from 'react-router-dom'
-const PORT = 'http://localhost:3000'
 // const PORT = 'https://shopii-backend.onrender.com'
 
 export default function Items ({ items }) {
