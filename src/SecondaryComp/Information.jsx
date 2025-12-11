@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import gsap from 'gsap'
 import Sorting from './Sorting'
 import {
   FaCcVisa,
@@ -8,7 +9,12 @@ import {
   FaGooglePay,
   FaApplePay
 } from 'react-icons/fa'
-export default function InformationBox ({ z = 40 }) {
+export default function InformationBox ({
+  z = 40,
+  setShippingAmount,
+  changeCartBottom,
+  showCheckout
+}) {
   const [data, setData] = useState([
     { id: 1, value: 'Information' },
     { id: 2, value: 'Shopping' },
@@ -28,23 +34,57 @@ export default function InformationBox ({ z = 40 }) {
   const [payment, setPayment] = useState('Credit card')
   const [paymentSelected, setPaymentSelected] = useState(1)
   const [shippingSelected, setShippingSelected] = useState(1)
+  const checkoutBox = useRef(null)
+  const [current, setCurrent] = useState(2)
+
+  useEffect(() => {
+    shippingSelected === 2 ? setShippingAmount(25) : setShippingAmount(0)
+  }, [shippingSelected])
+
+  useEffect(() => {
+    gsap.fromTo(
+      checkoutBox.current,
+      {
+        x: -100
+      },
+      {
+        x: checkoutBox.current,
+        duration: 0.5,
+        ease: 'elastic'
+      }
+    )
+  }, [])
+
+  useEffect(() => {
+    setCurrent(active)
+  }, [active])
 
   return (
     <section
+      ref={checkoutBox}
       style={{ zIndex: z }}
-      className=' bg-white w-[55%]  h-full  px-15  pt-0  fixed left-0 top-10 '
+      className=' w-[55%]  max-[900px]:w-full  h-full max-sm:h-180  bg-white   max-[900px]:px-0  max-[900px]:pl-10 px-15  pt-0  fixed left-0 top-10 overflow-y-scroll max-sm:pl-0 '
     >
       <Sorting
+        className={''}
+        current={current}
+        setCurrent={setCurrent}
         setActive={setActive}
         fixed={false}
         bgColor='inherit'
         specific={false}
         currentPos={active}
-        px={45}
+        px={
+          innerWidth <= 900 && innerWidth <= 500
+            ? 5
+            : // : innerWidth <= 490 && innerWidth <= 200
+              // ? 40
+              45
+        }
         array={data}
       />
       {active === 1 && (
-        <section className='flex flex-col justify-between mt-10  h-100'>
+        <section className='flex flex-col justify-between max-sm:pl-10   mt-10  h-120'>
           <InFoBoxUi
             setFirstName={setFirstName}
             setLastName={setLastName}
@@ -59,16 +99,36 @@ export default function InformationBox ({ z = 40 }) {
             setCity={setCity}
             setAddress={setAddress}
             setPostal={setPostal}
-            className=''
+            className='mt-10 mb-10'
             boxes={['Country', 'City', 'Street Address', 'Postal code']}
             head='Shipping Address *'
           />
+
+          <footer className='w-full flex flex-row gap-10 pr-15 max-sm:pr-10 max-sm:gap-3 max-sm:pb-10'>
+            <button
+              onClick={() => {
+                showCheckout(false), changeCartBottom(false)
+              }}
+              className='w-[40%] hover:bg-black/50  mt-2 flex self-center justify-self-center bg-black text-white py-3 items-center justify-center font-bold'
+            >
+              Back
+            </button>
+            <button
+              onClick={() => {
+                setActive(e => e + 1)
+              }}
+              className='w-[60%] hover:bg-black/50  mt-2 flex self-center justify-self-center bg-black text-white py-3 items-center justify-center font-bold'
+            >
+              Next
+            </button>
+          </footer>
         </section>
       )}
 
       {active === 2 && (
         <section className='flex flex-col mt-7  h-full'>
           <ShoppingUi
+            setActive={setActive}
             shippingFee={shippingFee}
             setShippingFee={setShippingFee}
             shippingSelected={shippingSelected}
@@ -81,6 +141,7 @@ export default function InformationBox ({ z = 40 }) {
       {active === 3 && (
         <section className='flex flex-col mt-7  h-full'>
           <PaymentUi
+            setActive={setActive}
             setPayment={setPayment}
             paymentSelected={paymentSelected}
             setPaymentSelected={setPaymentSelected}
@@ -103,6 +164,7 @@ export default function InformationBox ({ z = 40 }) {
       {active === 4 && (
         <section className='flex flex-col mt-7  h-full'>
           <ConfirmationUi
+            setActive={setActive}
             firstName={firstName}
             lastName={lastName}
             address={address}
@@ -130,7 +192,8 @@ function ConfirmationUi ({
   payment,
   email,
   country,
-  shippingFee
+  shippingFee,
+  setActive
 }) {
   return (
     <section className='flex flex-col w-full h-150   px-9 gap-8'>
@@ -145,7 +208,14 @@ function ConfirmationUi ({
           </ul>
         </div>
 
-        <div className='underline text-[13px] cursor-pointer'>Edit</div>
+        <div
+          onClick={() => {
+            setActive(1)
+          }}
+          className='underline text-[13px] cursor-pointer'
+        >
+          Edit
+        </div>
       </section>
       <section className='flex justify-between items-center pb-4 border-b'>
         <div className='flex flex-col gap-3'>
@@ -156,7 +226,14 @@ function ConfirmationUi ({
           </ul>
         </div>
 
-        <div className='underline text-[13px] cursor-pointer'>Edit</div>
+        <div
+          onClick={() => {
+            setActive(2)
+          }}
+          className='underline text-[13px] cursor-pointer'
+        >
+          Edit
+        </div>
       </section>
       <section className='flex justify-between items-center border-b pb-4'>
         <div className='flex flex-col gap-3'>
@@ -166,7 +243,14 @@ function ConfirmationUi ({
           </ul>
         </div>
 
-        <div className='underline text-[13px] cursor-pointer'>Edit</div>
+        <div
+          onClick={() => {
+            setActive(3)
+          }}
+          className='underline text-[13px] cursor-pointer'
+        >
+          Edit
+        </div>
       </section>
       <section className='flex justify-between items-center border-b pb-4'>
         <div className='flex flex-col gap-3'>
@@ -176,8 +260,32 @@ function ConfirmationUi ({
           </ul>
         </div>
 
-        <div className='underline text-[13px] cursor-pointer'>Edit</div>
+        <div
+          onClick={() => {
+            setActive(4)
+          }}
+          className='underline text-[13px] cursor-pointer'
+        >
+          Edit
+        </div>
       </section>
+
+      <footer className='w-full flex flex-row gap-10 max-sm:gap-3'>
+        <button
+          onClick={() => {
+            setActive(e => e - 1)
+          }}
+          className='w-[60%] hover:bg-black/50  mt-2 flex self-center justify-self-center bg-black text-white py-3 items-center justify-center font-bold'
+        >
+          Back
+        </button>
+        <button
+          onClick={() => {}}
+          className='w-[60%] hover:bg-black/50  mt-2 flex self-center justify-self-center bg-black text-white py-3 items-center justify-center font-bold'
+        >
+          Complete Order
+        </button>
+      </footer>
     </section>
   )
 }
@@ -205,7 +313,8 @@ function PaymentUi ({
     { id: 3, value: children3 }
   ],
   className = '',
-  gap = 35
+  gap = 35,
+  setActive
 }) {
   const handleSelect = value => {
     switch (value) {
@@ -228,32 +337,55 @@ function PaymentUi ({
   }
 
   return (
-    <section className={`${className} px-5 `}>
+    <section className={`${className} w-full  px-5 max-[900px]:pr-9 `}>
       <header className='text-3xl font-semibold mb-7 '>{head}</header>
 
-      <section style={{ gap: gap }} className='flex-col flex w-full '>
-        {boxes.map(item => (
-          <div
-            onClick={() => handleSelect(item.id)}
-            key={item.id}
-            className='flex gap-6 items-center cursor-pointer border-black border-b'
-          >
-            <span
-              style={
-                item.id === paymentSelected
-                  ? { backgroundColor: 'black' }
-                  : { backgroundColor: 'white' }
-              }
-              className='w-4 h-4 rounded-3xl border '
-            ></span>
-            <div></div>
-            <div className='flex w-full justify-between'>
-              {item.value.map((each, idx) => (
-                <div key={idx}>{each} </div>
-              ))}
-            </div>
+      <section style={{ gap: gap }} className='flex-col h-80   flex w-full '>
+        <div className='flex justify-between h-full  flex-col'>
+          <div className='gap-10 flex flex-col'>
+            {boxes.map(item => (
+              <div
+                onClick={() => handleSelect(item.id)}
+                key={item.id}
+                className='flex gap-6 items-center cursor-pointer border-black border-b'
+              >
+                <span
+                  style={
+                    item.id === paymentSelected
+                      ? { backgroundColor: 'black' }
+                      : { backgroundColor: 'white' }
+                  }
+                  className='w-4 h-4 rounded-3xl border '
+                ></span>
+                <div></div>
+                <div className='flex w-full justify-between'>
+                  {item.value.map((each, idx) => (
+                    <div key={idx}>{each} </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+
+          <footer className='w-full flex flex-row gap-10 max-sm:gap-3'>
+            <button
+              onClick={() => {
+                setActive(e => e - 1)
+              }}
+              className='w-[60%] hover:bg-black/50  mt-2 flex self-center justify-self-center bg-black text-white py-3 items-center justify-center font-bold '
+            >
+              Back
+            </button>
+            <button
+              onClick={() => {
+                setActive(e => e + 1)
+              }}
+              className='w-[60%] hover:bg-black/50  mt-2 flex self-center justify-self-center bg-black text-white py-3 items-center justify-center font-bold'
+            >
+              Next
+            </button>
+          </footer>
+        </div>
       </section>
     </section>
   )
@@ -271,7 +403,8 @@ function ShoppingUi ({
     { id: 2, value: children2 }
   ],
   className = '',
-  gap = 35
+  gap = 35,
+  setActive
 }) {
   const handleSelect = (value, input) => {
     const res = input.value.join(' ')
@@ -287,33 +420,55 @@ function ShoppingUi ({
   }, [shippingFee, setShippingFee])
 
   return (
-    <section className={`${className} px-5 `}>
+    <section className={`${className} px-5  max-[900px]:pr-9 `}>
       <header className='text-3xl font-semibold mb-7 '>{head}</header>
 
-      <section style={{ gap: gap }} className='flex-col flex w-full '>
-        {boxes.map(item => (
-          <div
-            onClick={() => {
-              handleSelect(item.id, item)
-            }}
-            key={item.id}
-            className='flex gap-6 items-center cursor-pointer border-black border-b'
-          >
-            <span
-              style={
-                item.id === shippingSelected
-                  ? { backgroundColor: 'black' }
-                  : { backgroundColor: 'white' }
-              }
-              className='w-4 h-4 rounded-3xl border '
-            ></span>
-            <div className='flex w-full justify-between'>
-              {item.value.map((each, i) => (
-                <div key={i}>{each}</div>
-              ))}
-            </div>
+      <section style={{ gap: gap }} className='flex-col h-80   flex w-full '>
+        <div className='flex justify-between h-full  flex-col'>
+          <div className='gap-10 flex flex-col'>
+            {boxes.map(item => (
+              <div
+                onClick={() => {
+                  handleSelect(item.id, item)
+                }}
+                key={item.id}
+                className='flex gap-6 items-center cursor-pointer border-black border-b'
+              >
+                <span
+                  style={
+                    item.id === shippingSelected
+                      ? { backgroundColor: 'black' }
+                      : { backgroundColor: 'white' }
+                  }
+                  className='w-4 h-4 rounded-3xl border '
+                ></span>
+                <div className='flex w-full justify-between'>
+                  {item.value.map((each, i) => (
+                    <div key={i}>{each}</div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+          <footer className='w-full flex flex-row gap-10 max-sm:gap-3'>
+            <button
+              onClick={() => {
+                setActive(e => e - 1)
+              }}
+              className='w-[60%] hover:bg-black/50  mt-2 flex self-center justify-self-center bg-black text-white py-3 items-center justify-center font-bold'
+            >
+              Back
+            </button>
+            <button
+              onClick={() => {
+                setActive(e => e + 1)
+              }}
+              className='w-[60%] hover:bg-black/50  mt-2 flex self-center justify-self-center bg-black text-white py-3 items-center justify-center font-bold'
+            >
+              Next
+            </button>
+          </footer>
+        </div>
       </section>
     </section>
   )
@@ -335,9 +490,6 @@ function InFoBoxUi ({
 }) {
   function setter (item, input) {
     const use = item.toLowerCase()
-    // console.log(use)
-    // console.log(input)
-
     if (use.includes('first')) {
       console.log(input)
     }
@@ -359,13 +511,14 @@ function InFoBoxUi ({
       ? setPostal(input)
       : null
   }
+
   return (
     <section
       style={{ minheight: height }}
-      className={`${className}  flex flex-col`}
+      className={`${className}  flex flex-col `}
     >
       <header className='text-2xl pb-5 font-semibold'>{head}</header>
-      <section className='flex gap-5 flex-wrap'>
+      <section className='flex  w-[90%] justify-between gap-5 flex-wrap'>
         {boxes.map(item => (
           <input
             type={
@@ -377,7 +530,7 @@ function InFoBoxUi ({
               setter(item, e.target.value)
             }}
             placeholder={item}
-            className='border shrink-0 w-[40%] p-3 text-sm text-gray-500'
+            className='border shrink-0 w-[40%] max-[900px]:w-[40%] max-sm:w-full p-3 text-sm text-gray-500'
           />
         ))}
       </section>

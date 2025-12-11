@@ -2,15 +2,19 @@ import gsap from 'gsap'
 import { useEffect, useRef, useState } from 'react'
 const API_URL = import.meta.env.VITE_PORT_URL
 import InformationBox from './Information'
-export default function Cart ({ showCart }) {
+export default function Cart ({ showCart, setRecur ,checkout,showCheckout}) {
   const array = [1, 2, 3, 4]
   const box = useRef(null)
+
   const [products, setProducts] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
-  
-
+  // const [checkout, showCheckout] = useState(false)
+  const [shippingAmount, setShippingAmount] = useState(0)
+  const [cartBottom, changeCartBottom] = useState(false)
+  const [subTotal, setSubTotal] = useState(0)
   async function updateQuantity (id, qty) {
     try {
+      setRecur(prev => prev + 1)
       const res = await fetch(
         `${API_URL}/UpdateCart?qty=${qty}&productID=${id}`,
         {
@@ -38,10 +42,19 @@ export default function Cart ({ showCart }) {
     }
   }
 
-  function removeFromCart (id) {
-    console.log(id)
+  async function removeFromCart (id) {
+    try {
+      setRecur(prev => prev + 1)
+      const res = await fetch(`${API_URL}/RemoveCart?productID=${id}`, {
+        method: 'DELETE'
+      })
 
-    setProducts(prev => prev.filter(item => item.id != id))
+      // const result = await res.json()
+
+      setProducts(prev => prev.filter(item => item.id != id))
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 
   useEffect(() => {
@@ -51,8 +64,11 @@ export default function Cart ({ showCart }) {
       return acc + price * qty
     }, 0)
 
-    setTotalPrice(sum.toFixed(2))
-  }, [products])
+    setSubTotal(sum.toFixed(2))
+    const extraFee = Number(shippingAmount > 0 ? shippingAmount : 0)
+    const calcTotal = extraFee + sum
+    setTotalPrice(calcTotal.toFixed(2))
+  }, [products, shippingAmount])
 
   useEffect(() => {
     ;(async function fetchCart () {
@@ -92,22 +108,25 @@ export default function Cart ({ showCart }) {
     })
   }
 
-
-
   return (
-    <section className='w-full h-full flex bg-amber-300'>
-      <InformationBox />
-
+    <section className='w-full h-full flex '>
+      {checkout && (
+        <InformationBox
+          showCheckout={showCheckout}
+          z={innerWidth <= 900 ? 60 : 40}
+          changeCartBottom={changeCartBottom}
+          setShippingAmount={setShippingAmount}
+        />
+      )}
       <section
         ref={box}
-        className='fixed right-0 top-10 bottom-0 w-[45%] bg-white z-50 flex flex-col h-full pb-15 gap-0 justify-between pt-5 px-15'
+        className='fixed right-0 top-10 bottom-0 w-[45%] max-lg:w-full  bg-white z-50 flex flex-col h-full pb-15 gap-0 justify-between pt-5 px-15 max-xl:px-7 overflow-y-scroll [scrollbar-width:none] '
       >
         <section>
           <section className='flex w-full justify-between items-center'>
             <h2 className='text-4xl font-semibold'>Cart</h2>
             <div
               onClick={() => {
-                // showCart(false)
                 moveCart()
               }}
               className='underline pb-1 text-m cursor-pointer'
@@ -123,27 +142,32 @@ export default function Cart ({ showCart }) {
             flex-col 
             gap-3 
             overflow-y-auto 
-            h-120
-            p-4
-            pr-2
+            h-120 max-[900px]:h-160
+            p-4 max-sm:h-100
+            pr-2 max-lg:p-0
           '
             >
               {products.map(item => (
                 <section
                   key={item.id}
-                  className='w-full h-50 shrink-0 flex border-b-[0.2px] border-gray-300  text-black gap-5 pb-5'
+                  className='w-full h-50 shrink-0 flex border-b-[0.2px] border-gray-300  text-black gap-5 pb-5 max-[900px]:gap-0 '
                 >
-                  <figure className='  w-[40%] flex justify-center items-center h-full'>
+                  <figure className='w-[40%] grow   flex justify-center items-center h-full'>
                     <img
                       src={item.image}
-                      className='h-full w-auto'
+                      className='h-full w-auto '
                       alt='photo'
                     />
                   </figure>
-                  <section className='flex flex-col px-3 w-full justify-between'>
+                  <section
+                    className='flex flex-col max-[900px]:w-[60%]  px-3 w-full
+                   justify-between'
+                  >
                     <header className='flex w-full justify-between'>
                       <div className='flex flex-col'>
-                        <div className='font-semibold'>{item.description}</div>
+                        <div className='font-semibold max-sm:text-[14px] max-sm:w-[70%]'>
+                          {item.description}
+                        </div>
                         <div className='text-[13px] text-[#515151fe]'>
                           id293njds
                         </div>
@@ -158,7 +182,7 @@ export default function Cart ({ showCart }) {
                       </div>
                     </header>
 
-                    <footer className='flex w-full justify-between '>
+                    <footer className='flex w-full justify-between max-sm:flex-col'>
                       <div className='text-[13px] text-[#515151fe]'>
                         <p>Color: {item.cartProduct.colour}</p>
                         <p>Size: {item.cartProduct.size}</p>
@@ -195,14 +219,18 @@ export default function Cart ({ showCart }) {
           </section>
         </section>
         <section className=' h-full  w-full '>
-          <header className='flex w-full justify-between font-semibold flex-col border-t border-b border-gray-300 py-6 px-4'>
+          <header className='flex w-full justify-between font-semibold flex-col border-t border-b border-gray-300 py-6 px-4 max-[325px]:px-1'>
             <div className='flex w-full justify-between'>
               <p>SubTotal :</p>
-              <p>{totalPrice} $</p>
+              <p>{subTotal} $</p>
             </div>
             <div className='flex w-full justify-between'>
               <p>Shipping :</p>
-              <p>Calculated at the next step</p>
+              {cartBottom ? (
+                <p>{shippingAmount > 0 ? shippingAmount + '.00 $' : 'free'}</p>
+              ) : (
+                <p className='max-sm:text-xs'>Calculated at the next step</p>
+              )}
             </div>
           </header>
 
@@ -211,9 +239,19 @@ export default function Cart ({ showCart }) {
             <div>{totalPrice}$</div>
           </footer>
 
-          <button className='w-[60%] mt-2 flex self-center justify-self-center bg-black text-white py-3 items-center justify-center font-bold'>
-            Check out
-          </button>
+          {cartBottom ? (
+            ''
+          ) : (
+            <button
+              onClick={() => {
+                changeCartBottom(true)
+                showCheckout(true)
+              }}
+              className='w-[60%] mt-2 flex self-center justify-self-center bg-black text-white py-3 items-center justify-center font-bold max-sm:w-full'
+            >
+              Check out
+            </button>
+          )}
         </section>
       </section>
     </section>

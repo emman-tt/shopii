@@ -18,7 +18,16 @@ const CartUi = lazy(() => import('../SecondaryComp/Cart'))
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function Homepage ({ menu, showMenu, cart, showCart }) {
+export default function Homepage ({
+  menu,
+  showMenu,
+  cart,
+  showCart,
+  recur,
+  setRecur,
+  checkout,
+  showCheckout
+}) {
   const heroLeft = useRef(null)
   const heroRight = useRef(null)
   const sellersRef = useRef(null)
@@ -77,10 +86,18 @@ export default function Homepage ({ menu, showMenu, cart, showCart }) {
         showMenu={showMenu}
         menu={menu}
         fixed={true}
+        showCheckout={showCheckout}
       />
-      {menu && <MobileMenu showMenu={showMenu} />}
-      {cart && <CartUi showCart={showCart} />}
-      {cart && <Overlay  showCart={showCart} />}
+      {menu && <MobileMenu showCart={showCart} showCheckout={showCheckout} showMenu={showMenu} />}
+      {cart && (
+        <CartUi
+          checkout={checkout}
+          showCheckout={showCheckout}
+          setRecur={setRecur}
+          showCart={showCart}
+        />
+      )}
+      {cart && <Overlay showCart={showCart} />}
       <Hero heroLeft={heroLeft} heroRight={heroRight} />
       <Categories heroLeft={heroLeft} heroRight={heroRight} />
       {!isMobile ? <Cards lastcard={lastcard} /> : null}

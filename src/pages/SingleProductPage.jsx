@@ -14,13 +14,22 @@ import { lazy } from 'react'
 const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
 import Overlay from '../reuse/overlay'
 const CartUi = lazy(() => import('../SecondaryComp/Cart'))
-export default function SPP ({ menu, showMenu, showCart, cart }) {
+export default function SPP ({
+  menu,
+  showMenu,
+  showCart,
+  cart,
+  recur,
+  setRecur,
+  checkout,
+  showCheckout
+}) {
   const [qty, setQty] = useState(1)
   const [clicked, setClicked] = useState(false)
   const [size, selectSize] = useState('m')
   const [color, setColor] = useState(null)
   const [message, showMessage] = useState(false)
-  const [recur, setRecur] = useState(0)
+
   const PORT = 'http://localhost:3000'
 
   // const { id } = useParams()
@@ -91,10 +100,24 @@ export default function SPP ({ menu, showMenu, showCart, cart }) {
         recur={recur}
         cartRef={cartRef}
         fixed={true}
+        showCheckout={showCheckout}
       />
-      {menu && <MobileMenu showMenu={showMenu} />}
+      {menu && (
+        <MobileMenu
+          showCart={showCart}
+          showCheckout={showCheckout}
+          showMenu={showMenu}
+        />
+      )}
       {cart && <Overlay showCart={showCart} />}
-      {cart && <CartUi showCart={showCart} />}
+      {cart && (
+        <CartUi
+          checkout={checkout}
+          showCheckout={showCheckout}
+          setRecur={setRecur}
+          showCart={showCart}
+        />
+      )}
 
       {!isLoaded ? (
         <section className='w-full flex justify-center items-center align-middle h-screen   max-[800px]:pl-20 max-[500px]:pl-0 max-[500px]:w-full z-0 overflow-x-hidden '>

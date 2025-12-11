@@ -10,23 +10,25 @@ import { BsShop } from 'react-icons/bs'
 
 import { useNavigate } from 'react-router-dom'
 
-export default function mobileMenu ({showMenu}) {
+export default function mobileMenu ({ showMenu, showCart, showCheckout }) {
   const navigate = useNavigate()
   function openLink (item) {
     showMenu(false)
+    showCart(false)
+    showCheckout(false)
     const use = item.toLowerCase()
     use === 'home'
       ? navigate('/')
       : use === 'products'
       ? navigate('/products')
       : use === 'cart'
-      ? navigate('/cart')
+      ? showCart(true)
       : use === 'wishlist'
       ? navigate('/wishlist')
       : navigate('/')
   }
   return (
-    <section className='bg-white fixed w-full h-screen  z-30 bottom-0 right-0 top-0 left-0 text-black pt-20'>
+    <section className='bg-white fixed w-full h-screen  z-70 bottom-0 right-0 top-0 left-0 text-black pt-20'>
       <section className='flex justify-between flex-col h-[95%]'>
         <section className='flex flex-col items-center   w-full'>
           <div className='w-20 h-20 rounded-[50%] bg-[#bfcce2b3] mb-5 justify-center items-center flex'>

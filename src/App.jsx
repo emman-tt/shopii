@@ -8,6 +8,9 @@ import { useState } from 'react'
 function App () {
   const [menu, showMenu] = useState(false)
   const [cart, showCart] = useState(false)
+  const [recur, setRecur] = useState(0)
+  const [checkout, showCheckout] = useState(false)
+
   return (
     <BrowserRouter>
       <Routes>
@@ -19,6 +22,10 @@ function App () {
               cart={cart}
               showCart={showCart}
               showMenu={showMenu}
+              recur={recur}
+              setRecur={setRecur}
+              checkout={checkout}
+              showCheckout={showCheckout}
             />
           }
         />
@@ -30,6 +37,10 @@ function App () {
               cart={cart}
               showCart={showCart}
               showMenu={showMenu}
+              recur={recur}
+              setRecur={setRecur}
+              checkout={checkout}
+              showCheckout={showCheckout}
             />
           }
         />
@@ -41,6 +52,10 @@ function App () {
               cart={cart}
               showCart={showCart}
               showMenu={showMenu}
+              recur={recur}
+              setRecur={setRecur}
+              checkout={checkout}
+              showCheckout={showCheckout}
             />
           }
         />

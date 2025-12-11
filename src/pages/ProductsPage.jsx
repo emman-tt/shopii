@@ -13,7 +13,15 @@ import { lazy } from 'react'
 import Overlay from '../reuse/overlay'
 const CartUi = lazy(() => import('../SecondaryComp/Cart'))
 const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
-export default function Products ({ menu, showMenu, cart, showCart }) {
+export default function Products ({
+  menu,
+  showMenu,
+  cart,
+  showCart,
+  recur,
+  setRecur, checkout,
+  showCheckout
+}) {
   const [page, setPage] = useState(2)
   const [gen, setGen] = useState(2)
   const [currentCat, setCurrentCat] = useState(1)
@@ -22,6 +30,7 @@ export default function Products ({ menu, showMenu, cart, showCart }) {
   const [categories, setCategories] = useState(Categories)
   const [currentColor, setCurrentColor] = useState('all')
   const [colours, setColours] = useState(Colours)
+  const [current, setCurrent] = useState(2)
 
   const { isLoaded, items } = useFetching(page, gen, currentCat, currentColor)
 
@@ -32,9 +41,13 @@ export default function Products ({ menu, showMenu, cart, showCart }) {
         showMenu={showMenu}
         menu={menu}
         fixed={true}
+        recur={recur}
+              showCheckout={showCheckout}
       ></Header>
 
       <Sorting
+        current={current}
+        setCurrent={setCurrent}
         setGen={setGen}
         array={[
           { id: 1, value: 'For Men' },
@@ -43,9 +56,9 @@ export default function Products ({ menu, showMenu, cart, showCart }) {
           { id: 4, value: 'Unisex' }
         ]}
       />
-      {menu && <MobileMenu showMenu={showMenu} />}
+      {menu && <MobileMenu showCart={showCart} showCheckout={showCheckout} showMenu={showMenu} />}
       {cart && <Overlay showCart={showCart} />}
-      {cart && <CartUi showCart={showCart} />}
+      {cart && <CartUi checkout={checkout} showCheckout={showCheckout} setRecur={setRecur} showCart={showCart} />}
       <section className='w-full relative  mt-10 min-h-screen flex flex-col'>
         {isMobiles ? (
           <section

@@ -12,14 +12,16 @@ export default function Header ({
   recur,
   showCart,
   showMenu,
-  menu
+  menu,
+  showCheckout
 }) {
   const navigate = useNavigate()
   const isMobile = innerWidth < 500
   const [total, setTotal] = useState(0)
-  // const [menu, showMenu] = useState(true)
 
   function openLink () {
+    showCart(false)
+    showCheckout(false)
     navigate('/products')
   }
   const PORT = 'http://localhost:3000'
@@ -42,7 +44,7 @@ export default function Header ({
     })()
   }, [recur])
   return (
-    <section className='h-full w-full z-40 relative overflow-hidden '>
+    <section className='h-full w-full z-100 relative overflow-hidden '>
       <section
         style={
           fixed
@@ -61,7 +63,6 @@ export default function Header ({
         {isMobile ? (
           <div
             onClick={() => {
-              // showMenu(e => !e)
               showMenu(prev => !prev)
             }}
             className='text-4xl pr-7'
@@ -76,7 +77,9 @@ export default function Header ({
           </section>
         )}
         <h1
-          onClick={() => navigate('/')}
+          onClick={() => {
+            navigate('/'), showCheckout(false), showCart(false)
+          }}
           className='text-3xl font-extrabold pr-20 max-[800px]:text-[15px] max-[800px]:font-bold max-[500px]:text-[32px] max-[500px]:pl-0 cursor-pointer  max-[500px]:pr-0 max-[500px]:hidden'
         >
           SHOPII
@@ -91,6 +94,7 @@ export default function Header ({
           </div>
           <div
             onClick={() => {
+              showCheckout(false)
               showCart(true)
             }}
             className='relative cursor-pointer'
