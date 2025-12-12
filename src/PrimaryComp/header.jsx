@@ -6,6 +6,7 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import { useEffect } from 'react'
 import { FaXmark } from 'react-icons/fa6'
 import { useState } from 'react'
+const API_URL = import.meta.env.VITE_PORT_URL
 export default function Header ({
   fixed = false,
   cartRef,
@@ -24,18 +25,16 @@ export default function Header ({
     showCheckout(false)
     navigate('/products')
   }
-  const PORT = 'http://localhost:3000'
 
   useEffect(() => {
     ;(async function fetchTotal () {
       try {
-        const res = await fetch(`${PORT}/api/fetchTotal`, {
+        const res = await fetch(`${API_URL}/api/fetchTotal`, {
           method: 'PUT'
         })
 
         const use = await res.json()
         if (use) {
-          // console.log(use)
           setTotal(use.total)
         }
       } catch (error) {
