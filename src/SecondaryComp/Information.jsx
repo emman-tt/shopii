@@ -38,7 +38,9 @@ export default function InformationBox ({
   const [current, setCurrent] = useState(2)
   const [problem, showProblem] = useState(false)
   const [error, setError] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('Some fields are missing response ,Please make sure to fill all details')
+  const [errorMessage, setErrorMessage] = useState(
+    'Some fields are missing response ,Please make sure to fill all details'
+  )
   useEffect(() => {
     shippingSelected === 2 ? setShippingAmount(25) : setShippingAmount(0)
   }, [shippingSelected])
@@ -61,6 +63,25 @@ export default function InformationBox ({
     setCurrent(active)
   }, [active])
 
+  function checkForErrors () {
+    if (
+      firstName == '' ||
+      lastName == '' ||
+      email === '' ||
+      address == '' ||
+      phone == 0 ||
+      city == '' ||
+      postal == 0 ||
+      country == ''
+    ) {
+      setCurrent(1)
+      setActive(1)
+      return setError(true)
+    }
+
+    setActive(e => e + 1)
+  }
+
   return (
     <section
       ref={checkoutBox}
@@ -68,7 +89,9 @@ export default function InformationBox ({
       className=' w-[55%]  max-[900px]:w-full  h-full max-sm:h-180  bg-white   max-[900px]:px-0  max-[900px]:pl-10 px-15  pt-0  fixed left-0 top-10 overflow-y-scroll max-sm:pl-0 '
     >
       <Sorting
-        className={''}
+        error={error}
+        checkForErrors={checkForErrors}
+        className={'overflow-hidden overflow-x-auto'}
         current={current}
         setCurrent={setCurrent}
         setActive={setActive}
@@ -77,11 +100,11 @@ export default function InformationBox ({
         specific={false}
         currentPos={active}
         px={
-          innerWidth <= 900 && innerWidth <= 500
+          innerWidth <= 900 && innerWidth >= 500
             ? 5
-            : // : innerWidth <= 490 && innerWidth <= 200
-              // ? 40
-              45
+            : innerWidth <= 450
+            ? 13
+            : 45
         }
         array={data}
       />
@@ -111,11 +134,12 @@ export default function InformationBox ({
             boxes={['Country', 'City', 'Street Address', 'Postal code']}
             head='Shipping Address *'
           />
-  {error && (
-              <div className='text-red-600 text-[15px] my-5 flex  self-center'>{errorMessage}</div>
-            )}
+          {error && (
+            <div className='text-red-600 text-[15px] my-5 flex  self-center'>
+              {errorMessage}
+            </div>
+          )}
           <footer className='w-full flex flex-row gap-10 pr-15 max-sm:pr-10 max-sm:gap-3 max-sm:pb-10'>
-          
             <button
               onClick={() => {
                 showCheckout(false), changeCartBottom(false)
@@ -126,19 +150,7 @@ export default function InformationBox ({
             </button>
             <button
               onClick={() => {
-                if (
-                  firstName == '' ||
-                  lastName == '' ||
-                  email === '' ||
-                  address == '' ||
-                  phone == 0 ||
-                  city == '' ||
-                  postal == 0 ||
-                  country == ''
-                ) {
-                  return setError(true)
-                }
-                setActive(e => e + 1)
+                checkForErrors()
               }}
               className='w-[60%] hover:bg-black/50  mt-2 flex self-center justify-self-center bg-black text-white py-3 items-center justify-center font-bold'
             >
@@ -547,21 +559,19 @@ function InFoBoxUi ({
       <header className='text-2xl pb-5 font-semibold'>{head}</header>
       <section className='flex  w-[90%] justify-between gap-5 flex-wrap'>
         {boxes.map(item => (
-          <>
-            <input
-              type={
-                item.includes('Phone') || item.includes('code')
-                  ? 'number'
-                  : 'text'
-              }
-              onChange={e => {
-                setter(item, e.target.value)
-              }}
-              placeholder={item}
-              className='border shrink-0 w-[40%] max-[900px]:w-[40%] max-sm:w-full p-3 text-sm text-gray-500'
-            />
-            {/* {error && <div className='text-red-600'>{errorMessage}</div>} */}
-          </>
+          <input
+            key={item}
+            type={
+              item.includes('Phone') || item.includes('code')
+                ? 'number'
+                : 'text'
+            }
+            onChange={e => {
+              setter(item, e.target.value)
+            }}
+            placeholder={item}
+            className='border text-base shrink-0 w-[40%] max-[900px]:w-[40%] max-sm:w-full p-3  text-gray-500'
+          />
         ))}
       </section>
     </section>

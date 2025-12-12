@@ -10,7 +10,9 @@ export default function Sorting ({
   setActive,
   current = currentPos,
   setCurrent,
-  className = ''
+  className = '',
+  checkForErrors,
+  error
 }) {
   return (
     <section
@@ -38,8 +40,9 @@ export default function Sorting ({
           <div
             key={item.id}
             onClick={e => {
-              setCurrent(item.id),
-                specific ? setGen(item.id) : setActive(item.id)
+              setCurrent(error ? 1 : item.id),
+                specific === false ? setActive(item.id) : null
+              specific ? setGen(item.id) : checkForErrors()
             }}
             style={
               current === item.id

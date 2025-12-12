@@ -46,9 +46,11 @@ export default function Products ({
       ></Header>
 
       <Sorting
+
         current={current}
         setCurrent={setCurrent}
         setGen={setGen}
+        px={innerWidth <450 ? 15 : 5}
         array={[
           { id: 1, value: 'For Men' },
           { id: 2, value: 'For  Women' },

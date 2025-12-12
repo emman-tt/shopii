@@ -13,7 +13,6 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
   const [subTotal, setSubTotal] = useState(0)
   async function updateQuantity (id, qty) {
     try {
-      setRecur(prev => prev + 1)
       setProducts(prev =>
         prev.map(item =>
           item.id === id
@@ -33,9 +32,10 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
           method: 'PUT'
         }
       )
-      // const result = await res.json()
-      // if (result) {
-      // }
+
+      setRecur(prev => prev + 1)
+
+    
     } catch (error) {
       console.log(error.message)
     }
@@ -43,14 +43,11 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
 
   async function removeFromCart (id) {
     try {
-      setRecur(prev => prev - 1)
       setProducts(prev => prev.filter(item => item.id != id))
       const res = await fetch(`${API_URL}/RemoveCart?productID=${id}`, {
         method: 'DELETE'
       })
-
-     
-
+      setRecur(prev => prev - 1)
     } catch (error) {
       console.log(error.message)
     }
