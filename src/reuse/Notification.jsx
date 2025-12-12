@@ -13,7 +13,7 @@ export default function ({ message = 'Added To Cart' }) {
   return (
     <section
       ref={box}
-      className={`absolute max-sm:fixed w-80 border  align-middle  justify-self-center items-center backdrop-blur-2xl bg-[#17092e] text-white py-5 rounded-2xl gap-8 flex place-content-center top-0 z-120 self-center text-xl`}
+      className={`absolute max-sm:fixed w-80 border  align-middle  justify-self-center items-center backdrop-blur-2xl bg-[#17092e] text-white py-5 rounded-2xl gap-8 flex place-content-center top-0 z-120 self-center justify-center  text-xl`}
     >
       <BiCheckCircle color='green' size={30} /> {message}
     </section>

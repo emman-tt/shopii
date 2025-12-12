@@ -14,28 +14,28 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
   async function updateQuantity (id, qty) {
     try {
       setRecur(prev => prev + 1)
+      setProducts(prev =>
+        prev.map(item =>
+          item.id === id
+            ? {
+                ...item,
+                cartProduct: {
+                  ...item.cartProduct,
+                  quantity: Number(item.cartProduct.quantity) + Number(qty)
+                }
+              }
+            : item
+        )
+      )
       const res = await fetch(
         `${API_URL}/UpdateCart?qty=${qty}&productID=${id}`,
         {
           method: 'PUT'
         }
       )
-      const result = await res.json()
-      if (result) {
-        setProducts(prev =>
-          prev.map(item =>
-            item.id === id
-              ? {
-                  ...item,
-                  cartProduct: {
-                    ...item.cartProduct,
-                    quantity: Number(item.cartProduct.quantity) + Number(qty)
-                  }
-                }
-              : item
-          )
-        )
-      }
+      // const result = await res.json()
+      // if (result) {
+      // }
     } catch (error) {
       console.log(error.message)
     }
@@ -44,13 +44,13 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
   async function removeFromCart (id) {
     try {
       setRecur(prev => prev - 1)
+      setProducts(prev => prev.filter(item => item.id != id))
       const res = await fetch(`${API_URL}/RemoveCart?productID=${id}`, {
         method: 'DELETE'
       })
 
-      // const result = await res.json()
+     
 
-      setProducts(prev => prev.filter(item => item.id != id))
     } catch (error) {
       console.log(error.message)
     }
@@ -168,7 +168,7 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
                           {item.description}
                         </div>
                         <div className='text-[13px] text-[#515151fe]'>
-                          {`prod${Math.random() - item.id}`}
+                          {`prod${-item.id}`}
                         </div>
                       </div>
                       <div
