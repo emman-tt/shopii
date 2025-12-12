@@ -2,13 +2,12 @@ import gsap from 'gsap'
 import { useEffect, useRef, useState } from 'react'
 const API_URL = import.meta.env.VITE_PORT_URL
 import InformationBox from './Information'
-export default function Cart ({ showCart, setRecur ,checkout,showCheckout}) {
+export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
   const array = [1, 2, 3, 4]
   const box = useRef(null)
 
   const [products, setProducts] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
-  // const [checkout, showCheckout] = useState(false)
   const [shippingAmount, setShippingAmount] = useState(0)
   const [cartBottom, changeCartBottom] = useState(false)
   const [subTotal, setSubTotal] = useState(0)
@@ -44,7 +43,7 @@ export default function Cart ({ showCart, setRecur ,checkout,showCheckout}) {
 
   async function removeFromCart (id) {
     try {
-      setRecur(prev => prev + 1)
+      setRecur(prev => prev - 1)
       const res = await fetch(`${API_URL}/RemoveCart?productID=${id}`, {
         method: 'DELETE'
       })
@@ -169,7 +168,7 @@ export default function Cart ({ showCart, setRecur ,checkout,showCheckout}) {
                           {item.description}
                         </div>
                         <div className='text-[13px] text-[#515151fe]'>
-                          id293njds
+                          {`prod${Math.random() - item.id}`}
                         </div>
                       </div>
                       <div
@@ -192,7 +191,9 @@ export default function Cart ({ showCart, setRecur ,checkout,showCheckout}) {
                         <section className='flex   gap-5'>
                           <button
                             onClick={() => {
-                              updateQuantity(item.id, -1)
+                              item.cartProduct.quantity > 1
+                                ? updateQuantity(item.id, -1)
+                                : null
                             }}
                             className='cursor-pointer'
                           >

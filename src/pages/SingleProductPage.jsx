@@ -30,9 +30,7 @@ export default function SPP ({
   const [color, setColor] = useState(null)
   const [message, showMessage] = useState(false)
 
-  // const PORT = API_URL
 
-  // const { id } = useParams()
   const itemRef = useRef(null)
   const cartRef = useRef(null)
   function forceRecur () {
