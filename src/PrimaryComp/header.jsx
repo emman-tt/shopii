@@ -29,7 +29,7 @@ export default function Header ({
   useEffect(() => {
     ;(async function fetchTotal () {
       try {
-        const res = await fetch(`${API_URL}/api/fetchTotal`, {
+        const res = await fetch(`${API_URL}/fetchTotal`, {
           method: 'PUT'
         })
 
