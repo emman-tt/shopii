@@ -1,13 +1,31 @@
-import { useState, useEffect } from 'react'
-  const API_URL = import.meta.env.VITE_PORT_URL
+import { useState, useEffect, useReducer } from 'react'
+const API_URL = import.meta.env.VITE_PORT_URL
+import fetchProductReducer, {
+  initialState
+} from '../hooks-and-reducers/fetchProducts.jsx'
 
-export function useFetching (page, gen, currentCat, currentColor) {
+export function useFetching (
+  page,
+  gen,
+  currentCat,
+  currentColor,
+  loadFromHomeCategories = false,
+  loadFromHomeProducts = false
+) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isNotFound, setIsNotFound] = useState(false)
   const [items, setItems] = useState([])
+  const [{ pageId, genderId, categoryId, colorId }, dispatch] = useReducer(
+    fetchProductReducer,
+    initialState
+  )
 
   useEffect(() => {
     ;(async function GetProducts () {
+      // console.log('gender :', genderId)
+      // console.log('category :', categoryId)
+      // console.log('color :', colorId)
+
       const res = await fetch(
         `${API_URL}/AllProducts?page=${page}&gender=${gen}&category=${currentCat}&color=${currentColor}`,
         { method: 'GET' }
@@ -15,6 +33,7 @@ export function useFetching (page, gen, currentCat, currentColor) {
       const products = await res.json()
 
       const use = products.products
+      // console.log(use)
       if (!use || use.length < 1) {
         setIsNotFound(true)
         setIsLoaded(true)

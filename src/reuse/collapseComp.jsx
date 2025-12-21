@@ -6,7 +6,7 @@ export default function Collapse ({
   numberOfCollapsedWords = 10,
   children,
   classname = '',
-  buttonStyles = ''
+ 
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false)
 

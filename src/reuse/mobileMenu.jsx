@@ -5,7 +5,6 @@ import { FaGears } from 'react-icons/fa6'
 import { GiPadlock } from 'react-icons/gi'
 import { CgProfile } from 'react-icons/cg'
 import { CgHome } from 'react-icons/cg'
-import { FcCloth } from 'react-icons/fc'
 import { BsShop } from 'react-icons/bs'
 
 import { useNavigate } from 'react-router-dom'

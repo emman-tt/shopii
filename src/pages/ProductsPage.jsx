@@ -1,38 +1,49 @@
 import Header from '../PrimaryComp/header'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useReducer, useContext } from 'react'
 import Filtering from '../reuse/filteringUi'
 import Items from '../SecondaryComp/ProductItems'
-import { LuArrowUpDown } from 'react-icons/lu'
 import Loader from '../reuse/loadingAnime'
 import { CiFilter } from 'react-icons/ci'
 import { Categories } from '../utils/filtering'
 import Sorting from '../SecondaryComp/Sorting'
 import { Colours } from '../utils/filtering'
-import { useFetching } from '../hooks/useFetching'
+import { useFetching } from '../hooks-and-reducers/useFetching.jsx'
 import { lazy } from 'react'
 import Overlay from '../reuse/overlay'
 const CartUi = lazy(() => import('../SecondaryComp/Cart'))
 const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
+import { FilterContext } from '../App.jsx'
+
 export default function Products ({
   menu,
   showMenu,
   cart,
   showCart,
   recur,
-  setRecur, checkout,
+  setRecur,
+  checkout,
   showCheckout
 }) {
-  const [page, setPage] = useState(2)
-  const [gen, setGen] = useState(2)
-  const [currentCat, setCurrentCat] = useState(1)
   const isMobiles = innerWidth <= 500
   const [isActive, setIsActive] = useState(false)
-  const [categories, setCategories] = useState(Categories)
-  const [currentColor, setCurrentColor] = useState('all')
-  const [colours, setColours] = useState(Colours)
-  const [current, setCurrent] = useState(2)
+  const { state, dispatch } = useContext(FilterContext)
+  const { genderId, categoryId, colourId, pageId, colours, categories } = state
 
-  const { isLoaded, items } = useFetching(page, gen, currentCat, currentColor)
+  const { isLoaded, items } = useFetching(
+    pageId,
+    genderId,
+    categoryId,
+    colourId
+  )
+  const [current, setCurrent] = useState(genderId)
+
+  function changeCategory (id) {
+    dispatch({ type: 'changeFilterCategory', payload: id })
+  }
+
+  function changeColor (item) {
+    dispatch({ type: 'changeFilterColor', payload: item })
+  }
 
   return (
     <section>
@@ -42,15 +53,14 @@ export default function Products ({
         menu={menu}
         fixed={true}
         recur={recur}
-              showCheckout={showCheckout}
+        showCheckout={showCheckout}
       ></Header>
 
       <Sorting
-
         current={current}
         setCurrent={setCurrent}
-        setGen={setGen}
-        px={innerWidth <450 ? 15 : 5}
+        dispatch={dispatch}
+        px={innerWidth < 450 ? 15 : 5}
         array={[
           { id: 1, value: 'For Men' },
           { id: 2, value: 'For  Women' },
@@ -58,9 +68,22 @@ export default function Products ({
           { id: 4, value: 'Unisex' }
         ]}
       />
-      {menu && <MobileMenu showCart={showCart} showCheckout={showCheckout} showMenu={showMenu} />}
+      {menu && (
+        <MobileMenu
+          showCart={showCart}
+          showCheckout={showCheckout}
+          showMenu={showMenu}
+        />
+      )}
       {cart && <Overlay showCart={showCart} />}
-      {cart && <CartUi checkout={checkout} showCheckout={showCheckout} setRecur={setRecur} showCart={showCart} />}
+      {cart && (
+        <CartUi
+          checkout={checkout}
+          showCheckout={showCheckout}
+          setRecur={setRecur}
+          showCart={showCart}
+        />
+      )}
       <section className='w-full relative  mt-10 min-h-screen flex flex-col'>
         {isMobiles ? (
           <section
@@ -76,28 +99,22 @@ export default function Products ({
         ) : (
           <Filtering
             categories={categories}
-            setCategories={setCategories}
-            setCurrentCat={setCurrentCat}
-            currentCat={currentCat}
-            currentColor={currentColor}
-            setCurrentColor={setCurrentColor}
             Colours={colours}
-            setColours={setColours}
+            dispatch={dispatch}
+            changeCategory={changeCategory}
+            changeColor={changeColor}
           />
         )}
 
         {isActive && isMobiles && (
           <Filtering
             categories={categories}
-            setCategories={setCategories}
             isActive={isActive}
             setIsActive={setIsActive}
-            setCurrentCat={setCurrentCat}
-            currentCat={currentCat}
-            currentColor={currentColor}
-            setCurrentColor={setCurrentColor}
+            dispatch={dispatch}
             Colours={colours}
-            setColours={setColours}
+            changeCategory={changeCategory}
+            changeColor={changeColor}
           />
         )}
 

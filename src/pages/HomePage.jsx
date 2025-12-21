@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useReducer, useContext } from 'react'
 import { lazy } from 'react'
 import Lenis from 'lenis'
 import gsap from 'gsap'
@@ -15,7 +15,11 @@ const BuildOutfits = lazy(() => import('../SecondaryComp/buildOutfits'))
 const Sneakers = lazy(() => import('../SecondaryComp/SneakerSection'))
 const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
 const CartUi = lazy(() => import('../SecondaryComp/Cart'))
+const TopPicks = lazy(() => import('../SecondaryComp/topPicks.jsx'))
+const Carousel = lazy(() => import('../SecondaryComp/carousel.jsx'))
+const Marquee = lazy(() => import('../SecondaryComp/marquee.jsx'))
 
+import { FilterContext } from '../App.jsx'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Homepage ({
@@ -34,9 +38,13 @@ export default function Homepage ({
   const buildRef = useRef(null)
   const lenisRef = useRef(null)
   const lastcard = useRef(null)
-  const isMobile = window.innerWidth <= 450
+  const isMobile = window.innerWidth <= 500
   const [ready, setReady] = useState(false)
+  const { state, dispatch } = useContext(FilterContext)
 
+
+
+  
   useEffect(() => {
     const initializeLenis = () => {
       lenisRef.current = new Lenis({
@@ -88,7 +96,13 @@ export default function Homepage ({
         fixed={true}
         showCheckout={showCheckout}
       />
-      {menu && <MobileMenu showCart={showCart} showCheckout={showCheckout} showMenu={showMenu} />}
+      {menu && (
+        <MobileMenu
+          showCart={showCart}
+          showCheckout={showCheckout}
+          showMenu={showMenu}
+        />
+      )}
       {cart && (
         <CartUi
           checkout={checkout}
@@ -99,7 +113,10 @@ export default function Homepage ({
       )}
       {cart && <Overlay showCart={showCart} />}
       <Hero heroLeft={heroLeft} heroRight={heroRight} />
-      <Categories heroLeft={heroLeft} heroRight={heroRight} />
+      <Categories state={state} dispatch={dispatch} heroLeft={heroLeft} heroRight={heroRight} />
+      <TopPicks />
+      <Marquee />
+      <Carousel />
       {!isMobile ? <Cards lastcard={lastcard} /> : null}
       <Sneakers lastcard={lastcard} />
       <BestSellers sellersRef={sellersRef} />

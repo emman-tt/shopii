@@ -11,7 +11,6 @@ export default function FeaturesComp ({
   className,
   setSize,
   setColor,
-  size
 }) {
   const [Children, setChildren] = useState(chlidren)
   function selector (item) {
@@ -59,7 +58,6 @@ export default function FeaturesComp ({
           <>
             {Children.map(item => (
               <div
-                // size={item.selected ? item.name : 'l'}
                 onClick={() => {
                   setSize(item.name)
                   selector(item.name)

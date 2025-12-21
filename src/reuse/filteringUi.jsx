@@ -1,48 +1,16 @@
-import { useState, useEffect } from 'react'
-import { FaSquare } from 'react-icons/fa'
 import { FaRegSquare } from 'react-icons/fa'
 import { CiFilter } from 'react-icons/ci'
 import { FaCheck } from 'react-icons/fa'
 export default function Filtering ({
   width = '20%',
-  setCurrentCat,
-  currentCat,
   isActive,
   setIsActive,
-  setCategories,
   categories,
-  currentColor,
-  setCurrentColor,
   Colours,
-  setColours
+  dispatch,
+  changeColor,
+  changeCategory
 }) {
-  function changeCategory (id) {
-    console.log(id)
-    setCategories(prev =>
-      prev.map(item =>
-        item.id === id
-          ? { ...item, selected: true }
-          : { ...item, selected: false }
-      )
-    )
-  }
-
-  function changeColor (item) {
-    setColours(prev =>
-      prev.map(i =>
-        i.col === item
-          ? {
-              ...i,
-              selected: true
-            }
-          : {
-              ...i,
-              selected: false
-            }
-      )
-    )
-  }
-
   return (
     <section
       className={`w-[${width}] fixed max-[500px]:mt-17  mt-10  max-[1040px]:mt-20 z-10 max-[500px]:w-full bg-white    max-[500px]:pl-[10%] max-[500px]:fixed max-[500px]:bottom-0 max-[500px]:z-1 max-[500px]:overflow-hidden max-[500px]:h-screen max-[500px]:top-0 max-[500px]:py-10 bottom-0 overflow-hidden min-h-150 left-0 top-[10%] `}
@@ -66,7 +34,8 @@ export default function Filtering ({
             {categories.map(item => (
               <section
                 onClick={() => {
-                  setCurrentCat(item.id), changeCategory(item.id)
+                  dispatch({ type: 'changeCategory', payload: item.id }),
+                    changeCategory(item.id)
                 }}
                 className='flex gap-4 max-[800px]:gap-2 text-[13px] align-middle items-center cursor-pointer max-[800px]:text-[10px] max-[500px]:text-[14px]'
                 key={item.id}
@@ -86,12 +55,11 @@ export default function Filtering ({
         <section className='flex flex-col pl-10 pt-9 max-[1040px]:pl-5 max-[800px]:pt-1 max-[500px]:pt-10'>
           <p className='text-[16px] font-bold pb-3 max-[800px]:pb-1'>Colours</p>
           <section className=' w-full  flex flex-col  align-middle gap-0.5 max-[500px]:gap-2 '>
-
             {Colours.map(item => (
               <section
                 onClick={() => {
                   changeColor(item.col)
-                  setCurrentColor(item.col)
+                  dispatch({ type: 'changeColour', payload: item.col })
                 }}
                 key={item.col}
                 className='flex gap-4 text-[13px] align-middle items-center max-[800px]:text-[10px] max-[800px]:gap-2 max-[500px]:text-[14px]'

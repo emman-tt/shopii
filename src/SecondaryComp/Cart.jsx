@@ -3,9 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 const API_URL = import.meta.env.VITE_PORT_URL
 import InformationBox from './Information'
 export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
-  const array = [1, 2, 3, 4]
   const box = useRef(null)
-
   const [products, setProducts] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
   const [shippingAmount, setShippingAmount] = useState(0)

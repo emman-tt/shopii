@@ -1,7 +1,5 @@
-import { useState } from 'react'
 export default function Sorting ({
   array = [],
-  setGen,
   currentPos = 2,
   bgColor = 'white',
   specific = true,
@@ -12,7 +10,8 @@ export default function Sorting ({
   setCurrent,
   className = '',
   checkForErrors,
-  error
+  error,
+  dispatch
 }) {
   return (
     <section
@@ -42,7 +41,9 @@ export default function Sorting ({
             onClick={e => {
               setCurrent(error ? 1 : item.id),
                 specific === false ? setActive(item.id) : null
-              specific ? setGen(item.id) : checkForErrors()
+              specific
+                ? dispatch({ type: 'changeGender', payload: item.id })
+                : checkForErrors()
             }}
             style={
               current === item.id

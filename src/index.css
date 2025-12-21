@@ -1,6 +1,15 @@
 
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
+video {
+  will-change: transform;
+  transform: translateZ(0); 
+}
+
 /* * {
   outline: 1px solid red !important;
 } */

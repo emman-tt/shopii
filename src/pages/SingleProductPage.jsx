@@ -8,7 +8,7 @@ const API_URL = import.meta.env.VITE_PORT_URL
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import Notification from '../reuse/Notification'
-import useFecthingSPP from '../hooks/useFetchingSPP'
+import useFecthingSPP from '../hooks-and-reducers/useFetchingSPP'
 import Loader from '../reuse/loadingAnime'
 import { lazy } from 'react'
 const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
