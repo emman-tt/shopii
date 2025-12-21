@@ -6,11 +6,14 @@ import { GiPadlock } from 'react-icons/gi'
 import { CgProfile } from 'react-icons/cg'
 import { CgHome } from 'react-icons/cg'
 import { BsShop } from 'react-icons/bs'
-
+import gsap from 'gsap'
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
 
 export default function mobileMenu ({ showMenu, showCart, showCheckout }) {
   const navigate = useNavigate()
+  const box = useRef(null)
+
   function openLink (item) {
     showMenu(false)
     showCart(false)
@@ -26,8 +29,24 @@ export default function mobileMenu ({ showMenu, showCart, showCheckout }) {
       ? navigate('/wishlist')
       : navigate('/')
   }
+
+  useEffect(() => {
+    gsap.fromTo(
+      box.current,
+      {
+        x: -100
+      },
+      {
+        x: box.current,
+        duration: 0.6,
+        ease: 'bounce'
+      }
+    )
+  }, [])
+
+
   return (
-    <section className='bg-white fixed w-full h-screen  z-70 bottom-0 right-0 top-0 left-0 text-black pt-20'>
+    <section ref={box} className='bg-white fixed w-full h-screen  z-70 bottom-0 right-0 top-0 left-0 text-black pt-20'>
       <section className='flex justify-between flex-col h-[95%]'>
         <section className='flex flex-col items-center   w-full'>
           <div className='w-20 h-20 rounded-[50%] bg-[#bfcce2b3] mb-5 justify-center items-center flex'>

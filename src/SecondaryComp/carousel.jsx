@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { BsArrowRight, BsArrowLeft } from 'react-icons/bs'
 import { topPicksList } from '../utils/topPicks'
-
+import { useNavigate } from 'react-router-dom'
 export default function CircularCarousel () {
   const containerRef = useRef(null)
   const cardsRef = useRef([])
   const [index, setIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
-
+  const navigate = useNavigate()
   const radius = 220
   const total = topPicksList.length
 
@@ -60,6 +60,9 @@ export default function CircularCarousel () {
     setIndex(prev => (prev - 1 + total) % total)
   }
 
+  function openSPP (id) {
+    navigate(`/products/:${id}`)
+  }
   return (
     <div className='w-full min-h-screen flex flex-col items-center justify-center gradient-to-b overflow-hidden pt-30 bg-black sm:hidden relative '>
       <h1 className=' text-3xl w-full mb-50 text-left text-white flex font-bold pl-9'>
@@ -74,6 +77,7 @@ export default function CircularCarousel () {
         >
           {topPicksList.map((item, i) => (
             <div
+              onClick={() => openSPP(item.id)}
               key={i}
               ref={el => (cardsRef.current[i] = el)}
               className={`absolute w-60 h-70  rounded-2xl  flex items-center justify-center text-2xl font-bold text-white cursor-pointer will-change-transform bg-blue-900`}
@@ -100,7 +104,7 @@ export default function CircularCarousel () {
           disabled={isAnimating}
           className='flex  rounded-4xl items-center justify-center  text-white border-[0.1px] border-gray-500  bg-black/10  backdrop-blur-[7px] p-6 text-6xl font-extrabold'
         >
-           <BsArrowRight />
+          <BsArrowRight />
         </button>
       </div>
     </div>

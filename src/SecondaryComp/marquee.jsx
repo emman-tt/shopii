@@ -59,7 +59,7 @@ export default function Marquee () {
         {marquesListOne.map((item, i) => (
           <div
             key={i}
-            className='w-max flex justify-center items-center  max-sm:h-15 h-30  '
+            className='w-max flex justify-center items-center  max-sm:h-15 h-30 max-sm:max-w-max '
           >
             <img
               src={item.image}
@@ -76,7 +76,7 @@ export default function Marquee () {
         {marquesListTwo.map((item, i) => (
           <div
             key={i}
-            className='w-max  flex justify-center items-center max-sm:h-15 h-30  '
+            className='w-max max-sm:max-w-max flex justify-center items-center max-sm:h-15 h-30  '
           >
             <img
               src={item.image}
