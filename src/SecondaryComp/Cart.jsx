@@ -32,8 +32,6 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
       )
 
       setRecur(prev => prev + 1)
-
-    
     } catch (error) {
       console.log(error.message)
     }
@@ -105,7 +103,7 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
   return (
     <section className='w-full h-full flex '>
       {checkout && (
-        <InformationBox
+        <InformationBox 
           showCheckout={showCheckout}
           z={innerWidth <= 900 ? 60 : 40}
           changeCartBottom={changeCartBottom}
@@ -114,7 +112,7 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
       )}
       <section
         ref={box}
-        className='fixed right-0 top-10 bottom-0 w-[45%] max-lg:w-full  bg-white z-50 flex flex-col h-full pb-15 gap-0 justify-between pt-5 px-15 max-xl:px-7 overflow-y-scroll [scrollbar-width:none] '
+        className='fixed right-0 top-10 bottom-0 w-[45%] max-lg:w-full   z-50 flex flex-col min-h-screen pb-15 gap-0 justify-between pt-5 px-15 max-xl:px-7 bg-white overflow-y-scroll [scrollbar-width:none] max-sm:px-2'
       >
         <section>
           <section className='flex w-full justify-between items-center'>
@@ -129,7 +127,7 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
             </div>
           </section>
 
-          <section className='flex-1 bg-white rounded-lg overflow-hidden'>
+          <section className='flex-1 bg-white rounded-lg overflow-hidden '>
             <section
               className='
             flex 
@@ -138,7 +136,7 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
             overflow-y-auto 
             h-120 max-[900px]:h-160
             p-4 max-sm:h-100
-            pr-2 max-lg:p-0
+            pr-2 max-lg:p-0  
           '
             >
               {products.map(item => (
@@ -146,10 +144,10 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
                   key={item.id}
                   className='w-full h-50 shrink-0 flex border-b-[0.2px] border-gray-300  text-black gap-5 pb-5 max-[900px]:gap-0 '
                 >
-                  <figure className='w-[40%] grow   flex justify-center items-center h-full'>
+                  <figure className='w-[40%] grow   flex justify-center items-center h-full '>
                     <img
                       src={item.image}
-                      className='h-full w-auto '
+                      className='h-full max-[330px]:h-[70%] w-auto '
                       alt='photo'
                     />
                   </figure>
@@ -159,7 +157,7 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
                   >
                     <header className='flex w-full justify-between'>
                       <div className='flex flex-col'>
-                        <div className='font-semibold max-sm:text-[14px] max-sm:w-[70%]'>
+                        <div className=' font-semibold max-sm:text-[12px] max-sm:w-[70%] '>
                           {item.description}
                         </div>
                         <div className='text-[13px] text-[#515151fe]'>
@@ -182,8 +180,8 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
                         <p>Size: {item.cartProduct.size}</p>
                       </div>
 
-                      <div className='flex gap-10 font-semibold items-center'>
-                        <section className='flex   gap-5'>
+                      <div className='flex gap-10 font-semibold items-center justify-center'>
+                        <section className='flex max-sm:text-[13px]    gap-5'>
                           <button
                             onClick={() => {
                               item.cartProduct.quantity > 1
@@ -205,7 +203,7 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
                           </button>
                         </section>
 
-                        <p>{item.price}$</p>
+                        <p className='max-sm:text-[13px]'>{item.price}$</p>
                       </div>
                     </footer>
                   </section>
@@ -215,8 +213,8 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
           </section>
         </section>
         <section className=' h-full  w-full '>
-          <header className='flex w-full justify-between font-semibold flex-col border-t border-b border-gray-300 py-6 px-4 max-[325px]:px-1'>
-            <div className='flex w-full justify-between'>
+          <header className='flex w-full justify-between font-semibold flex-col border-t border-b border-gray-300 py-6 px-4 max-[325px]:px-1 max-sm:text-xs'>
+            <div className='flex w-full  justify-between'>
               <p>SubTotal :</p>
               <p>{subTotal} $</p>
             </div>
@@ -230,7 +228,7 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
             </div>
           </header>
 
-          <footer className='flex w-full justify-between font-semibold px-4 mt-2'>
+          <footer className='flex w-full justify-between font-semibold px-4 mt-2 max-sm:text-xs'>
             <div>Total:</div>
             <div>{totalPrice}$</div>
           </footer>

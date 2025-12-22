@@ -98,7 +98,7 @@ export default function BuildOutfits ({
       animation: gsap.fromTo(
         middle.current,
         {
-          scale: 5,
+          scale: isMobile ? 3 : 5,
           opacity: 0
         },
         { scale: 1, ease: 'linear', opacity: 1 }
@@ -214,7 +214,7 @@ export default function BuildOutfits ({
                   <SlArrowRight />
                 </div>
                 <div className='h-[95%]   w-full '>
-                  <ImageWithShimmer
+                  <img
                     src={item.image}
                     className='h-[105%] w-full max-[1030px]:h-full max-[380px]:h-[90%] '
                     alt='photo'
@@ -237,7 +237,7 @@ export default function BuildOutfits ({
               className=' h-full flex flex-col items-center  max-[500px]:justify-center '
             >
               <div className='w-full   h-[92%] max-[500px]:h-[50%] max-[500px]:justify-center flex max-[376px]:h-80'>
-                <ImageWithShimmer
+                <img
                   src={item.image}
                   className='h-full w-full max-[500px]:w-auto max-[500px]:h-90'
                   alt='photo'

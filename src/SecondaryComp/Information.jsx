@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from 'react'
 import gsap from 'gsap'
 import Sorting from './Sorting'
+import ScrollToPlugin from 'gsap/ScrollToPlugin'
+gsap.registerPlugin(ScrollToPlugin)
 import {
   FaCcVisa,
   FaCcMastercard,
-  FaCcAmex,
-  FaCcPaypal,
   FaGooglePay,
   FaApplePay
 } from 'react-icons/fa'
@@ -21,6 +21,7 @@ export default function InformationBox ({
     { id: 3, value: 'Payment' },
     { id: 4, value: 'Confirmation' }
   ])
+
   const [active, setActive] = useState(1)
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -63,6 +64,9 @@ export default function InformationBox ({
     setCurrent(active)
   }, [active])
 
+
+
+
   function checkForErrors () {
     if (
       firstName == '' ||
@@ -74,6 +78,12 @@ export default function InformationBox ({
       postal == 0 ||
       country == ''
     ) {
+      gsap.to(checkoutBox.current, {
+        scrollTo: 500,
+        duration: 0.5,
+        ease: 'power3.inOut'
+      })
+
       setCurrent(1)
       setActive(1)
       return setError(true)
@@ -85,8 +95,8 @@ export default function InformationBox ({
   return (
     <section
       ref={checkoutBox}
-      style={{ zIndex: z }}
-      className=' w-[55%]  max-[900px]:w-full  h-full max-sm:h-180  bg-white   max-[900px]:px-0  max-[900px]:pl-10 px-15  pt-0  fixed left-0 top-10 overflow-y-scroll max-sm:pl-0 '
+      style={{ zIndex: z }}    
+      className=' w-[55%]  max-[900px]:w-full  h-screen   bg-white   max-[900px]:px-0  max-[900px]:pl-10 px-15  pt-0  fixed left-0 top-10 overflow-y-scroll max-sm:pl-0  bottom-0 '
     >
       <Sorting
         error={error}
@@ -109,7 +119,10 @@ export default function InformationBox ({
         array={data}
       />
       {active === 1 && (
-        <section className='flex flex-col justify-between max-sm:pl-10   mt-10  h-120'>
+        <section
+       
+          className='flex flex-col relative justify-between max-sm:pl-10   mt-10    pb-30'
+        >
           <InFoBoxUi
             error={error}
             setError={setError}

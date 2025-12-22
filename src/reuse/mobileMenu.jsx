@@ -44,11 +44,14 @@ export default function mobileMenu ({ showMenu, showCart, showCheckout }) {
     )
   }, [])
 
-
   return (
-    <section ref={box} className='bg-white fixed w-full h-screen  z-70 bottom-0 right-0 top-0 left-0 text-black pt-20'>
-      <section className='flex justify-between flex-col h-[95%]'>
-        <section className='flex flex-col items-center   w-full'>
+    <section
+      ref={box}
+      // style={{height:'100vh'}}
+      className=' bg-white  max-[340px]:overflow-y-scroll fixed w-full   z-70  bottom-0 right-0 top-0 left-0 text-black pt-20 '
+    >
+      <section className='flex justify-between flex-col pb-20 h-max'>
+        <section className='flex flex-col items-center    w-full'>
           <div className='w-20 h-20 rounded-[50%] bg-[#bfcce2b3] mb-5 justify-center items-center flex'>
             <CgProfile size={'80%'} />
           </div>
@@ -112,7 +115,7 @@ export default function mobileMenu ({ showMenu, showCart, showCheckout }) {
             </li>
           </ul>
         </section>
-        <button className='flex self-center border w-[80%]  justify-self-center justify-center py-3 align-bottom'>
+        <button className='flex self-center border w-[80%]   justify-self-center justify-center py-3 mt-10 align-bottom'>
           Log Out
         </button>
       </section>
