@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
@@ -6,10 +6,7 @@ import { SlArrowLeft, SlArrowRight } from 'react-icons/sl'
 import ImageWithShimmer from '../reuse/shimmer'
 import { outfitMiddle, outfitsLeft, outfitsRight } from '../utils/buildOutfits'
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
-export default function BuildOutfits ({
-  sellersRef,
-  buildRef
-}) {
+export default function BuildOutfits ({ sellersRef, buildRef }) {
   const leftTop = useRef(null)
   const rightTop = useRef(null)
   const rightBottom = useRef(null)
@@ -17,6 +14,7 @@ export default function BuildOutfits ({
   const middle = useRef(null)
   const trigger = useRef(null)
   const isMobile = innerWidth <= 500
+  const [current, setCurrent] = useState(5)
 
   useEffect(() => {
     ScrollTrigger.create({
@@ -109,44 +107,12 @@ export default function BuildOutfits ({
 
   function scrollRight () {
     gsap.to(middle.current, {
-      scrollTo: {
-        x:
-          innerWidth <= 1200 && innerWidth >= 1040
-            ? '+=600'
-            : innerWidth <= 1030 && innerWidth >= 1000
-            ? '+=520'
-            : innerWidth <= 900 && innerWidth >= 500
-            ? '+=400'
-            : innerWidth <= 430 && innerWidth >= 380
-            ? '+=380'
-            : innerWidth <= 376 && innerWidth >= 330
-            ? '+=320'
-            : innerWidth <= 326 && innerWidth >= 300
-            ? '+=270'
-            : '+=800'
-      },
       duration: 0.8,
       ease: 'power2.out'
     })
   }
   function scrollLeft () {
     gsap.to(middle.current, {
-      scrollTo: {
-        x:
-          innerWidth <= 1200 && innerWidth >= 1040
-            ? '+=-600'
-            : innerWidth <= 1040 && innerWidth >= 1000
-            ? '+=-520'
-            : innerWidth <= 900 && innerWidth >= 500
-            ? '+=-400'
-            : innerWidth <= 430 && innerWidth >= 380
-            ? '+=-380'
-            : innerWidth <= 376 && innerWidth >= 330
-            ? '+=-320'
-            : innerWidth <= 326 && innerWidth >= 300
-            ? '-=270'
-            : '+=-800'
-      },
       duration: 0.8,
       ease: 'power2.out'
     })
@@ -164,7 +130,7 @@ export default function BuildOutfits ({
         Build your Outfits
       </div>
 
-      <section className='h-full gap-5 mt-5 flex flex-row max-[500px]:flex-col max-[500px]:h-max'>
+      <section className='h-full gap-5 w-full mt-5 flex flex-row max-[500px]:flex-col max-[500px]:h-max'>
         <section className='w-23/100 h-full flex flex-col justify-between  gap-5 max-[500px]:w-full'>
           {outfitsLeft.map(item => (
             <section
@@ -191,41 +157,45 @@ export default function BuildOutfits ({
         <section
           ref={middle}
           id='middle'
-          className=' px-[0%]  flex text-black overflow-hidden max-[1441px]:h-210 max-[1200px]:h-190 max-[1040px]:h-165 w-[60%]  h-230 max-[800px]:h-120 max-[500px]:w-full  '
+          className='   flex text-black   max-[1200px]:h-190 max-[1040px]:h-165    max-[800px]:h-120 max-[500px]:w-full  relative z-5      w-[50%]  overflow-hidden'
         >
-          <section className='[scrollbar-width:none]  flex  '>
-            {outfitMiddle.map(item => (
-              <section
-                className='flex justify-between flex-col gap-0 
-                 h-full  w-200  mr-0 relative max-[1030px]:w-130 max-[800px]:w-100 max-[500px]:w-[380px] max-[380px]:w-[320px] max-[322px]:w-[270px] max-[323px]:h-[80%]'
-                key={item.id}
-              >
-                <div
-                  onClick={scrollLeft}
-                  className=' absolute left-[5%] top-[35%] z-5 text-4xl font-extrabold text-black 
+          <div
+            style={{ position: 'absolute' }}
+            onClick={() =>
+              setCurrent(e => (e === 1 ? outfitMiddle.length : e - 1))
+            }
+            className='absolute left-[5%] top-[35%] z-5 text-4xl font-extrabold text-black 
                   max-[323px]:left-[1%]'
-                >
-                  <SlArrowLeft />
-                </div>
-                <div
-                  onClick={scrollRight}
-                  className=' absolute right-[5%] top-[35%] z-5 text-4xl font-extrabold text-black max-[320px]:right-[1%] max-[400px]:right-[10%]'
-                >
-                  <SlArrowRight />
-                </div>
-                <div className='h-[95%]   w-full '>
-                  <img
-                    src={item.image}
-                    className='h-[105%] w-full max-[1030px]:h-full max-[380px]:h-[90%] '
-                    alt='photo'
-                  />
-                </div>
-                <div className='flex flex-row text-black font-medium justify-around  items-center max-[1030px]:text-sm'>
-                  <p className=''>{item.description}</p>
-                  <p className=''>$ {item.price}</p>
-                </div>
-              </section>
-            ))}
+          >
+            <SlArrowLeft />
+          </div>
+          <div
+            style={{ position: 'absolute' }}
+            onClick={() =>
+              setCurrent(e => (e === outfitMiddle.length ? 1 : e + 1))
+            }
+            className='absolute right-[5%] top-[35%] z-5 text-4xl font-extrabold text-black max-[320px]:right-[1%] max-[400px]:right-[10%]'
+          >
+            <SlArrowRight />
+          </div>
+          <section className='[scrollbar-width:none] min-w-max  overflow-x-hidden   gap-0 h-full  relative  flex  '>
+            {outfitMiddle.map(
+              item =>
+                item.id === current && (
+                  <section
+                    className='h-full  min-w-200 rounded-3xl relative     max-[800px]:w-100 max-[500px]:w-[380px] max-[380px]:w-[320px] max-[322px]:w-[270px] max-[323px]:h-[80%'
+                    key={item.id}
+                  >
+                    <div className='absolute  h-full overflow-hidden   w-full   '>
+                      <img
+                        src={item.image}
+                        className='   h-full  max-[380px]:h-[90%] '
+                        alt='photo'
+                      />
+                    </div>
+                  </section>
+                )
+            )}
           </section>
         </section>
 
