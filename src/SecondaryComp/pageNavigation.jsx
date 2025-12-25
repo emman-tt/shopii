@@ -19,7 +19,9 @@ export default function PageNavigation ({
   return (
     <section
       className={`bg-white h-${height}  max-xl:pl-[15%] max-md:pl-[6%] w-full fixed z-${z} ${className} ${style} top-${top} flex gap-1 text-[15px] pl-[30%] pb-10 pt-${pt} ${
-        product === true ? ' max-[800px]:top-19 max-sm:top-32 max-sm:z-3 max-sm:pl-[13%] ' : ''
+        product === true
+          ? ' max-[800px]:top-19 max-sm:top-32 max-sm:z-3 max-sm:pl-[13%] '
+          : ''
       }`}
     >
       <div
