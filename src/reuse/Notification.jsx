@@ -1,4 +1,4 @@
-import { BiCheckCircle } from 'react-icons/bi'
+import { BadgeCheck } from 'lucide-react'
 import gsap from 'gsap'
 import { useEffect, useRef } from 'react'
 
@@ -18,7 +18,7 @@ export default function ({ message = 'Added To Cart' }) {
       style={{ display: 'flex', justifySelf: 'center', alignSelf: 'center' }}
       className={`absolute max-sm:fixed w-80     justify-self-center  backdrop-blur-2xl bg-[#17092e] text-white py-5 rounded-2xl gap-8 flex place-content-center top-0 z-120 self-center justify-center sm:w-100 sm:mx-auto  text-xl`}
     >
-      <BiCheckCircle color='green' size={30} /> {message}
+      <BadgeCheck color='green' size={30} /> {message}
     </section>
   )
 }

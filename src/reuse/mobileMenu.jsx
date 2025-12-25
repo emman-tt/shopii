@@ -1,14 +1,17 @@
-import { BiCart, BiHeart, BiCard } from 'react-icons/bi'
-import { BsPerson } from 'react-icons/bs'
-import { FaCoins } from 'react-icons/fa'
-import { FaGears } from 'react-icons/fa6'
-import { GiPadlock } from 'react-icons/gi'
-import { CgProfile } from 'react-icons/cg'
-import { CgHome } from 'react-icons/cg'
-import { BsShop } from 'react-icons/bs'
 import gsap from 'gsap'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
+import {
+  Home,
+  UserCircle2,
+  ShoppingBag,
+  Lock,
+  Heart,
+  CreditCard,
+  Settings,
+  ShoppingBasket,
+  Bitcoin
+} from 'lucide-react'
 
 export default function mobileMenu ({ showMenu, showCart, showCheckout }) {
   const navigate = useNavigate()
@@ -53,7 +56,7 @@ export default function mobileMenu ({ showMenu, showCart, showCheckout }) {
       <section className='flex justify-between flex-col pb-20 h-max'>
         <section className='flex flex-col items-center    w-full'>
           <div className='w-20 h-20 rounded-[50%] bg-[#bfcce2b3] mb-5 justify-center items-center flex'>
-            <CgProfile size={'80%'} />
+            <UserCircle2 size={'80%'} />
           </div>
           <div>Emmanuel</div>
           <div>emmanuel@gmail.com</div>
@@ -65,7 +68,7 @@ export default function mobileMenu ({ showMenu, showCart, showCheckout }) {
               }}
               className=' border-t-[0.5px] pl-5 py-2 flex gap-3  items-center border-gray-500'
             >
-              <CgHome size={20} />
+              <Home size={20} />
               Home
             </li>
             <li
@@ -74,7 +77,7 @@ export default function mobileMenu ({ showMenu, showCart, showCheckout }) {
               }}
               className=' border-t-[0.5px] pl-5 py-2 flex gap-3  items-center border-gray-500'
             >
-              <BsShop size={20} />
+              <ShoppingBag size={20} />
               All Clothing & Outfits
             </li>
             <li
@@ -83,7 +86,7 @@ export default function mobileMenu ({ showMenu, showCart, showCheckout }) {
               }}
               className='border-t-[0.5px] border-b-[0.5px] pl-5 py-2 flex gap-3  items-center border-gray-400'
             >
-              <BiCart size={20} />
+              <ShoppingBasket size={20} />
               My orders
             </li>
             <li
@@ -93,24 +96,24 @@ export default function mobileMenu ({ showMenu, showCart, showCheckout }) {
               className=' border-b-[0.5px]
            pl-5 py-2 flex gap-3  items-center border-gray-500'
             >
-              <BiHeart size={20} />
+              <Heart size={20} />
               My wishlist
             </li>
 
             <li className=' border-b-[0.5px] pl-5 py-2 flex gap-3  items-center border-gray-500'>
-              <BiCard size={20} />
+              <CreditCard size={20} />
               Payment Method
             </li>
             <li className=' border-b-[0.5px] pl-5 py-2 flex gap-3  items-center border-gray-500'>
-              <FaCoins />
+              <Bitcoin />
               Bonuses and Coupons
             </li>
             <li className=' border-b-[0.5px] pl-5 py-2 flex gap-3  items-center border-gray-500'>
-              <FaGears />
+              <Settings />
               Support
             </li>
             <li className='border-b-[0.5px]  pl-5  py-2 flex gap-3  items-center border-gray-500'>
-              <GiPadlock />
+              <Lock />
               Privacy Policy
             </li>
           </ul>

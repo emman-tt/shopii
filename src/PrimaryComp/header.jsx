@@ -1,10 +1,6 @@
-import { IoPersonOutline } from 'react-icons/io5'
-import { BsCart4 } from 'react-icons/bs'
-import { FaRegHeart } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
-import { GiHamburgerMenu } from 'react-icons/gi'
 import { useContext, useEffect } from 'react'
-import { FaXmark } from 'react-icons/fa6'
+import { User, Heart, ShoppingCart, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 const API_URL = import.meta.env.VITE_PORT_URL
 import { FilterContext } from '../App'
@@ -67,7 +63,7 @@ export default function Header ({
             }}
             className='text-4xl pr-7'
           >
-            {menu ? <FaXmark /> : <GiHamburgerMenu />}
+            {menu ? <X /> : <Menu />}
           </div>
         ) : (
           <section className='flex flex-row h-max font-semibold  gap-5 max-[500px]:hidden max-[800px]:text-[11px] cursor-pointer '>
@@ -87,10 +83,10 @@ export default function Header ({
 
         <section className='flex flex-row h-max text-xl  gap-7 max-[800px]:text-[13px] max-[500px]:gap-6 max-[500px]:text-[19px]'>
           <div>
-            <IoPersonOutline className='cursor-pointer' />
+            <User className='cursor-pointer' />
           </div>
           <div>
-            <FaRegHeart className='cursor-pointer' />
+            <Heart className='cursor-pointer' />
           </div>
           <div
             onClick={() => {
@@ -103,7 +99,7 @@ export default function Header ({
             <div className='absolute h-6 w-6 text-[18px] -top-2 -right-4 text-white rounded-[50%] bg-red-600 flex items-center justify-center  max-sm:h-5 max-sm:w-5'>
               {total}
             </div>
-            <BsCart4 />
+            <ShoppingCart />
           </div>
         </section>
       </section>

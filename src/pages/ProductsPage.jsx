@@ -1,15 +1,13 @@
+import { lazy } from 'react'
 import Header from '../PrimaryComp/header'
-import { useState, useEffect, useReducer, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Filtering from '../reuse/filteringUi'
-import Items from '../SecondaryComp/ProductItems'
+const Items = lazy(() => import('../SecondaryComp/ProductItems'))
 import Loader from '../reuse/loadingAnime'
 import { CiFilter } from 'react-icons/ci'
-import { Categories } from '../utils/filtering'
 import Sorting from '../SecondaryComp/Sorting'
-import { Colours } from '../utils/filtering'
 import { useFetching } from '../hooks-and-reducers/useFetching.jsx'
-import { lazy } from 'react'
-import Overlay from '../reuse/overlay'
+const Overlay = lazy(() => import('../reuse/overlay'))
 const CartUi = lazy(() => import('../SecondaryComp/Cart'))
 const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
 import { FilterContext } from '../App.jsx'
@@ -65,7 +63,7 @@ export default function Products ({
           { id: 4, value: 'Unisex' }
         ]}
       />
-      <PageNavigation product={true}/>
+      <PageNavigation product={true} />
       {menu && (
         <MobileMenu
           showCart={showCart}

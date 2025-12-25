@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
-import { SlArrowLeft, SlArrowRight } from 'react-icons/sl'
+import { ChevronRight, ChevronLeft } from 'lucide-react'
 import ImageWithShimmer from '../reuse/shimmer'
 import { outfitMiddle, outfitsLeft, outfitsRight } from '../utils/buildOutfits'
 import { useNavigate } from 'react-router-dom'
@@ -169,7 +169,7 @@ export default function BuildOutfits ({ sellersRef, buildRef }) {
             className='absolute left-[5%] top-[35%] z-5 text-4xl font-extrabold text-black 
                   max-[323px]:left-[1%]'
           >
-            <SlArrowLeft />
+            <ChevronLeft />
           </div>
           <div
             style={{ position: 'absolute' }}
@@ -178,7 +178,7 @@ export default function BuildOutfits ({ sellersRef, buildRef }) {
             }
             className='absolute right-[5%] top-[35%] z-5 text-4xl font-extrabold text-black max-[320px]:right-[1%] max-[400px]:right-[10%]'
           >
-            <SlArrowRight />
+            <ChevronRight />
           </div>
           <section className='[scrollbar-width:none] min-w-max  overflow-x-hidden   gap-0 h-full  relative  flex  '>
             {outfitMiddle.map(

@@ -1,9 +1,9 @@
 import gsap from 'gsap'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { lazy, useContext, useEffect, useRef, useState } from 'react'
 const API_URL = import.meta.env.VITE_PORT_URL
-import InformationBox from './Information'
+const InformationBox = lazy(() => import('./Information'))
 import { FilterContext } from '../App.jsx'
-
+const Loader = lazy(() => import('../reuse/loadingAnime.jsx'))
 export default function Cart ({ showCart, checkout, showCheckout }) {
   const box = useRef(null)
   const [products, setProducts] = useState([])
@@ -12,6 +12,7 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
   const [cartBottom, changeCartBottom] = useState(false)
   const [subTotal, setSubTotal] = useState(0)
   const { state, dispatch } = useContext(FilterContext)
+  const [isLoaded, setIsloaded] = useState(false)
   async function updateQuantity (id, qty) {
     try {
       setProducts(prev =>
@@ -78,6 +79,7 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
         const items = await res.json()
         const data = items.products
         setProducts(data.reverse())
+        setIsloaded(true)
       }
     })()
   }, [])
@@ -97,7 +99,6 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
   }, [])
 
   function moveCart () {
-  
     gsap.to(box.current, {
       x: 800,
       ease: 'power1.inOut',
@@ -108,6 +109,13 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
     })
   }
 
+  if (!isLoaded) {
+    return (
+      <section className='w-full flex justify-center items-center align-middle h-screen   max-[800px]:pl-20 max-[500px]:pl-0 max-[500px]:w-full z-0 overflow-x-hidden '>
+        <Loader />
+      </section>
+    )
+  }
   return (
     <section className='w-full h-full flex '>
       {checkout && (

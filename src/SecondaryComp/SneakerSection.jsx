@@ -1,8 +1,8 @@
 import Shoes from '../utils/shoes.js'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
-import { useEffect, useRef } from 'react'
-import ImageWithShimmer from '../reuse/shimmer.jsx'
+import { lazy, useEffect, useRef } from 'react'
+const ImageWithShimmer = lazy(() => import('../reuse/shimmer.jsx'))
 import { useNavigate } from 'react-router-dom'
 gsap.registerPlugin(ScrollTrigger)
 
@@ -74,7 +74,7 @@ export default function Sneakers ({ lastcard }) {
         {Shoes.map(item => (
           <section
             onClick={() => navigate(`/products/:${item.id}`)}
-            ref={item.id === 1 ? shoe1ref : item.id === 4 ? shoe2ref : null}
+            ref={item.id === 88 ? shoe1ref : item.id === 85 ? shoe2ref : null}
             className=' h-full w-full cursor-pointer max-[500px]:w-[50%] max-[500px]:h-[50%] '
             key={item.id}
           >

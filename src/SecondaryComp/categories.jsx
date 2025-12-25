@@ -5,9 +5,9 @@ import { useRef, useEffect, useReducer, useState } from 'react'
 import watchimg from '../assets/img/watch.png'
 import shoesimg from '../assets/img/shoes.png'
 import categoryMiddle from '../assets/img/categoryMiddle.png'
-import { BsArrowUpRight } from 'react-icons/bs'
+import { MoveUpRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import { categoriesList } from '../utils/categories'
+import {categoriesList} from '../utils/categories'
 
 export default function Categories ({ heroLeft, heroRight, state, dispatch }) {
   const navigate = useNavigate()
@@ -87,7 +87,12 @@ export default function Categories ({ heroLeft, heroRight, state, dispatch }) {
                 className='border h-full w-40 rounded-3xl relative '
               >
                 <div className='absolute w-full h-full flex justify-center overflow-hidden'>
-                  <img src={item.image} className='h-full' alt='image' />
+                  <img
+                    src={item.image}
+                    loading='lazy'
+                    className='h-full'
+                    alt='image'
+                  />
                 </div>
                 <span className='bg-indigo-50 w-[70%] absolute bottom-3 flex text-center rounded-[13px] p-1 text-[13px] left-5 justify-center'>
                   {item.text}
@@ -111,11 +116,16 @@ export default function Categories ({ heroLeft, heroRight, state, dispatch }) {
             className=' w-23/100 cursor-pointer h-[60%] max-[500px]:w-full max-[500px]:h-[25%]'
           >
             <div className='w-full flex h-73/100 max-[1100px]:h-[60%] justify-center items-center  bg-[#b1b1bb25]  max-[800px]:h-full'>
-              <img src={watchimg} className=' max-[500px]:h-full' alt='photo' />
+              <img
+                src={watchimg}
+                loading='lazy'
+                className=' max-[500px]:h-full'
+                alt='photo'
+              />
             </div>
             <div className='text-xl text-black font-semibold pl-10 flex gap-10 items-center pt-5 max-[800px]:text-[15px] max-[800px]:gap-5 max-[800px]:pt-1 max-[800px]:pl-2 hover:opacity-[0.4] cursor-pointer'>
               Accesories
-              <BsArrowUpRight className='font-extrabold text-xl max-[800px]:text-xs' />
+              <MoveUpRight className='font-extrabold text-xl max-[800px]:text-xs' />
             </div>
           </section>
           <section
@@ -126,13 +136,14 @@ export default function Categories ({ heroLeft, heroRight, state, dispatch }) {
             <div className='w-full h-93/100 flex items-center justify-center  bg-[#b1b1bb25]'>
               <img
                 src={categoryMiddle}
+                loading='lazy'
                 className='w-75/100 max-[330px]:w-full'
                 alt='photo'
               />
             </div>
             <div className='text-xl pt-5  text-black font-semibold pl-10 flex gap-10 items-center max-[800px]:text-[15px] max-[800px]:gap-5 max-[800px]:pt-1 max-[800px]:pl-2 hover:opacity-[0.4] cursor-pointer'>
               Clothes
-              <BsArrowUpRight className='font-extrabold text-xl max-[800px]:text-xs' />
+              <MoveUpRight className='font-extrabold text-xl max-[800px]:text-xs' />
             </div>
           </section>
           <section
@@ -141,11 +152,16 @@ export default function Categories ({ heroLeft, heroRight, state, dispatch }) {
             className='w-25/100 h-50/100 cursor-pointer flex flex-col self-end max-[500px]:w-full max-[500px]:h-[25%]'
           >
             <div className='w-full h-full p-0  flex items-center max-[800px]:h-full'>
-              <img className=' bg-[#b1b1bb25]' src={shoesimg} alt='photo' />
+              <img
+                loading='lazy'
+                className=' bg-[#b1b1bb25]'
+                src={shoesimg}
+                alt='photo'
+              />
             </div>
             <div className='text-xl text-black font-semibold pl-10 flex gap-10  items-center max-[800px]:text-[15px] max-[800px]:gap-5 max-[800px]:pt-1 max-[800px]:pl-2 hover:opacity-[0.4] cursor-pointer'>
               Shoes
-              <BsArrowUpRight className='font-extrabold text-xl max-[800px]:text-xs' />
+              <MoveUpRight className='font-extrabold text-xl max-[800px]:text-xs' />
             </div>
           </section>
         </section>

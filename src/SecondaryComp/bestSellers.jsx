@@ -1,9 +1,9 @@
-import { useRef, useState } from 'react'
+import { lazy, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { SlArrowLeft, SlArrowRight } from 'react-icons/sl'
-import { FaRegHeart } from 'react-icons/fa6'
+import { ChevronRight, Heart, ChevronLeft } from 'lucide-react'
 import { all } from '../utils/bestSellers'
-import ImageWithShimmer from '../reuse/shimmer'
+
+const ImageWithShimmer = lazy(() => import('../reuse/shimmer'))
 import { useNavigate } from 'react-router-dom'
 export default function BestSellers ({ sellersRef }) {
   const rightArrow = useRef(null)
@@ -40,14 +40,14 @@ export default function BestSellers ({ sellersRef }) {
         onClick={scrollLeft}
         className=' absolute left-[3%] top-[50%] z-5 text-4xl font-extrabold text-black cursor-pointer rounded-2xl border p-3 backdrop-blur-2xl max-[800px]:p-1 max-[500px]:hidden'
       >
-        <SlArrowLeft />
+        <ChevronLeft />
       </div>
       <div
         ref={rightArrow}
         onClick={scrollRight}
         className=' absolute right-[6%] top-[50%] z-5 text-4xl font-extrabold text-black cursor-pointer  rounded-2xl border p-3 backdrop-blur-2xl max-[800px]:p-1 max-[500px]:right-[13%] max-[500px]:hidden '
       >
-        <SlArrowRight />
+        <ChevronRight />
       </div>
       <div className='text-3xl font-semibold text-center text-black mb-10 max-[500px]:text-left max-[500px]:pl-10'>
         Best Sellers
@@ -62,7 +62,7 @@ export default function BestSellers ({ sellersRef }) {
             key={item.id}
             className=' min-w-[300px]  h-full relative  pb-3'
           >
-            <FaRegHeart className='absolute right-5 z-10 top-5 text-xl ' />
+            <Heart className='absolute right-5 z-10 top-5 text-xl ' />
             <div
               onClick={() => navigate(`/products/:${item.id}`)}
               className='w-full h-93/100 cursor-pointer  max-[800px]:w-[95%]'

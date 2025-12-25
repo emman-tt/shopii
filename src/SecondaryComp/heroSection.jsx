@@ -1,17 +1,16 @@
-import { useRef } from 'react'
+import { lazy, useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
-import ImageWithShimmer from '../reuse/shimmer'
 import { SplitText } from 'gsap/SplitText'
 gsap.registerPlugin(SplitText)
+const ImageWithShimmer = lazy(() => import('../reuse/shimmer'))
 import heroLeftimg from '../assets/img/heroLeft.png'
 import heroRightimg from '../assets/img/heroRight.png'
-import { BsArrowUpRight } from 'react-icons/bs'
-import { useEffect } from 'react'
+import { MoveUpRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 export default function Hero ({ heroLeft, heroRight }) {
   const heroLeftText = useRef(null)
   const heroRightText = useRef(null)
-   const navigate = useNavigate()
+  const navigate = useNavigate()
   useEffect(() => {
     const heroLeftSplit = new SplitText(heroLeftText.current, {
       type: 'chars,words,lines'
@@ -72,7 +71,11 @@ export default function Hero ({ heroLeft, heroRight }) {
           ref={heroRight}
           className='w-50/100 flex justify-center bg-[#79797a1c]  text-black max-[500px]:w-full max-[500px]:h-70/100 place-content-center'
         >
-          <ImageWithShimmer src={heroRightimg} className='flex  self-center place-content-center w-full' alt='phot0' />
+          <ImageWithShimmer
+            src={heroRightimg}
+            className='flex  self-center place-content-center w-full'
+            alt='phot0'
+          />
         </div>
       </section>
 
@@ -80,11 +83,14 @@ export default function Hero ({ heroLeft, heroRight }) {
         <div className='w-50/100 justify-center pl-0 flex flex-row gap-6 items-center  hover:opacity-[0.4] cursor-pointer'>
           <div ref={heroLeftText}>Limited Edition</div>
 
-          <BsArrowUpRight className='font-extrabold text-3xl max-[800px]:text-sm' />
+          <MoveUpRight className='font-extrabold text-3xl max-[800px]:text-sm' />
         </div>
-        <div onClick={() => navigate('/products')} className='w-50/100 pl-0 justify-center flex flex-row gap-6 items-center hover:opacity-[0.4] cursor-pointer'>
+        <div
+          onClick={() => navigate('/products')}
+          className='w-50/100 pl-0 justify-center flex flex-row gap-6 items-center hover:opacity-[0.4] cursor-pointer'
+        >
           <div ref={heroRightText}>New Arrivals</div>
-          <BsArrowUpRight className='font-extrabold text-3xl max-[800px]:text-sm' />
+          <MoveUpRight className='font-extrabold text-3xl max-[800px]:text-sm' />
         </div>
       </div>
     </>

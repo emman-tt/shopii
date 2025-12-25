@@ -1,11 +1,10 @@
-import { useRef, useState, useEffect, useReducer, useContext } from 'react'
+import { useRef, useState, useEffect, useContext } from 'react'
 import { lazy } from 'react'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Cards from '../reuse/StackedCards'
-import Overlay from '../reuse/overlay'
-
+const Cards = lazy(() => import('../reuse/StackedCards'))
+const Overlay = lazy(() => import('../reuse/overlay'))
 const Categories = lazy(() => import('../SecondaryComp/categories'))
 const Hero = lazy(() => import('../SecondaryComp/heroSection'))
 const Footer = lazy(() => import('../PrimaryComp/footer'))
@@ -27,7 +26,6 @@ export default function Homepage ({
   showMenu,
   cart,
   showCart,
-
   checkout,
   showCheckout
 }) {
@@ -100,7 +98,7 @@ export default function Homepage ({
         />
       )}
       {cart && (
-        <CartUi 
+        <CartUi
           checkout={checkout}
           showCheckout={showCheckout}
           showCart={showCart}
