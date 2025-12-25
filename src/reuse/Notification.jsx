@@ -1,8 +1,10 @@
 import { BiCheckCircle } from 'react-icons/bi'
 import gsap from 'gsap'
 import { useEffect, useRef } from 'react'
+
 export default function ({ message = 'Added To Cart' }) {
   const box = useRef(null)
+  const isMobile = innerWidth <= 500
   useEffect(() => {
     gsap.from(box.current, {
       y: 50,
@@ -13,6 +15,7 @@ export default function ({ message = 'Added To Cart' }) {
   return (
     <section
       ref={box}
+      style={{ display:"flex",justifySelf:"center",alignSelf:"center" }}
       className={`absolute max-sm:fixed w-80     justify-self-center  backdrop-blur-2xl bg-[#17092e] text-white py-5 rounded-2xl gap-8 flex place-content-center top-0 z-120 self-center justify-center sm:w-100 sm:mx-auto  text-xl`}
     >
       <BiCheckCircle color='green' size={30} /> {message}
