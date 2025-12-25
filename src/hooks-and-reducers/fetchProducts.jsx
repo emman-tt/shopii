@@ -8,7 +8,8 @@ export const initialState = {
   filterCategory: 'All',
   colours: Colours,
   categories: Categories,
-  recur: 1
+  recur: 1,
+  currentSPP: ''
 }
 
 export default function fetchProductReducer (state, action) {
@@ -47,6 +48,12 @@ export default function fetchProductReducer (state, action) {
       return {
         ...state,
         recur: state.recur++
+      }
+
+    case 'changeSPP':
+      return {
+        ...state,
+        currentSPP: action.payload
       }
     case 'RESET':
       return initialState

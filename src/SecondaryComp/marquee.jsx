@@ -63,7 +63,7 @@ export default function Marquee () {
           >
             <img
               src={item.image}
-              className='bg-white w-max rounded-2xl h-full'
+              className='bg-white max-w-50 rounded-2xl h-full'
               alt='photoads'
             />
           </div>
@@ -80,7 +80,7 @@ export default function Marquee () {
           >
             <img
               src={item.image}
-              className='rounded-2xl w-max max-md:w-100 h-full'
+              className='rounded-2xl  max-w-50 h-full'
               alt='photoads'
             />
           </div>

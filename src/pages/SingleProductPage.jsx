@@ -3,18 +3,18 @@ import FeaturesComp from '../reuse/SPPcomp'
 import { useContext, useState } from 'react'
 import { FaRegHeart } from 'react-icons/fa6'
 import { FaHeart } from 'react-icons/fa'
-import ImageWithShimmer from '../reuse/shimmer'
 const API_URL = import.meta.env.VITE_PORT_URL
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import gsap from 'gsap'
-import Notification from '../reuse/Notification'
 import useFecthingSPP from '../hooks-and-reducers/useFetchingSPP'
 import Loader from '../reuse/loadingAnime'
 import { lazy } from 'react'
 import { FilterContext } from '../App'
 const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
-import Overlay from '../reuse/overlay'
+const Overlay = lazy(() => import('../reuse/overlay'))
 const CartUi = lazy(() => import('../SecondaryComp/Cart'))
+const PageNavigation = lazy(() => import('../SecondaryComp/pageNavigation'))
+const Notification = lazy(() => import('../reuse/Notification'))
 export default function SPP ({
   menu,
   showMenu,
@@ -96,6 +96,7 @@ export default function SPP ({
         fixed={true}
         showCheckout={showCheckout}
       />
+      <PageNavigation top={5} pt={10} />
       {menu && (
         <MobileMenu
           showCart={showCart}
@@ -120,7 +121,7 @@ export default function SPP ({
         data.map(item => (
           <section
             key={item.id}
-            className='flex md:px-[4%] lg:px-[12%] mt-5 pb-20  max-[900px]:flex-col '
+            className='flex md:px-[4%] lg:px-[12%] mt-15 pb-20   max-[900px]:flex-col '
           >
             <section className=' h-130   flex place-content-center w-[60%] max-sm:w-full max-sm:h-100  '>
               <img

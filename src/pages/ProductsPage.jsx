@@ -13,7 +13,7 @@ import Overlay from '../reuse/overlay'
 const CartUi = lazy(() => import('../SecondaryComp/Cart'))
 const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
 import { FilterContext } from '../App.jsx'
-
+import PageNavigation from '../SecondaryComp/pageNavigation.jsx'
 export default function Products ({
   menu,
   showMenu,
@@ -65,6 +65,7 @@ export default function Products ({
           { id: 4, value: 'Unisex' }
         ]}
       />
+      <PageNavigation product={true}/>
       {menu && (
         <MobileMenu
           showCart={showCart}

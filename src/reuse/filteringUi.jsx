@@ -13,7 +13,7 @@ export default function Filtering ({
 }) {
   return (
     <section
-      className={`w-[${width}] fixed max-[500px]:mt-17  mt-10  max-[1040px]:mt-20 z-10 max-[500px]:w-full bg-white    max-[500px]:pl-[10%] max-[500px]:fixed max-[500px]:bottom-0 max-[500px]:z-1 max-[500px]:overflow-hidden max-[500px]:h-screen max-[500px]:top-0 max-[500px]:py-10 bottom-0 overflow-hidden min-h-150 left-0 top-[10%] `}
+      className={`w-[${width}] fixed max-[500px]:mt-17  mt-13  max-[1040px]:mt-20 z-10 max-[500px]:w-full bg-white    max-[500px]:pl-[10%] max-[500px]:fixed max-[500px]:bottom-0 max-[500px]:z-1 max-[500px]:overflow-hidden max-[500px]:h-screen max-[500px]:top-0 max-[500px]:py-10 bottom-0 overflow-hidden min-h-150 left-0 top-[10%]  `}
     >
       <section className='max-[500px]:overflow-y-scroll  overflow-y-scroll  [scrollbar-width:none] h-full pb-10'>
         <section className=' w-full px-7 justify-between max-[800px]:text-[12px] flex max-[1040px]:px-2 max-[800px]:px-1 max-[500px]:h-max '>
