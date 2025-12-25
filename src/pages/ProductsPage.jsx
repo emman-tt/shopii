@@ -19,8 +19,6 @@ export default function Products ({
   showMenu,
   cart,
   showCart,
-  recur,
-  setRecur,
   checkout,
   showCheckout
 }) {
@@ -52,7 +50,6 @@ export default function Products ({
         showMenu={showMenu}
         menu={menu}
         fixed={true}
-        recur={recur}
         showCheckout={showCheckout}
       ></Header>
 
@@ -80,7 +77,6 @@ export default function Products ({
         <CartUi
           checkout={checkout}
           showCheckout={showCheckout}
-          setRecur={setRecur}
           showCart={showCart}
         />
       )}

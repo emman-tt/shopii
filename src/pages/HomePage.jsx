@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Cards from '../reuse/StackedCards'
 import Overlay from '../reuse/overlay'
+
 const Categories = lazy(() => import('../SecondaryComp/categories'))
 const Hero = lazy(() => import('../SecondaryComp/heroSection'))
 const Footer = lazy(() => import('../PrimaryComp/footer'))
@@ -18,7 +19,6 @@ const CartUi = lazy(() => import('../SecondaryComp/Cart'))
 const TopPicks = lazy(() => import('../SecondaryComp/topPicks.jsx'))
 const Carousel = lazy(() => import('../SecondaryComp/carousel.jsx'))
 const Marquee = lazy(() => import('../SecondaryComp/marquee.jsx'))
-
 import { FilterContext } from '../App.jsx'
 gsap.registerPlugin(ScrollTrigger)
 
@@ -27,8 +27,7 @@ export default function Homepage ({
   showMenu,
   cart,
   showCart,
-  recur,
-  setRecur,
+
   checkout,
   showCheckout
 }) {
@@ -42,9 +41,6 @@ export default function Homepage ({
   const [ready, setReady] = useState(false)
   const { state, dispatch } = useContext(FilterContext)
 
-
-
-  
   useEffect(() => {
     const initializeLenis = () => {
       lenisRef.current = new Lenis({
@@ -104,16 +100,20 @@ export default function Homepage ({
         />
       )}
       {cart && (
-        <CartUi
+        <CartUi 
           checkout={checkout}
           showCheckout={showCheckout}
-          setRecur={setRecur}
           showCart={showCart}
         />
       )}
       {cart && <Overlay showCart={showCart} />}
       <Hero heroLeft={heroLeft} heroRight={heroRight} />
-      <Categories state={state} dispatch={dispatch} heroLeft={heroLeft} heroRight={heroRight} />
+      <Categories
+        state={state}
+        dispatch={dispatch}
+        heroLeft={heroLeft}
+        heroRight={heroRight}
+      />
       <TopPicks />
       <Marquee />
       <Carousel />

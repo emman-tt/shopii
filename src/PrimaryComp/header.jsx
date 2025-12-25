@@ -3,14 +3,14 @@ import { BsCart4 } from 'react-icons/bs'
 import { FaRegHeart } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
 import { GiHamburgerMenu } from 'react-icons/gi'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { FaXmark } from 'react-icons/fa6'
 import { useState } from 'react'
 const API_URL = import.meta.env.VITE_PORT_URL
+import { FilterContext } from '../App'
 export default function Header ({
   fixed = false,
   cartRef,
-  recur,
   showCart,
   showMenu,
   menu,
@@ -19,7 +19,8 @@ export default function Header ({
   const navigate = useNavigate()
   const isMobile = innerWidth < 500
   const [total, setTotal] = useState(0)
-
+  const { state, dispatch } = useContext(FilterContext)
+  const { recur } = state
   function openLink () {
     showCart(false)
     showCheckout(false)

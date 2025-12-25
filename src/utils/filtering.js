@@ -6,7 +6,7 @@ export const Categories = [
   { id: 5, cat: 'Shorts', selected: false },
   { id: 6, cat: 'Pants', selected: false },
   { id: 7, cat: 'Coats', selected: false },
-  { id: 8, cat: 'Jewelry', selected: false },
+  { id: 8, cat: 'Accesories & Jewelries', selected: false },
   { id: 9, cat: 'Dress', selected: false },
   { id: 10, cat: 'Swimwear & Beachwear', selected: false }
 ]

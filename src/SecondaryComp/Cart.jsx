@@ -1,14 +1,17 @@
 import gsap from 'gsap'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 const API_URL = import.meta.env.VITE_PORT_URL
 import InformationBox from './Information'
-export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
+import { FilterContext } from '../App.jsx'
+
+export default function Cart ({ showCart, checkout, showCheckout }) {
   const box = useRef(null)
   const [products, setProducts] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
   const [shippingAmount, setShippingAmount] = useState(0)
   const [cartBottom, changeCartBottom] = useState(false)
   const [subTotal, setSubTotal] = useState(0)
+  const { state, dispatch } = useContext(FilterContext)
   async function updateQuantity (id, qty) {
     try {
       setProducts(prev =>
@@ -24,14 +27,16 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
             : item
         )
       )
+
       const res = await fetch(
         `${API_URL}/UpdateCart?qty=${qty}&productID=${id}`,
         {
           method: 'PUT'
         }
       )
-
-      setRecur(prev => prev + 1)
+      if (res.ok) {
+        dispatch({ type: 'fetchTotal' })
+      }
     } catch (error) {
       console.log(error.message)
     }
@@ -43,7 +48,9 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
       const res = await fetch(`${API_URL}/RemoveCart?productID=${id}`, {
         method: 'DELETE'
       })
-      setRecur(prev => prev - 1)
+      if (res.ok) {
+        dispatch({ type: 'fetchTotal' })
+      }
     } catch (error) {
       console.log(error.message)
     }
@@ -90,6 +97,7 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
   }, [])
 
   function moveCart () {
+  
     gsap.to(box.current, {
       x: 800,
       ease: 'power1.inOut',
@@ -103,7 +111,7 @@ export default function Cart ({ showCart, setRecur, checkout, showCheckout }) {
   return (
     <section className='w-full h-full flex '>
       {checkout && (
-        <InformationBox 
+        <InformationBox
           showCheckout={showCheckout}
           z={innerWidth <= 900 ? 60 : 40}
           changeCartBottom={changeCartBottom}

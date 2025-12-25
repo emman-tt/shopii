@@ -5,6 +5,7 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl'
 import ImageWithShimmer from '../reuse/shimmer'
 import { outfitMiddle, outfitsLeft, outfitsRight } from '../utils/buildOutfits'
+import { useNavigate } from 'react-router-dom'
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 export default function BuildOutfits ({ sellersRef, buildRef }) {
   const leftTop = useRef(null)
@@ -15,7 +16,7 @@ export default function BuildOutfits ({ sellersRef, buildRef }) {
   const trigger = useRef(null)
   const isMobile = innerWidth <= 500
   const [current, setCurrent] = useState(5)
-
+  const navigate = useNavigate()
   useEffect(() => {
     ScrollTrigger.create({
       trigger: sellersRef.current,
@@ -134,6 +135,7 @@ export default function BuildOutfits ({ sellersRef, buildRef }) {
         <section className='w-23/100 h-full flex flex-col justify-between  gap-5 max-[500px]:w-full'>
           {outfitsLeft.map(item => (
             <section
+              onClick={() => navigate(`/products/:${item.id}`)}
               key={item.id}
               ref={item.id === 1 ? leftTop : leftBottom}
               className=' flex justify-between flex-col'
@@ -202,9 +204,10 @@ export default function BuildOutfits ({ sellersRef, buildRef }) {
         <section className='w-23/100 h-full flex flex-col justify-between  gap-5 max-[500px]:w-full '>
           {outfitsRight.map(item => (
             <section
+              onClick={() => navigate(`/products/:${item.id}`)}
               key={item.id}
               ref={item.id === 1 ? rightTop : rightBottom}
-              className=' h-full flex flex-col items-center  max-[500px]:justify-center '
+              className=' h-full cursor-pointer flex flex-col items-center  max-[500px]:justify-center '
             >
               <div className='w-full   h-[92%] max-[500px]:h-[50%] max-[500px]:justify-center flex max-[376px]:h-80'>
                 <img

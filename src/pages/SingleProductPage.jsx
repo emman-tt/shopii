@@ -1,6 +1,6 @@
 import Header from '../PrimaryComp/header'
 import FeaturesComp from '../reuse/SPPcomp'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { FaRegHeart } from 'react-icons/fa6'
 import { FaHeart } from 'react-icons/fa'
 import ImageWithShimmer from '../reuse/shimmer'
@@ -11,6 +11,7 @@ import Notification from '../reuse/Notification'
 import useFecthingSPP from '../hooks-and-reducers/useFetchingSPP'
 import Loader from '../reuse/loadingAnime'
 import { lazy } from 'react'
+import { FilterContext } from '../App'
 const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
 import Overlay from '../reuse/overlay'
 const CartUi = lazy(() => import('../SecondaryComp/Cart'))
@@ -19,8 +20,6 @@ export default function SPP ({
   showMenu,
   showCart,
   cart,
-  recur,
-  setRecur,
   checkout,
   showCheckout
 }) {
@@ -29,13 +28,10 @@ export default function SPP ({
   const [size, selectSize] = useState('m')
   const [color, setColor] = useState(null)
   const [message, showMessage] = useState(false)
-
-
+  const { state, dispatch } = useContext(FilterContext)
+  const { recur } = state
   const itemRef = useRef(null)
   const cartRef = useRef(null)
-  function forceRecur () {
-    setRecur(prev => prev + 1)
-  }
 
   const { isLoaded, data } = useFecthingSPP(setColor, recur)
 
@@ -81,7 +77,9 @@ export default function SPP ({
           method: 'POST'
         }
       )
-      forceRecur()
+      if (res.ok) {
+        dispatch({ type: 'fetchTotal' })
+      }
     } catch (error) {
       console.log(error.message)
     }
@@ -94,8 +92,6 @@ export default function SPP ({
         showCart={showCart}
         menu={menu}
         showMenu={showMenu}
-        setRecur={setRecur}
-        recur={recur}
         cartRef={cartRef}
         fixed={true}
         showCheckout={showCheckout}
@@ -112,7 +108,6 @@ export default function SPP ({
         <CartUi
           checkout={checkout}
           showCheckout={showCheckout}
-          setRecur={setRecur}
           showCart={showCart}
         />
       )}
@@ -202,7 +197,7 @@ export default function SPP ({
               <section className='flex justify-between gap-4'>
                 <button
                   onClick={() => {
-                    Anime(), saveToCart(item.id), setRecur(prev => prev + 1)
+                    Anime(), saveToCart(item.id)
                   }}
                   className='bg-black rounded-[10px] w-[65%] text-white py-2.5'
                 >

@@ -5,19 +5,19 @@ import shoes12 from '../assets/img/shoes12.jpg'
 
 const Shoes = [
   {
-    id: 1,
+    id: 88,
     img: shoes12
   },
   {
-    id: 2,
+    id: 87,
     img: shoes7
   },
   {
-    id: 3,
+    id: 86,
     img: shoes4
   },
   {
-    id: 4,
+    id: 85,
     img: shoes5
   }
 ]

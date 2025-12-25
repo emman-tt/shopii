@@ -1,10 +1,10 @@
-import { useRef,useState } from 'react'
+import { useRef, useState } from 'react'
 import gsap from 'gsap'
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl'
 import { FaRegHeart } from 'react-icons/fa6'
 import { all } from '../utils/bestSellers'
 import ImageWithShimmer from '../reuse/shimmer'
-
+import { useNavigate } from 'react-router-dom'
 export default function BestSellers ({ sellersRef }) {
   const rightArrow = useRef(null)
   const leftArrow = useRef(null)
@@ -12,7 +12,7 @@ export default function BestSellers ({ sellersRef }) {
   const isMobile = innerWidth <= 800
   const isSmallMobile = innerWidth <= 500
   const [products, setProducts] = useState(all)
-
+  const navigate = useNavigate()
   function scrollRight () {
     gsap.to(container.current, {
       scrollTo: { x: isMobile ? '+=220' : isSmallMobile ? '+=324' : '+=340' },
@@ -63,8 +63,15 @@ export default function BestSellers ({ sellersRef }) {
             className=' min-w-[300px]  h-full relative  pb-3'
           >
             <FaRegHeart className='absolute right-5 z-10 top-5 text-xl ' />
-            <div className='w-full h-93/100  max-[800px]:w-[95%]'>
-              <ImageWithShimmer className='h-full w-full' src={item.image} alt='' />
+            <div
+              onClick={() => navigate(`/products/:${item.id}`)}
+              className='w-full h-93/100 cursor-pointer  max-[800px]:w-[95%]'
+            >
+              <ImageWithShimmer
+                className='h-full w-full'
+                src={item.image}
+                alt=''
+              />
             </div>
             <section className='text-sm text-black font-semibold  flex justify-around'>
               <div>{item.description}</div>

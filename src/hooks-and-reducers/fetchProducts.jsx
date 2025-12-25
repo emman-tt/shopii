@@ -7,7 +7,8 @@ export const initialState = {
   filterColor: 'All',
   filterCategory: 'All',
   colours: Colours,
-  categories: Categories
+  categories: Categories,
+  recur: 1
 }
 
 export default function fetchProductReducer (state, action) {
@@ -22,14 +23,13 @@ export default function fetchProductReducer (state, action) {
     case 'changeFilterColor':
       return {
         ...state,
-        colours: state.colours.map(
-          item =>
-            (item.col === action.payload
-              ? {
-                  ...item,
-                  selected: true
-                }
-              : { ...item, selected: false })
+        colours: state.colours.map(item =>
+          item.col === action.payload
+            ? {
+                ...item,
+                selected: true
+              }
+            : { ...item, selected: false }
         )
       }
 
@@ -41,6 +41,12 @@ export default function fetchProductReducer (state, action) {
             ? { ...item, selected: true }
             : { ...item, selected: false }
         )
+      }
+
+    case 'fetchTotal':
+      return {
+        ...state,
+        recur: state.recur++
       }
     case 'RESET':
       return initialState

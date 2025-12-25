@@ -80,7 +80,7 @@ export default function Marquee () {
           >
             <img
               src={item.image}
-              className='rounded-2xl w-max md:w-100 h-full'
+              className='rounded-2xl w-max max-md:w-100 h-full'
               alt='photoads'
             />
           </div>

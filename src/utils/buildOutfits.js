@@ -57,14 +57,14 @@ export const outfitMiddle = [
 
 export const outfitsLeft = [
   {
-    id: 1,
+    id: 100,
     image: outfit10,
     description: 'Balmain  Anthem shoulder bag',
     price: 1335,
     liked: false
   },
   {
-    id: 2,
+    id: 99,
     image: outfit14,
     description: 'Rabanne chain shoulder bag',
     price: 335,
@@ -73,14 +73,14 @@ export const outfitsLeft = [
 ]
 export const outfitsRight = [
   {
-    id: 1,
+    id: 97,
     image: outfit12,
     description: 'Miu Miu fastening leather boots',
     price: 1335,
     liked: false
   },
   {
-    id: 2,
+    id: 98,
     image: outfit13,
     description: 'Dr. Martens x Rick Owens',
     price: 835,

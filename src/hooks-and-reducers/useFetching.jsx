@@ -9,8 +9,6 @@ export function useFetching (
   gen,
   currentCat,
   currentColor,
-  loadFromHomeCategories = false,
-  loadFromHomeProducts = false
 ) {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isNotFound, setIsNotFound] = useState(false)
@@ -22,10 +20,6 @@ export function useFetching (
 
   useEffect(() => {
     ;(async function GetProducts () {
-      // console.log('gender :', genderId)
-      // console.log('category :', categoryId)
-      // console.log('color :', colorId)
-
       const res = await fetch(
         `${API_URL}/AllProducts?page=${page}&gender=${gen}&category=${currentCat}&color=${currentColor}`,
         { method: 'GET' }
