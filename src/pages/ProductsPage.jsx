@@ -11,7 +11,8 @@ const Overlay = lazy(() => import('../reuse/overlay'))
 const CartUi = lazy(() => import('../SecondaryComp/Cart'))
 const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
 import { FilterContext } from '../App.jsx'
-import PageNavigation from '../SecondaryComp/pageNavigation.jsx'
+const PageNavigation = lazy(() => import('../SecondaryComp/pageNavigation.jsx'))
+const PageFooter = lazy(() => import('../reuse/pageFooter.jsx'))
 export default function Products ({
   menu,
   showMenu,
@@ -114,7 +115,10 @@ export default function Products ({
         )}
 
         {isLoaded ? (
-          <Items items={items} />
+          <>
+            <Items items={items} />
+            <PageFooter />
+          </>
         ) : (
           <section className='w-full flex justify-center items-center align-middle h-screen   max-[800px]:pl-20 max-[500px]:pl-0 max-[500px]:w-full z-0 overflow-x-hidden '>
             <Loader />

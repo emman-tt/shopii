@@ -35,6 +35,8 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
           method: 'PUT'
         }
       )
+      dispatch({ type: 'fetchTotal' })
+
       if (res.ok) {
         dispatch({ type: 'fetchTotal' })
       }
@@ -49,6 +51,8 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
       const res = await fetch(`${API_URL}/RemoveCart?productID=${id}`, {
         method: 'DELETE'
       })
+      dispatch({ type: 'fetchTotal' })
+
       if (res.ok) {
         dispatch({ type: 'fetchTotal' })
       }

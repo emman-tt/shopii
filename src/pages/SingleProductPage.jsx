@@ -68,6 +68,7 @@ export default function SPP ({
   async function saveToCart (id) {
     showMessage(true)
     try {
+      dispatch({ type: 'fetchTotal' })
       setTimeout(() => {
         showMessage(false)
       }, 2000)
