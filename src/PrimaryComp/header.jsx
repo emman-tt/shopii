@@ -24,10 +24,13 @@ export default function Header ({
   }
 
   useEffect(() => {
+    const controller = new AbortController()
     ;(async function fetchTotal () {
       try {
         const res = await fetch(`${API_URL}/fetchTotal`, {
-          method: 'PUT'
+          method: 'PUT',
+          credentials: 'include',
+          signal: controller.signal
         })
 
         const use = await res.json()
@@ -35,9 +38,17 @@ export default function Header ({
           setTotal(use.total)
         }
       } catch (error) {
-        console.log(error.message)
+        if (error.name === 'AbortError') {
+          console.log('Fetch aborted')
+        } else {
+          console.error(error.message)
+        }
       }
     })()
+
+    return () => {
+      controller.abort()
+    }
   }, [recur])
   return (
     <section className='h-full w-full z-100 relative overflow-hidden '>

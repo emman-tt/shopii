@@ -13,8 +13,13 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
   const [subTotal, setSubTotal] = useState(0)
   const { state, dispatch } = useContext(FilterContext)
   const [isLoaded, setIsloaded] = useState(false)
-  async function updateQuantity (id, qty) {
+  const [updateId, setUpdateId] = useState(0)
+  const [updateqty, setUpdateqty] = useState(0)
+
+  function updateQuantity (id, qty) {
     try {
+      setUpdateqty(qty)
+      setUpdateId(id)
       setProducts(prev =>
         prev.map(item =>
           item.id === id
@@ -28,33 +33,45 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
             : item
         )
       )
-
-      const res = await fetch(
-        `${API_URL}/UpdateCart?qty=${qty}&productID=${id}`,
-        {
-          method: 'PUT'
-        }
-      )
-      dispatch({ type: 'fetchTotal' })
-
-   
     } catch (error) {
       console.log(error.message)
     }
   }
 
+  useEffect(() => {
+    const controller = new AbortController()
+    ;(async () => {
+      const res = await fetch(
+        `${API_URL}/UpdateCart?qty=${updateqty}&productID=${updateId}`,
+        {
+          method: 'PUT',
+          credentials: 'include',
+          signal: controller.signal
+        }
+      )
+
+      if (res.ok) {
+        dispatch({ type: 'fetchTotal' })
+      }
+    })()
+
+    return () => {
+      controller.abort()
+    }
+  }, [products])
+
   async function removeFromCart (id) {
     try {
       setProducts(prev => prev.filter(item => item.id != id))
       const res = await fetch(`${API_URL}/RemoveCart?productID=${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        credentials: 'include'
       })
-      dispatch({ type: 'fetchTotal' })
-
-      // if (res.ok) {
-      //   dispatch({ type: 'fetchTotal' })
-      // }
+      if (res.ok) {
+        await dispatch({ type: 'fetchTotal' })
+      }
     } catch (error) {
+      if (error.name === 'abort') console.log('abotted')
       console.log(error.message)
     }
   }
@@ -75,7 +92,8 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
   useEffect(() => {
     ;(async function fetchCart () {
       const res = await fetch(`${API_URL}/fetchCart`, {
-        method: 'GET'
+        method: 'GET',
+        credentials: 'include'
       })
       if (res) {
         const items = await res.json()

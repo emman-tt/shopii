@@ -75,7 +75,8 @@ export default function SPP ({
       const res = await fetch(
         `${API_URL}/cart?itemID=${id}&size=${size}&color=${color}&quantity=${qty}`,
         {
-          method: 'POST'
+          method: 'POST',
+          credentials: 'include'
         }
       )
       if (res.ok) {

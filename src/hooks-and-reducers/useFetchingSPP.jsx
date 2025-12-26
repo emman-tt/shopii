@@ -11,10 +11,13 @@ export default function useFecthingSPP (setColor, recur) {
   const { state, dispatch } = useContext(FilterContext)
 
   useEffect(() => {
+    const controller = new AbortController()
     const split = id.split(':')[1]
     ;(async function FetchSPP () {
       const res = await fetch(`${API_URL}/getSPP?ID=${split}`, {
-        method: 'GET'
+        method: 'GET',
+        credentials: 'include',
+        signal: controller.signal
       })
 
       const items = await res.json()
@@ -25,10 +28,12 @@ export default function useFecthingSPP (setColor, recur) {
         setIsLoaded(true)
         setColor(details.colours[0])
         setData([details])
-        dispatch({type:'changeSPP', payload: details.description})
+        dispatch({ type: 'changeSPP', payload: details.description })
         return
       }
     })()
+
+    return () => controller.abort()
   }, [recur])
 
   return { isLoaded, data }

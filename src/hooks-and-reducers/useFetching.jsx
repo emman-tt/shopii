@@ -22,7 +22,7 @@ export function useFetching (
     ;(async function GetProducts () {
       const res = await fetch(
         `${API_URL}/AllProducts?page=${page}&gender=${gen}&category=${currentCat}&color=${currentColor}`,
-        { method: 'GET' }
+        { method: 'GET' ,credentials:'include'}
       )
       const products = await res.json()
 
