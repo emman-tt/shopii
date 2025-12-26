@@ -18,7 +18,7 @@ export default function PageNavigation ({
   const productPath = location?.pathname === '/products'
   return (
     <section
-      className={` h-${height} bg-white max-xl:pl-[15%] max-md:pl-[6%] w-full fixed z-${z} ${className} ${style} top-${top} flex gap-1 text-[15px] pl-[30%] pb-10 pt-${pt} ${
+      className={` h-${height} bg-white max-xl:pl-[15%] max-md:pl-[6%] w-full fixed z-${z} ${className} ${style} top-${top} flex gap-1 text-[15px] pl-[30%] pb-10 pt-${pt} max-xl:pl-[25%] ${
         product === true
           ? ' top-27 max-lg:top-29 max-[800px]:top-19 max-sm:top-35 max-sm:z-3 max-sm:pl-[13%] '
           : ''

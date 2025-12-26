@@ -12,7 +12,7 @@ export default function Items ({ items }) {
     navigate(`/products/:${id}`)
   }
   return (
-    <section className='w-[99%] min-h-max flex flex-wrap gap-y-15 gap-10 justify-start max-[500px]:gap-5   max-[500px]:w-screen max-[500px]:px-[10%]   pl-[25%] mt-21 max-[800px]:pl-[25%]   max-[1040px]:mt-29 max-[1040px]:pl-[20%]   max-[500px]:mt-30 max-[500px]:gap-y-20 '>
+    <section className='w-[99%] min-h-max flex flex-wrap gap-y-15 gap-10 justify-start max-[500px]:gap-5   max-[500px]:w-screen max-[500px]:px-[10%]   pl-[25%] mt-21 max-[800px]:pl-[25%]     max-[1040px]:mt-29 max-[1040px]:pl-[20%]   max-[500px]:mt-30 max-[500px]:gap-y-20  xl:pl-[30%] 2xl:gap-x-20  max-[930px]:pl-[30%] max-[930px]:gap-x-20 '>
       {items.length < 1 ? (
         <NoItem />
       ) : (
@@ -23,12 +23,12 @@ export default function Items ({ items }) {
                 openSPP(item.id)
               }}
               key={item.id}
-              className='w-[23%] cursor-pointer max-[1040px]:w-[29%] max-[800px]:w-[45%] h-80 max-[800px]:h-60 flex flex-col max-[500px]:w-[46%] max-[500px]:h-50'
+              className='w-[23%]  cursor-pointer max-[1040px]:w-[29%] max-[800px]:w-[45%] h-80 max-[800px]:h-60 flex flex-col max-[500px]:w-[46%] max-[500px]:h-50 max-[930px]:w-[40%] md:w-[40%]'
             >
               <div className='h-[8%] flex justify-end  items-center pr-3 '>
                 <FaHeart className='text-[#4140402a] hover:text-black' />
               </div>
-              <div className='h-[85%] relative overflow-auto flex items-center justify-center'>
+              <div className='h-[85%] xl:h-[70%] max-[930px]:h-[90%] relative overflow-auto flex items-center justify-center'>
                 <img
                   src={item.image}
                   className='h-full w-auto absolute'

@@ -48,7 +48,6 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
 
     const syncCart = async () => {
       try {
-        // console.log(updateId, updateqty)
         const res = await fetch(
           `${API_URL}/UpdateCart?qty=${updateqty}&productID=${updateId}`,
           {
