@@ -15,50 +15,66 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
   const [isLoaded, setIsloaded] = useState(false)
   const [updateId, setUpdateId] = useState(0)
   const [updateqty, setUpdateqty] = useState(0)
-
-  function updateQuantity (id, qty) {
-    try {
-      setUpdateqty(qty)
-      setUpdateId(id)
-      setProducts(prev =>
-        prev.map(item =>
-          item.id === id
-            ? {
-                ...item,
-                cartProduct: {
-                  ...item.cartProduct,
-                  quantity: Number(item.cartProduct.quantity) + Number(qty)
-                }
+  const [lastUpdate, setLastUpdate] = useState(0)
+  const updateQuantity = async (id, qty) => {
+    setProducts(prev =>
+      prev.map(item =>
+        item.id === id
+          ? {
+              ...item,
+              cartProduct: {
+                ...item.cartProduct,
+                quantity: Math.max(
+                  0,
+                  Number(item.cartProduct.quantity) + Number(qty)
+                )
               }
-            : item
-        )
+            }
+          : item
       )
-    } catch (error) {
-      console.log(error.message)
-    }
+    )
+
+    setUpdateId(id)
+    setUpdateqty(qty)
+    setLastUpdate(Date.now())
   }
 
   useEffect(() => {
-    const controller = new AbortController()
-    ;(async () => {
-      const res = await fetch(
-        `${API_URL}/UpdateCart?qty=${updateqty}&productID=${updateId}`,
-        {
-          method: 'PUT',
-          credentials: 'include',
-          signal: controller.signal
-        }
-      )
+    if (updateqty === 0) {
+      return console.log('update id is 0')
+    } 
 
-      if (res.ok) {
-        dispatch({ type: 'fetchTotal' })
+    const controller = new AbortController()
+
+    const syncCart = async () => {
+      try {
+        // console.log(updateId, updateqty)
+        const res = await fetch(
+          `${API_URL}/UpdateCart?qty=${updateqty}&productID=${updateId}`,
+          {
+            method: 'PUT',
+            credentials: 'include',
+            signal: controller.signal
+          }
+        )
+
+        if (res.ok) {
+          dispatch({ type: 'fetchTotal' })
+        }
+      } catch (error) {
+        if (error.name === 'AbortError') {
+          console.log(error.message)
+        }
+        if (error) console.error(error.message)
       }
-    })()
+    }
+
+    syncCart()
 
     return () => {
       controller.abort()
     }
-  }, [products])
+  }, [lastUpdate])
 
   async function removeFromCart (id) {
     try {
@@ -220,9 +236,9 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
                         <section className='flex max-sm:text-[13px]    gap-5'>
                           <button
                             onClick={() => {
-                              item.cartProduct.quantity > 1
-                                ? updateQuantity(item.id, -1)
-                                : null
+                              if (item.cartProduct.quantity > 1) {
+                                updateQuantity(item.id, -1)
+                              }
                             }}
                             className='cursor-pointer'
                           >
