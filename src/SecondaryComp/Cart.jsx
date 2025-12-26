@@ -37,9 +37,7 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
       )
       dispatch({ type: 'fetchTotal' })
 
-      if (res.ok) {
-        dispatch({ type: 'fetchTotal' })
-      }
+   
     } catch (error) {
       console.log(error.message)
     }
@@ -53,9 +51,9 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
       })
       dispatch({ type: 'fetchTotal' })
 
-      if (res.ok) {
-        dispatch({ type: 'fetchTotal' })
-      }
+      // if (res.ok) {
+      //   dispatch({ type: 'fetchTotal' })
+      // }
     } catch (error) {
       console.log(error.message)
     }

@@ -47,7 +47,7 @@ export default function fetchProductReducer (state, action) {
     case 'fetchTotal':
       return {
         ...state,
-        recur: state.recur++
+        recur: state.recur + 1
       }
 
     case 'changeSPP':

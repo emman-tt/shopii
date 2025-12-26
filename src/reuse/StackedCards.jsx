@@ -4,19 +4,16 @@ import ScrollToPlugin from 'gsap/ScrollToPlugin'
 import { useEffect, useState } from 'react'
 import { cardsData } from '../utils/stackedCards'
 import ImageWithShimmer from './shimmer'
-import { useRef } from 'react'
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger)
 
 export default function Cards ({ lastcard }) {
-
   useEffect(() => {
     const initializeCards = () => {
       const cards = gsap.utils.toArray('#each')
 
       cards.forEach((card, i) => {
         const isLast = i === cards.length - 1
-        // if (isLast) return
 
         gsap.to(card, {
           scale: 0.4 * (i / (cards.length - 1)),
@@ -29,7 +26,7 @@ export default function Cards ({ lastcard }) {
             scrub: true,
             pin: card,
             pinSpacing: false,
-            invalidateOnRefresh: true,
+            invalidateOnRefresh: true
           }
         })
       })
@@ -38,25 +35,12 @@ export default function Cards ({ lastcard }) {
       console.log(' Cards ready')
     }
 
-
     initializeCards()
 
-    // const timer = setTimeout(() => {
-    //   if (document.readyState === 'complete') {
-    //     initializeCards();
-    //   } else {
-    //     window.addEventListener('load', initializeCards, { once: true })
-    //   }
-    // }, 100)
-
     return () => {
-  //    clearTimeout(timer)
       ScrollTrigger.getAll().forEach(trigger => trigger.kill())
     }
   }, [])
-
-  
-
 
   return (
     <section
@@ -94,7 +78,3 @@ export default function Cards ({ lastcard }) {
     </section>
   )
 }
-
-
-
-

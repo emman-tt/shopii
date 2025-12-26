@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from 'react'
 import Filtering from '../reuse/filteringUi'
 const Items = lazy(() => import('../SecondaryComp/ProductItems'))
 import Loader from '../reuse/loadingAnime'
-import { CiFilter } from 'react-icons/ci'
+import { Filter } from 'lucide-react'
 import Sorting from '../SecondaryComp/Sorting'
 import { useFetching } from '../hooks-and-reducers/useFetching.jsx'
 const Overlay = lazy(() => import('../reuse/overlay'))
@@ -89,7 +89,7 @@ export default function Products ({
             className=' w-full mt-12 pt-5 pb-2 pl-[13%] mb-4 flex fixed z-10 bg-white  '
           >
             <div className='flex gap-2 items-center text-[18px] font-bold'>
-              Filters <CiFilter />
+              Filters <Filter />
             </div>
           </section>
         ) : (

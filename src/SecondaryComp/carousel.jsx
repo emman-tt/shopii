@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { BsArrowRight, BsArrowLeft } from 'react-icons/bs'
+import { ChevronRight, ChevronLeft } from 'lucide-react'
 import { topPicksList } from '../utils/topPicks'
 import { useNavigate } from 'react-router-dom'
 export default function CircularCarousel () {
@@ -97,14 +97,14 @@ export default function CircularCarousel () {
           disabled={isAnimating}
           className='flex rounded-4xl items-center justify-center  text-white border-[0.1px] border-gray-500  bg-black/10  backdrop-blur-[7px] p-6 text-6xl font-extrabold '
         >
-          <BsArrowLeft />
+          <ChevronLeft />
         </button>
         <button
           onClick={next}
           disabled={isAnimating}
           className='flex  rounded-4xl items-center justify-center  text-white border-[0.1px] border-gray-500  bg-black/10  backdrop-blur-[7px] p-6 text-6xl font-extrabold'
         >
-          <BsArrowRight />
+          <ChevronRight />
         </button>
       </div>
     </div>

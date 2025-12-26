@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FaCheck } from 'react-icons/fa6'
+import { Check } from 'lucide-react'
 export default function FeaturesComp ({
   feature = 'Number',
   icon,
@@ -45,7 +45,7 @@ export default function FeaturesComp ({
                 }}
               >
                 {item.selected ? (
-                  <FaCheck
+                  <Check
                     className='absolute text-black'
                     color='white'
                     size={10}

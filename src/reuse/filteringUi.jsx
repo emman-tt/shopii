@@ -1,6 +1,4 @@
-import { FaRegSquare } from 'react-icons/fa'
-import { CiFilter } from 'react-icons/ci'
-import { FaCheck } from 'react-icons/fa'
+import { Filter, Check, Square } from 'lucide-react'
 export default function Filtering ({
   width = '20%',
   isActive,
@@ -18,7 +16,7 @@ export default function Filtering ({
       <section className='max-[500px]:overflow-y-scroll  overflow-y-scroll  [scrollbar-width:none] h-full pb-10'>
         <section className=' w-full px-7 justify-between max-[800px]:text-[12px] flex max-[1040px]:px-2 max-[800px]:px-1 max-[500px]:h-max '>
           <div className='flex gap-2 items-center max-[500px]:text-[17px] '>
-            Filters <CiFilter />
+            Filters <Filter />
           </div>
           <div className='border-b pb-0.5 max-[800px]:pb-0.2 max-[500px]:text-[9px] flex  self-center max-[500px]:mr-[13%]'>
             Clear all
@@ -41,9 +39,9 @@ export default function Filtering ({
                 key={item.id}
               >
                 <div className='relative flex items-center justify-center w-6 h-6 '>
-                  <FaRegSquare className='absolute' size={15} />
+                  <Square className='absolute' size={15} />
                   {item.selected ? (
-                    <FaCheck className='absolute text-black' size={7} />
+                    <Check className='absolute text-black' size={7} />
                   ) : null}
                 </div>
 
@@ -65,9 +63,9 @@ export default function Filtering ({
                 className='flex gap-4 text-[13px] align-middle items-center max-[800px]:text-[10px] max-[800px]:gap-2 max-[500px]:text-[14px]'
               >
                 <div className='relative flex items-center justify-center w-6 h-6 '>
-                  <FaRegSquare className='absolute' size={15} />
+                  <Square className='absolute' size={15} />
                   {item.selected ? (
-                    <FaCheck className='absolute text-black' size={7} />
+                    <Check className='absolute text-black' size={7} />
                   ) : null}
                 </div>
 
