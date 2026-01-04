@@ -11,7 +11,7 @@ export default function Filtering ({
 }) {
   return (
     <section
-      className={`w-[${width}] fixed max-[500px]:mt-17  mt-13  max-[1040px]:mt-20 z-10 max-[500px]:w-full bg-white    max-[500px]:pl-[10%] max-[500px]:fixed max-[500px]:bottom-0 max-[500px]:z-1 max-[500px]:overflow-hidden max-[500px]:h-screen max-[500px]:top-0 max-[500px]:py-10 bottom-0 overflow-hidden min-h-150 left-0 top-[10%] max-xl:min-h-200 max-xl:pb-60`}
+      className={`w-[${width}] fixed max-[500px]:mt-17  mt-13  max-[1040px]:mt-20 z-10 max-[500px]:w-full bg-white    max-[500px]:pl-[10%] max-[500px]:fixed max-[500px]:bottom-0 max-[500px]:z-1 max-[500px]:overflow-hidden max-[500px]:h-screen max-[500px]:top-0 max-[500px]:py-10 bottom-0 overflow-hidden min-h-150 left-0 top-[10%] max-xl:min-h-200 max-xl:pb-30 `}
     >
       <section className='max-[500px]:overflow-y-scroll  overflow-y-scroll  [scrollbar-width:none] h-full pb-10'>
         <section className=' w-full px-7 justify-between max-[800px]:text-[12px] flex max-[1040px]:px-2 max-[800px]:px-1 max-[500px]:h-max '>
@@ -39,9 +39,15 @@ export default function Filtering ({
                 key={item.id}
               >
                 <div className='relative flex items-center justify-center w-6 h-6 '>
-                  <Square className='absolute' size={15} />
+                  <Square
+                    style={{
+                      backgroundColor: item.selected ? 'black' : 'white'
+                    }}
+                    className='absolute rounded'
+                    size={15}
+                  />
                   {item.selected ? (
-                    <Check className='absolute text-black' size={7} />
+                    <Check className='absolute text-white' size={14} />
                   ) : null}
                 </div>
 
@@ -63,9 +69,19 @@ export default function Filtering ({
                 className='flex gap-4 text-[13px] align-middle items-center max-[800px]:text-[10px] max-[800px]:gap-2 max-[500px]:text-[14px]'
               >
                 <div className='relative flex items-center justify-center w-6 h-6 '>
-                  <Square className='absolute' size={15} />
+                  <Square
+                    style={{
+                      backgroundColor: item.selected ? 'black' : 'white'
+                    }}
+                    className='absolute rounded'
+                    size={15}
+                  />
                   {item.selected ? (
-                    <Check className='absolute text-black' size={7} />
+                    <Check
+                      className='absolute font-extrabold '
+                      size={14}
+                      color='white'
+                    />
                   ) : null}
                 </div>
 

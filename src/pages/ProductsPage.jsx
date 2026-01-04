@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from 'react'
 import Filtering from '../reuse/filteringUi'
 const Items = lazy(() => import('../SecondaryComp/ProductItems'))
 import Loader from '../reuse/loadingAnime'
-import { Filter } from 'lucide-react'
+import { Filter, X } from 'lucide-react'
 import Sorting from '../SecondaryComp/Sorting'
 import { useFetching } from '../hooks-and-reducers/useFetching.jsx'
 const Overlay = lazy(() => import('../reuse/overlay'))
@@ -12,6 +12,7 @@ const CartUi = lazy(() => import('../SecondaryComp/Cart'))
 const MobileMenu = lazy(() => import('../reuse/mobileMenu'))
 import { FilterContext } from '../App.jsx'
 const PageNavigation = lazy(() => import('../SecondaryComp/pageNavigation.jsx'))
+
 const PageFooter = lazy(() => import('../reuse/pageFooter.jsx'))
 export default function Products ({
   menu,
@@ -82,15 +83,41 @@ export default function Products ({
       )}
       <section className='w-full relative  mt-10 min-h-screen flex flex-col'>
         {isMobiles ? (
-          <section
-            onClick={() => {
-              setIsActive(!isActive)
-            }}
-            className=' w-full mt-12 pt-5 pb-2 pl-[13%] mb-4 flex fixed z-10 bg-white  '
-          >
-            <div className='flex gap-2 items-center text-[18px] font-bold'>
-              Filters <Filter />
+          <section className=' w-full mt-12 pt-5 pb-2 pl-[7%] mb-4 flex fixed z-10 bg-white   gap-14'>
+            <div
+              onClick={() => {
+                setIsActive(!isActive)
+              }}
+              className='flex gap-2 items-center text-[18px] font-bold'
+            >
+              Filters
+              <span>{isActive ? <X size={20} /> : <Filter size={20} />}</span>
             </div>
+            <section className='flex  gap-5 text-sm'>
+              <div
+                onClick={() => {
+                  setIsActive(!isActive)
+                }}
+                className=' rounded-4xl p-1 px-4  bg-blue-100 text-blue-700 text-nowrap overflow-hidden max-w-25'
+              >
+                {categories[categoryId - 1].cat}
+              </div>
+
+              {colours.map(
+                item =>
+                  item.selected && (
+                    <div
+                      onClick={() => {
+                        setIsActive(!isActive)
+                      }}
+                      style={{ backgroundColor: item.bg, color: item.col }}
+                      className={` rounded-4xl p-1 px-4 `}
+                    >
+                      {item.col}
+                    </div>
+                  )
+              )}
+            </section>
           </section>
         ) : (
           <Filtering
