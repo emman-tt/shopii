@@ -1,7 +1,7 @@
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import { lazy } from 'react'
-const blackVid = lazy(() => import('../assets/img/blackVid.mp4'))
+import blackVid from '../assets/img/blackVid.mp4'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function TopPicks () {

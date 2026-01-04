@@ -76,7 +76,7 @@ export default function SPP ({
         `${API_URL}/cart?itemID=${id}&size=${size}&color=${color}&quantity=${qty}`,
         {
           method: 'POST',
-          credentials: 'include'
+          credentials: 'include',
         }
       )
       if (res.ok) {

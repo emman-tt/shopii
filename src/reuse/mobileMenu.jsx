@@ -50,7 +50,6 @@ export default function mobileMenu ({ showMenu, showCart, showCheckout }) {
   return (
     <section
       ref={box}
-      // style={{height:'100vh'}}
       className=' bg-white  max-[340px]:overflow-y-scroll fixed w-full   z-70  bottom-0 right-0 top-0 left-0 text-black pt-20 '
     >
       <section className='flex justify-between flex-col pb-20 h-max'>
@@ -58,8 +57,8 @@ export default function mobileMenu ({ showMenu, showCart, showCheckout }) {
           <div className='w-20 h-20 rounded-[50%] bg-[#bfcce2b3] mb-5 justify-center items-center flex'>
             <UserCircle2 size={'80%'} />
           </div>
-          <div>Emmanuel</div>
-          <div>emmanuel@gmail.com</div>
+          <div>Guest</div>
+          <div>Guest@gmail.com</div>
 
           <ul className='flex flex-col w-full mt-5'>
             <li

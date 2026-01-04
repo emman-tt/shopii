@@ -33,6 +33,11 @@ export default function Header ({
           signal: controller.signal
         })
 
+        if (res.status === 401) {
+          setTotal(0)
+          return
+        }
+
         const use = await res.json()
         if (use) {
           setTotal(use.total)
@@ -72,9 +77,9 @@ export default function Header ({
             onClick={() => {
               showMenu(prev => !prev)
             }}
-            className='text-4xl pr-7'
+            className='text-4xl pr-0'
           >
-            {menu ? <X /> : <Menu />}
+            {menu ? <X size={35} /> : <Menu size={35} />}
           </div>
         ) : (
           <section className='flex flex-row h-max font-semibold  gap-5 max-[500px]:hidden max-[800px]:text-[11px] cursor-pointer '>

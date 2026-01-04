@@ -12,7 +12,7 @@ export default function Items ({ items }) {
     navigate(`/products/:${id}`)
   }
   return (
-    <section className='w-[99%] min-h-max flex flex-wrap gap-y-15 gap-10 justify-start max-[500px]:gap-5   max-[500px]:w-screen max-[500px]:px-[10%]   pl-[25%] mt-21 max-[800px]:pl-[25%]     max-[1040px]:mt-29 max-[1040px]:pl-[20%]   max-[500px]:mt-30 max-[500px]:gap-y-20  xl:pl-[30%] 2xl:gap-x-20  max-[930px]:pl-[30%] max-[930px]:gap-x-20  2xl:pl-[25%]'>
+    <section className='w-[99%] min-h-max flex flex-wrap gap-y-15 gap-10 justify-start max-[500px]:gap-5   max-[500px]:w-screen max-[500px]:px-[10%]   pl-[25%] mt-21 max-[800px]:pl-[25%]     max-[1040px]:mt-29 max-[1040px]:pl-[20%]   max-[500px]:mt-30 max-[500px]:gap-y-20  xl:pl-[30%] 2xl:gap-x-20  max-[930px]:pl-[30%] max-[930px]:gap-x-20  2xl:pl-[25%]  pt-5 '>
       {items.length < 1 ? (
         <NoItem />
       ) : (

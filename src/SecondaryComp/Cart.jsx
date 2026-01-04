@@ -42,7 +42,7 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
   useEffect(() => {
     if (updateqty === 0) {
       return console.log('update id is 0')
-    } 
+    }
 
     const controller = new AbortController()
 
@@ -110,6 +110,12 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
         method: 'GET',
         credentials: 'include'
       })
+
+      if (res.status === 401) {
+        setProducts([])
+        setIsloaded(true)
+        return
+      }
       if (res) {
         const items = await res.json()
         const data = items.products
@@ -144,13 +150,6 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
     })
   }
 
-  if (!isLoaded) {
-    return (
-      <section className='w-full flex justify-center items-center align-middle h-screen   max-[800px]:pl-20 max-[500px]:pl-0 max-[500px]:w-full z-0 overflow-x-hidden '>
-        <Loader />
-      </section>
-    )
-  }
   return (
     <section className='w-full h-full flex '>
       {checkout && (
@@ -165,22 +164,28 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
         ref={box}
         className='fixed right-0 top-10 bottom-0 w-[45%] max-lg:w-full   z-50 flex flex-col min-h-screen pb-15 gap-0 justify-between pt-5 px-15 max-xl:px-7 bg-white overflow-y-scroll [scrollbar-width:none] max-sm:px-2'
       >
-        <section>
-          <section className='flex w-full justify-between items-center'>
-            <h2 className='text-4xl font-semibold'>Cart</h2>
-            <div
-              onClick={() => {
-                moveCart()
-              }}
-              className='underline pb-1 text-m cursor-pointer'
-            >
-              Close
-            </div>
+        {!isLoaded ? (
+          <section className='w-full flex justify-center items-center align-middle h-screen   max-[800px]:pl-20 max-[500px]:pl-0 max-[500px]:w-full z-0 overflow-x-hidden '>
+            <Loader />
           </section>
+        ) : (
+          <>
+            <section>
+              <section className='flex w-full justify-between items-center'>
+                <h2 className='text-4xl font-semibold'>Cart</h2>
+                <div
+                  onClick={() => {
+                    moveCart()
+                  }}
+                  className='underline pb-1 text-m cursor-pointer'
+                >
+                  Close
+                </div>
+              </section>
 
-          <section className='flex-1 bg-white rounded-lg overflow-hidden '>
-            <section
-              className='
+              <section className='flex-1 bg-white rounded-lg overflow-hidden '>
+                <section
+                  className='
             flex 
             flex-col 
             gap-3 
@@ -189,115 +194,121 @@ export default function Cart ({ showCart, checkout, showCheckout }) {
             p-4 max-sm:h-100
             pr-2 max-lg:p-0  
           '
-            >
-              {products.map(item => (
-                <section
-                  key={item.id}
-                  className='w-full h-50 shrink-0 flex border-b-[0.2px] border-gray-300  text-black gap-5 pb-5 max-[900px]:gap-0 '
                 >
-                  <figure className='w-[40%] grow   flex justify-center items-center h-full '>
-                    <img
-                      src={item.image}
-                      className='h-full max-[330px]:h-[70%] w-auto '
-                      alt='photo'
-                    />
-                  </figure>
-                  <section
-                    className='flex flex-col max-[900px]:w-[60%]  px-3 w-full
+                  {products.map(item => (
+                    <section
+                      key={item.id}
+                      className='w-full h-50 shrink-0 flex border-b-[0.2px] border-gray-300  text-black gap-5 pb-5 max-[900px]:gap-0 '
+                    >
+                      <figure className='w-[40%] grow   flex justify-center items-center h-full '>
+                        <img
+                          src={item.image}
+                          className='h-full max-[330px]:h-[70%] w-auto '
+                          alt='photo'
+                        />
+                      </figure>
+                      <section
+                        className='flex flex-col max-[900px]:w-[60%]  px-3 w-full
                    justify-between'
-                  >
-                    <header className='flex w-full justify-between'>
-                      <div className='flex flex-col'>
-                        <div className=' font-semibold max-sm:text-[12px] max-sm:w-[70%] '>
-                          {item.description}
-                        </div>
-                        <div className='text-[13px] text-[#515151fe]'>
-                          {`prod${-item.id}`}
-                        </div>
-                      </div>
-                      <div
-                        onClick={() => {
-                          removeFromCart(item.id)
-                        }}
-                        className='font-bold text-[13px] cursor-pointer'
                       >
-                        X
-                      </div>
-                    </header>
-
-                    <footer className='flex w-full justify-between max-sm:flex-col'>
-                      <div className='text-[13px] text-[#515151fe]'>
-                        <p>Color: {item.cartProduct.colour}</p>
-                        <p>Size: {item.cartProduct.size}</p>
-                      </div>
-
-                      <div className='flex gap-10 font-semibold items-center justify-center'>
-                        <section className='flex max-sm:text-[13px]    gap-5'>
-                          <button
+                        <header className='flex w-full justify-between'>
+                          <div className='flex flex-col'>
+                            <div className=' font-semibold max-sm:text-[12px] max-sm:w-[70%] '>
+                              {item.description}
+                            </div>
+                            <div className='text-[13px] text-[#515151fe]'>
+                              {`prod${-item.id}`}
+                            </div>
+                          </div>
+                          <div
                             onClick={() => {
-                              if (item.cartProduct.quantity > 1) {
-                                updateQuantity(item.id, -1)
-                              }
+                              removeFromCart(item.id)
                             }}
-                            className='cursor-pointer'
+                            className='font-bold text-[13px] cursor-pointer'
                           >
-                            -
-                          </button>
-                          {item.cartProduct.quantity}
-                          <button
-                            onClick={() => {
-                              updateQuantity(item.id, 1)
-                            }}
-                            className='cursor-pointer'
-                          >
-                            +
-                          </button>
-                        </section>
+                            X
+                          </div>
+                        </header>
 
-                        <p className='max-sm:text-[13px]'>{item.price}$</p>
-                      </div>
-                    </footer>
-                  </section>
+                        <footer className='flex w-full justify-between max-sm:flex-col'>
+                          <div className='text-[13px] text-[#515151fe]'>
+                            <p>Color: {item.cartProduct.colour}</p>
+                            <p>Size: {item.cartProduct.size}</p>
+                          </div>
+
+                          <div className='flex gap-10 font-semibold items-center justify-center'>
+                            <section className='flex max-sm:text-[13px]    gap-5'>
+                              <button
+                                onClick={() => {
+                                  if (item.cartProduct.quantity > 1) {
+                                    updateQuantity(item.id, -1)
+                                  }
+                                }}
+                                className='cursor-pointer'
+                              >
+                                -
+                              </button>
+                              {item.cartProduct.quantity}
+                              <button
+                                onClick={() => {
+                                  updateQuantity(item.id, 1)
+                                }}
+                                className='cursor-pointer'
+                              >
+                                +
+                              </button>
+                            </section>
+
+                            <p className='max-sm:text-[13px]'>{item.price}$</p>
+                          </div>
+                        </footer>
+                      </section>
+                    </section>
+                  ))}
                 </section>
-              ))}
+              </section>
             </section>
-          </section>
-        </section>
-        <section className=' h-full  w-full '>
-          <header className='flex w-full justify-between font-semibold flex-col border-t border-b border-gray-300 py-6 px-4 max-[325px]:px-1 max-sm:text-xs'>
-            <div className='flex w-full  justify-between'>
-              <p>SubTotal :</p>
-              <p>{subTotal} $</p>
-            </div>
-            <div className='flex w-full justify-between'>
-              <p>Shipping :</p>
+            <section className=' h-full  w-full '>
+              <header className='flex w-full justify-between font-semibold flex-col border-t border-b border-gray-300 py-6 px-4 max-[325px]:px-1 max-sm:text-xs'>
+                <div className='flex w-full  justify-between'>
+                  <p>SubTotal :</p>
+                  <p>{subTotal} $</p>
+                </div>
+                <div className='flex w-full justify-between'>
+                  <p>Shipping :</p>
+                  {cartBottom ? (
+                    <p>
+                      {shippingAmount > 0 ? shippingAmount + '.00 $' : 'free'}
+                    </p>
+                  ) : (
+                    <p className='max-sm:text-xs'>
+                      Calculated at the next step
+                    </p>
+                  )}
+                </div>
+              </header>
+
+              <footer className='flex w-full justify-between font-semibold px-4 mt-2 max-sm:text-xs'>
+                <div>Total:</div>
+                <div>{totalPrice}$</div>
+              </footer>
+
               {cartBottom ? (
-                <p>{shippingAmount > 0 ? shippingAmount + '.00 $' : 'free'}</p>
+                ''
               ) : (
-                <p className='max-sm:text-xs'>Calculated at the next step</p>
+                <button
+                  onClick={() => {
+                    changeCartBottom(true)
+                    showCheckout(true)
+                  }}
+                  className='w-[60%] mt-2 flex self-center justify-self-center bg-black text-white py-3 items-center justify-center font-bold max-sm:w-full'
+                >
+                  Check out
+                </button>
               )}
-            </div>
-          </header>
-
-          <footer className='flex w-full justify-between font-semibold px-4 mt-2 max-sm:text-xs'>
-            <div>Total:</div>
-            <div>{totalPrice}$</div>
-          </footer>
-
-          {cartBottom ? (
-            ''
-          ) : (
-            <button
-              onClick={() => {
-                changeCartBottom(true)
-                showCheckout(true)
-              }}
-              className='w-[60%] mt-2 flex self-center justify-self-center bg-black text-white py-3 items-center justify-center font-bold max-sm:w-full'
-            >
-              Check out
-            </button>
-          )}
-        </section>
+            </section>
+          </>
+        )}
       </section>
     </section>
   )

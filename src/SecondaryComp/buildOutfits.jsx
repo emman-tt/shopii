@@ -169,16 +169,16 @@ export default function BuildOutfits ({ sellersRef, buildRef }) {
             className='absolute left-[5%] top-[35%] z-5 text-4xl font-extrabold text-black 
                   max-[323px]:left-[1%]'
           >
-            <ChevronLeft />
+            <ChevronLeft size={40}/>
           </div>
           <div
             style={{ position: 'absolute' }}
             onClick={() =>
               setCurrent(e => (e === outfitMiddle.length ? 1 : e + 1))
             }
-            className='absolute right-[5%] top-[35%] z-5 text-4xl font-extrabold text-black max-[320px]:right-[1%] max-[400px]:right-[10%]'
+            className='absolute right-[5%] top-[35%] z-5 text-4xl font-extrabold text-black max-[320px]:right-[1%] max-[400px]:right-[6%]'
           >
-            <ChevronRight />
+            <ChevronRight size={40} />
           </div>
           <section className='[scrollbar-width:none] min-w-max  overflow-x-hidden   gap-0 h-full  relative  flex  '>
             {outfitMiddle.map(

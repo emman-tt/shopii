@@ -95,16 +95,16 @@ export default function CircularCarousel () {
         <button
           onClick={prev}
           disabled={isAnimating}
-          className='flex rounded-4xl items-center justify-center  text-white border-[0.1px] border-gray-500  bg-black/10  backdrop-blur-[7px] p-6 text-6xl font-extrabold '
+          className='flex rounded-4xl items-center justify-center  text-white border-[0.1px] border-gray-500  bg-black/10  backdrop-blur-[7px] p-4 text-6xl font-extrabold '
         >
-          <ChevronLeft />
+          <ChevronLeft size={50}  />
         </button>
         <button
           onClick={next}
           disabled={isAnimating}
-          className='flex  rounded-4xl items-center justify-center  text-white border-[0.1px] border-gray-500  bg-black/10  backdrop-blur-[7px] p-6 text-6xl font-extrabold'
+          className='flex  rounded-4xl items-center justify-center  text-white border-[0.1px] border-gray-500  bg-black/10  backdrop-blur-[7px] p-4 text-6xl font-extrabold'
         >
-          <ChevronRight />
+          <ChevronRight size={50} />
         </button>
       </div>
     </div>
